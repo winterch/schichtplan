@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Shift extends Migration
+class CreateShiftTable extends Migration
 {
     /**
      * Run the migrations.
@@ -25,7 +25,7 @@ class Shift extends Migration
                 $table->dateTime('end');
                 $table->integer('team_size', false, true);
                 $table->integer('group');
-                $table->foreignIdFor(Plan::class)
+                $table->foreignIdFor(\App\Models\Plan::class)
                     ->constrained()
                     ->onUpdate('cascade')
                     ->onDelete('cascade');

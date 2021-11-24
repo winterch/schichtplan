@@ -22,7 +22,7 @@ class CreateSubscriptionTable extends Migration
                 $table->string('phone', 20);
                 $table->string('email', 200);
                 $table->string('comment',500);
-                $table->foreignIdFor(Shift::class)
+                $table->foreignIdFor(\App\Models\Shift::class)
                     ->constrained()
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
