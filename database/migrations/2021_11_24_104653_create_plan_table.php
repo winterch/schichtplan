@@ -20,6 +20,7 @@ class CreatePlanTable extends Migration
             // add missing timestamps
             Schema::table('plans', function (Blueprint $table) {
                 $table->timestamps();
+                $table->char('remember_token');
             });
         }
 
@@ -34,6 +35,7 @@ class CreatePlanTable extends Migration
                 $table->string('contact', 200);
                 $table->string('owner_email', 200);
                 $table->char('password');
+                $table->char('remember_token');
                 $table->timestamps();
             });
         }
