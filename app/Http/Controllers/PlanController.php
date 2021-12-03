@@ -6,6 +6,7 @@ use App\Http\Requests\StorePlanRequest;
 use App\Http\Requests\UpdatePlanRequest;
 use App\Models\Plan;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 
@@ -36,10 +37,10 @@ class PlanController extends Controller
         $data = $request->validated();
         $plan = Plan::create($data);
         // auth user with provided details
-
+        Auth::login($plan);
         // redirect
         Session::flash('message', 'Successfully created plan. Add some shifts');
-        return Redirect::to('shift.index');
+        return redirect()->route('plan.shift.index', ['plan' => $plan->id]);
     }
 
     /**
