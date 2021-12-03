@@ -13,7 +13,7 @@ class StoreShiftRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,13 @@ class StoreShiftRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'required|max:200',
+            'type' => 'required|max:200',
+            'description' => 'max:500',
+            'group' => 'int|numeric|max:100|nullable',
+            'start' => 'required|date|before:end',
+            'end' => 'required|date|after:start',
+            'team_size' => 'required|int|max:100|numeric',
         ];
     }
 }

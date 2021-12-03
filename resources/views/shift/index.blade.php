@@ -3,9 +3,11 @@
     <div class="container p-2 mr-auto ml-auto">
         <h2>{{ $plan->title }}</h2>
         <div>{{ $plan->description }}</div>
-        @foreach($plan->shifts() as $shift)
-            {{$shift->title}}
+        <ul>
+        @foreach($plan->shifts as $shift)
+            <li>{{$shift->title}}</li>
         @endforeach
+        </ul>
         @if(empty($plan->shifts()))
             <div>{{__('shift.noshifts')}}</div>
         @endif
