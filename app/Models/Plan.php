@@ -16,7 +16,8 @@ class Plan extends Model
      */
     protected $fillable = [
         'title',
-        'message',
+        'description',
+        'contact',
         'owner_email',
         'password',
     ];
@@ -28,5 +29,33 @@ class Plan extends Model
      */
     protected $hidden = [
         'password',
+        'owner_email',
     ];
+
+    /**
+     * @inheritDoc
+     * @param array $options
+     * @return bool
+     */
+    public function save(array $options = [])
+    {
+        // add a unique_link for newly created plans
+        if(empty($this->unique_link)) {
+            // seed random generator
+            srand(self::make_seed());
+            $randval = rand();
+            $this->unique_link = md5($randval);
+        }
+        return parent::save($options);
+    }
+
+    /**
+     * Generate seed for random generator
+     * @return float
+     */
+    private static function make_seed()
+    {
+        list($usec, $sec) = explode(' ', microtime());
+        return $sec + $usec * 1000000;
+    }
 }
