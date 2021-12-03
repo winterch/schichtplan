@@ -6,6 +6,8 @@ use App\Http\Requests\StoreShiftRequest;
 use App\Http\Requests\UpdateShiftRequest;
 use App\Models\Plan;
 use App\Models\Shift;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 class ShiftController extends Controller
@@ -13,15 +15,13 @@ class ShiftController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param int $plan
+     * @param Plan $plan
      * @return \Illuminate\Http\Response
      */
-    public function index(int $plan)
+    public function index(Plan $plan)
     {
-        if ($plan) {
-            $plan = Plan::find($plan);
-        }
-        return view('shift.index')->with(['plan' => $plan, 'bla' => "DEfv"]);
+        $this->authorize('view', $plan);
+        return view('shift.index')->with(['plan' => $plan]);
     }
 
     /**
@@ -29,32 +29,26 @@ class ShiftController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(int $plan)
+    public function create(Plan $plan)
     {
-        if ($plan) {
-            $plan = Plan::find($plan);
-        }
-
+        $this->authorize('update', $plan);
         return view('shift.create', ['plan' => $plan]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreShiftRequest  $request
+     * @param \App\Http\Requests\StoreShiftRequest $request
+     * @param int $plan
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreShiftRequest $request, $plan)
+    public function store(StoreShiftRequest $request, Plan $plan)
     {
+        $this->authorize('update', $plan);
         $data = $request->validated();
-        if ($plan) {
-            $plan = Plan::find($plan);
-        }
         $shift = $plan->shifts()->create($data);
-
-        // $shift = Shift::create($data);
         Session::flash('info', 'Successfully created shift');
-        return redirect()->route('plan.shift.index', ['plan' => $shift->plan]);
+        return redirect()->route('plan.shift.index', ['plan' => $plan]);
     }
 
     /**

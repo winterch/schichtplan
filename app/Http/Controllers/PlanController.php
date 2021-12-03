@@ -33,6 +33,7 @@ class PlanController extends Controller
      */
     public function store(StorePlanRequest $request)
     {
+        // no specific validation
         // validate
         $data = $request->validated();
         $plan = Plan::create($data);
