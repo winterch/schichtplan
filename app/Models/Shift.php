@@ -24,4 +24,7 @@ class Shift extends Model
         'team_size',
     ];
 
+    public function plan() {
+        return $this->belongsTo(Plan::class);
+    }
 }

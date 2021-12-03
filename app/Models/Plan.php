@@ -50,6 +50,8 @@ class Plan extends Model implements
      */
     public function save(array $options = [])
     {
+        // set remember token
+        $this->remember_token = $this->getRememberToken();
         // add a unique_link for newly created plans
         if(empty($this->unique_link)) {
             // seed random generator
