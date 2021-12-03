@@ -14,8 +14,18 @@ class CreateShiftTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('shift')) {
-            Schema::create('shift', function (Blueprint $table) {
+        // Update existing shift tables
+        // rename shift to shifts
+        // add timestamps to existing table
+        if (Schema::hasTable('shift')) {
+            Schema::rename('shift', 'shifts');
+            Schema::table('shifts', function (Blueprint $table) {
+                $table->timestamps();
+            });
+        }
+
+        if (!Schema::hasTable('shifts')) {
+            Schema::create('shifts', function (Blueprint $table) {
                 $table->id();
                 // the typo is in the origin repo
                 $table->char('typ', 60);
@@ -33,12 +43,6 @@ class CreateShiftTable extends Migration
             });
         }
 
-        // add timestamps to existing table
-        if (!Schema::hasColumn('shift', 'created_at')) {
-            Schema::table('shift', function (Blueprint $table) {
-                $table->timestamps();
-            });
-        }
         Schema::enableForeignKeyConstraints();
     }
 

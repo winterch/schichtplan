@@ -15,8 +15,8 @@ class AlterShiftTable extends Migration
      */
     public function up()
     {
-        if (Schema::hasColumn('shift', 'typ') && !Schema::hasColumn('shift', 'type')) {
-            Schema::table('shift', function (Blueprint $table) {
+        if (Schema::hasColumn('shifts', 'typ') && !Schema::hasColumn('shift', 'type')) {
+            Schema::table('shifts', function (Blueprint $table) {
                 $table->renameColumn('typ', 'type');
             });
         }
@@ -31,7 +31,7 @@ class AlterShiftTable extends Migration
      */
     public function down()
     {
-        Schema::table('shift', function (Blueprint $table) {
+        Schema::table('shifts', function (Blueprint $table) {
             $table->renameColumn('type', 'typ');
         });
     }
