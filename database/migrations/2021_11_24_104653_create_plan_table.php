@@ -14,22 +14,26 @@ class CreatePlanTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('plan')) {
-            Schema::create('plan', function (Blueprint $table) {
-                $table->id();
-                // f.e. ac55616963a1624843019fd68af114f754d2baee
-                $table->string('unique_link', 40)->unique();
-                $table->string('title', 200);
-                $table->string('message', 500);
-                $table->string('owner_email', 200);
-                $table->string('password');
+        // migrate from old < v2.0 plan to plans
+        if (Schema::hasTable('plan')) {
+            Schema::rename('plan', 'plans');
+            // add missing timestamps
+            Schema::table('plans', function (Blueprint $table) {
                 $table->timestamps();
             });
         }
 
-        // add timestamps to existing table
-        if (!Schema::hasColumn('plan', 'created_at')) {
-            Schema::table('plan', function (Blueprint $table) {
+        // Table doesn't exist. We need to create it
+        if (!Schema::hasTable('plans')) {
+            Schema::create('plans', function (Blueprint $table) {
+                $table->id();
+                // f.e. ac55616963a1624843019fd68af114f754d2baee
+                $table->string('unique_link', 40)->unique();
+                $table->string('title', 200);
+                $table->string('description', 500);
+                $table->string('contact', 200);
+                $table->string('owner_email', 200);
+                $table->char('password');
                 $table->timestamps();
             });
         }
@@ -43,6 +47,7 @@ class CreatePlanTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('plan');
+        // just drop table
+        Schema::dropIfExists('plans');
     }
 }
