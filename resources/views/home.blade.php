@@ -5,7 +5,7 @@
     <p>{{ __('home.shiftplanInfo') }}</p>
 
     <p>
-        <a href="{{URL::to('plan/add')}}">{{__('home.createPlan')}}</a><br>
+        <a href="{{route('plan.create')}}">{{__('home.createPlan')}}</a><br>
     </p>
 
     <p>
@@ -13,8 +13,7 @@
     </p>
 
     <div style="font-size:small; float:right;">
-        immerda.ch - <a href=
-                        "https://code.immerda.ch/immerda/apps/schichtplan">src</a><br>
+        immerda.ch - <a href= "https://code.immerda.ch/immerda/apps/schichtplan">src</a><br>
     </div><br>
 
     <div style="position:absolute;bottom:0;right:0;">
