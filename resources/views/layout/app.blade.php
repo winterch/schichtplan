@@ -13,8 +13,10 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
+<div class="container mr-auto ml-auto mt-8">
     @include('partials.language_switcher')
     @include('partials.flash')
     @yield('body')
+</div>
 </body>
 </html>

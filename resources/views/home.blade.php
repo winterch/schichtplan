@@ -1,23 +1,24 @@
 @extends('layout.app')
 @section('body')
-    <h2>{{ __('home.Shiftplan') }}</h2>
+    <h1 class="text-3xl mb-2">{{ __('home.Shiftplan') }}</h1>
 
-    <p>{{ __('home.shiftplanInfo') }}</p>
+    <p class="block mb-4">{{ __('home.shiftplanInfo') }}</p>
 
-    <p>
-        <a href="{{route('plan.create')}}">{{__('home.createPlan')}}</a><br>
-    </p>
+    <a href="{{route('plan.create')}}" class="bg-green-800 hover:bg-green-600 py-2 px-4 rounded mb-4 inline-block text-white font-bold">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+        </svg>
+        {{__('home.createPlan')}}
+    </a>
 
-    <p>
-        <i><?php __('home.deleteInfo') ?></i><br>
-    </p>
+    <p class="italic">{{__('home.deleteInfo') }}</p>
 
-    <div style="font-size:small; float:right;">
-        immerda.ch - <a href= "https://code.immerda.ch/immerda/apps/schichtplan">src</a><br>
-    </div><br>
+    <div class="flex justify-end text-sm">
+        {!! __('home.copyleft') !!}
+    </div>
 
     <div style="position:absolute;bottom:0;right:0;">
-        <img src="{{URL::to('/assets/images/agplv3-88x31.png')}}" alt="{{__('home.AGPLlogo')}}">
+
     </div>
 
 @endsection
