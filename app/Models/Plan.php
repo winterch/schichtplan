@@ -78,6 +78,7 @@ class Plan extends Model implements
      */
     public function shifts()
     {
-        return $this->hasMany(Shift::class);
+        // order by group, tye and start date
+        return $this->hasMany(Shift::class)->orderBy('group')->orderBy('type')->orderBy('start');
     }
 }

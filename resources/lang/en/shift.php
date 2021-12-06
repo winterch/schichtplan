@@ -2,9 +2,15 @@
 return [
     'add' => 'Add shift',
     'noshifts' => 'No shifts',
-    'planDesc' => 'Describe this Plan. (Will be shown prominently to the subscribers)',
-    'contactDesc' => 'Means of Contact. Warning: Will be publicly shown! (optional)',
-    'mailDesc' => 'Your Mail (hidden)',
-    'passwordDesc' => 'Password',
-    'save' => 'save plan'
+    'createHeading' => 'New shift',
+    'type' => 'Type',
+    'title' => 'Title',
+    'description' => 'Description',
+    'group' => 'Additional Grouping',
+    'startDesc' => 'Beginning',
+    'endDesc' => 'End',
+    'team_sizeDesc' => 'Number of required volunteers',
+    'team_size' => 'No. volunteers',
+    'action' => '',
+    'save' => 'Save shift'
 ];

@@ -38,7 +38,7 @@ Route::resource('plan', \App\Http\Controllers\PlanController::class)->only([
  * Hint: just for auth users
  */
 Route::resource('plan.shift', \App\Http\Controllers\ShiftController::class)->only([
-    'index', 'create', 'store', 'update', 'destroy',
+    'index', 'create', 'store', 'update', 'destroy','edit',
 ])->middleware('auth');
 
 /**

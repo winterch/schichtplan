@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateShiftRequest;
 use App\Models\Plan;
 use App\Models\Shift;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
@@ -32,7 +33,9 @@ class ShiftController extends Controller
     public function create(Plan $plan)
     {
         $this->authorize('update', $plan);
-        return view('shift.create', ['plan' => $plan]);
+        $groups = $this->getGroups($plan);
+        $shift = new Shift();
+        return view('shift.create', ['plan' => $plan, 'shift' => $shift, 'groups' => $groups]);
     }
 
     /**
@@ -65,12 +68,14 @@ class ShiftController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Shift  $shift
+     * @param Plan $plan
+     * @param \App\Models\Shift $shift
      * @return \Illuminate\Http\Response
      */
-    public function edit(Shift $shift)
+    public function edit(Plan $plan, Shift $shift)
     {
-        //
+        $groups = $this->getGroups($plan);
+        return view('shift.create', ['shift' => $shift, 'plan' => $plan, 'groups' => $groups]);
     }
 
     /**
@@ -80,9 +85,14 @@ class ShiftController extends Controller
      * @param  \App\Models\Shift  $shift
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateShiftRequest $request, Shift $shift)
+    public function update(UpdateShiftRequest $request, Plan $plan, Shift $shift)
     {
-        //
+        $this->authorize('update', $shift);
+        $data = $request->validated();
+        $shift->update($data);
+        Session::flash('info', 'Shift successfully updated');
+        return redirect()->route('plan.shift.index', ['plan' => $plan]);
+
     }
 
     /**
@@ -91,8 +101,24 @@ class ShiftController extends Controller
      * @param  \App\Models\Shift  $shift
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Shift $shift)
+    public function destroy(Plan $plan, Shift $shift)
     {
-        //
+        $this->authorize('forceDelete', $shift);
+        $shift->forceDelete();
+        return redirect()->route('plan.shift.index', ['plan' => $plan]);
+    }
+
+    /**
+     * Return the number of shift goups present for the plan
+     * @param Plan $plan
+     * @return int
+     */
+    private function getGroups(Plan $plan): int
+    {
+        return Shift::select('group')
+            ->distinct()
+            ->whereBelongsTo($plan)
+            ->get()
+            ->count();
     }
 }

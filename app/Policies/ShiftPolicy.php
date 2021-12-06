@@ -21,7 +21,6 @@ class ShiftPolicy
      */
     public function viewAny(Plan $user, Plan $plan)
     {
-        die();
         Log::info($user->id);
         Log::info($plan->id);
         return $user->id === $plan->id;
@@ -59,7 +58,7 @@ class ShiftPolicy
      */
     public function update(Plan $plan, Shift $shift)
     {
-        return $plan->id == $shift->plan()->id;
+        return $plan->id == $shift->plan->id;
     }
 
     /**
@@ -71,7 +70,7 @@ class ShiftPolicy
      */
     public function delete(Plan $plan, Shift $shift)
     {
-        return $plan->id == $shift->plan()->id;
+        return $plan->id == $shift->plan->id;
     }
 
     /**
@@ -83,7 +82,7 @@ class ShiftPolicy
      */
     public function restore(Plan $plan, Shift $shift)
     {
-        return $plan->id == $shift->plan()->id;
+        return $plan->id == $shift->plan->id;
     }
 
     /**
@@ -95,6 +94,6 @@ class ShiftPolicy
      */
     public function forceDelete(Plan $plan, Shift $shift)
     {
-        return $plan->id == $shift->plan()->id;
+        return $plan->id == $shift->plan->id;
     }
 }
