@@ -33,14 +33,17 @@ class AuthController extends Controller
      */
     public function login(AuthLoginRequest $request, Plan $plan) {
         $data = $request->validated();
+        // todo: implement attempt() method instead of own logic
         // check if the emails are the same
         if($plan->owner_email !== $data['email']) {
             Log::Debug('Email does not match');
+            Session::flash('loginFailed', __('auth.failed'));
             return view('auth.login', ['plan' => $plan]);
         }
         // Compare password hashes
         if(!Hash::check($data['password'], $plan->password)) {
             Log::Debug('Password does not match');
+            Session::flash('loginFailed', __('auth.failed'));
             return view('auth.login', ['plan' => $plan]);
         }
         // login user
