@@ -33,9 +33,9 @@
             </div>
             <div>
                 <label for="group" class="block text-gray-700 font-bold mb-1">{{__("shift.group")}}</label>
-                <select id="group" name="group" class="@error('group') border-red-500 @enderror w-full block text-black p-1 text-lg mb-2 border rounded">
+                <select id="group" name="group" class="@error('group') border-red-500 @enderror w-full block text-black p-1 text-lg mb-2 border rounded" >
                     @for($i = 0; $i <= $groups; $i++)
-                        <option value="{{$i}}">{{$i}}</option>
+                        <option value="{{$i}}" @if($i == $shift->group) selected @endif>{{$i}}</option>
                     @endfor
                 </select>
                 @error('group')
