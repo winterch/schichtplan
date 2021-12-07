@@ -12,5 +12,7 @@ return [
     'team_sizeDesc' => 'Number of required volunteers',
     'team_size' => 'No. volunteers',
     'action' => '',
-    'save' => 'Save shift'
+    'save' => 'Save shift',
+    'manageSubscription' => 'Manage subscriptions',
+    'edit' => 'Edit'
 ];

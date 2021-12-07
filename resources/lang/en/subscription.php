@@ -4,5 +4,7 @@ return [
     'phone' => 'Phone',
     'email' => 'Email',
     'comment' => 'Comment',
-    'save' => 'Subscribe'
+    'save' => 'Subscribe',
+    'unsubscribe' => 'Unsubscribe',
+    'subscribe' => 'Subscribe',
 ];
