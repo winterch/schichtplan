@@ -44,14 +44,14 @@
             </div>
             <div>
                 <label for="start" class="block text-gray-700 font-bold mb-1">{{__("shift.startDesc")}}</label>
-                <input id="start" name="start" type="date" class="@error('start') border-red-500 @enderror w-full block text-black p-1 text-lg mb-2 border rounded" value="{{old('start', $shift->start)}}">
+                <input id="start" name="start" type="date" class="@error('start') border-red-500 @enderror datepicker w-full block text-black p-1 text-lg mb-2 border rounded" value="{{old('start', $shift->start)}}">
                 @error('start')
                 <div class="text-red-500 text-xs italic">{{ $message }}</div>
                 @enderror
             </div>
             <div>
                 <label for="end" class="block text-gray-700 font-bold mb-1">{{__("shift.endDesc")}}</label>
-                <input id="end" name="end" type="date" class="@error('end') border-red-500 @enderror w-full block text-black p-1 text-lg mb-2 border rounded" value="{{old('end', $shift->end)}}">
+                <input id="end" name="end" type="date" class="@error('end') border-red-500 @enderror datepicker w-full block text-black p-1 text-lg mb-2 border rounded" value="{{old('end', $shift->end)}}">
                 @error('end')
                 <div class="text-red-500 text-xs italic">{{ $message }}</div>
                 @enderror

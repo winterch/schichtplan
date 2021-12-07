@@ -18,6 +18,7 @@
         "tailwindcss": "^2.2.19"
     },
     "dependencies": {
+        "flatpickr": "^4.6.9",
         "sass-loader": "^12.3.0"
     }
 }
