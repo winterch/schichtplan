@@ -57,7 +57,7 @@ class PlanController extends Controller
     public function show(Plan $plan)
     {
         $this->authorize('view', $plan);
-
+        return view('plan.show', ['plan' => $plan]);
     }
 
     /**

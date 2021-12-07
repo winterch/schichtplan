@@ -52,7 +52,7 @@ Route::post('/plan', [\App\Http\Controllers\PlanController::class, 'store'])->na
  * Plan resource controller
  */
 Route::resource('plan', \App\Http\Controllers\PlanController::class)->only([
-    'edit', 'update', 'destroy',
+    'edit', 'update', 'destroy','show',
 ])->middleware('auth');
 
 /**
@@ -60,7 +60,7 @@ Route::resource('plan', \App\Http\Controllers\PlanController::class)->only([
  * Hint: just for auth users
  */
 Route::resource('plan.shift', \App\Http\Controllers\ShiftController::class)->only([
-    'index', 'create', 'store', 'update', 'destroy','edit',
+    'index', 'create', 'store', 'update', 'destroy','edit', 'show',
 ])->middleware('auth');
 
 

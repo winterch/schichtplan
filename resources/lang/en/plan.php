@@ -8,5 +8,8 @@ return [
     'mailDesc' => 'Your Mail (hidden)',
     'passwordDesc' => 'Password',
     'samePassword' => 'The password will be the same',
-    'save' => 'Save plan'
+    'save' => 'Save plan',
+    'unsubscribe' => 'unsubscribe',
+    'subscribe' => 'subscribe',
+    'editShifts' => 'Edit shifts'
 ];
