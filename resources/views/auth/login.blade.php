@@ -1,0 +1,28 @@
+@extends('layout.app')
+@section('body')
+    <div class="w-full md:w-1/2 lg:w-1/4">
+        <h1 class="text-3xl mb-2">{{ __('auth.login') }}</h1>
+        <form method="post" action="{{route('auth.authenticate', ['plan' => $plan])}}">
+            @csrf
+            <div>
+                <label for="email" class="block text-gray-700 font-bold mb-1">{{__("auth.email")}}</label>
+                <input id="email" name="email" type="text" class="@error('email') border-red-500 @enderror w-full block text-black p-1 text-lg mb-2 border rounded" value="{{old('email', $plan->email)}}">
+                @error('email')
+                <div class="text-red-500 text-xs italic">{{ $message }}</div>
+                @enderror
+            </div>
+            <div>
+                <label for="password" class="block text-gray-700 font-bold mb-1">{{__("auth.password")}}</label>
+                <input id="password" name="password" type="password" class="@error('password') border-red-500 @enderror w-full block text-black p-1 text-lg mb-2 border rounded" value="{{old('password', $plan->password)}}">
+                @error('password')
+                <div class="text-red-500 text-xs italic">{{ $message }}</div>
+                @enderror
+            </div>
+            <button type="submit" class="bg-green-800 hover:bg-green-600 py-2 px-4 rounded mb-4 inline-block text-white font-bold">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+                </svg>
+                {{__('auth.save')}}
+            </button>
+
+@endsection

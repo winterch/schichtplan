@@ -55,7 +55,7 @@ class SubscriptionController extends Controller
 
     /**
      * Display the specified resource.
-     * Plans are identified by a unique_link. If a user nows the unique_link she/he can access the subscription page
+     * Plans are identified by a unique_link. If a user knows the unique_link she/he can access the subscription page
      *
      * @param Plan $plan
      * @return \Illuminate\Http\Response
@@ -104,10 +104,12 @@ class SubscriptionController extends Controller
      *
      * @param Plan $plan
      * @param Shift $shift
+     * @param Subscription $subscription
      * @return \Illuminate\Http\Response
      */
     public function destroy(Plan $plan, Shift $shift, Subscription $subscription)
     {
+        $this->authorize('forceDelete', $subscription);
         $subscription->forceDelete();
         // todo: check if this is working
         Session::forget('subscriptions.'.$subscription->id);

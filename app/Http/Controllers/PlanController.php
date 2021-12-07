@@ -7,6 +7,7 @@ use App\Http\Requests\UpdatePlanRequest;
 use App\Models\Plan;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 
@@ -21,8 +22,8 @@ class PlanController extends Controller
      */
     public function create()
     {
-        return view('plan.create');
-
+        $plan = new Plan();
+        return view('plan.create', ['plan' => $plan]);
     }
 
     /**
@@ -36,6 +37,8 @@ class PlanController extends Controller
         // no specific authorization
         // validate the request
         $data = $request->validated();
+        // Hash password with aragon2
+        $data['password'] = Hash::make($data['password'], config('hashing.bcrypt'));
         $plan = Plan::create($data);
         // auth user with provided details
         Auth::login($plan);
@@ -53,6 +56,8 @@ class PlanController extends Controller
      */
     public function show(Plan $plan)
     {
+        $this->authorize('view', $plan);
+
     }
 
     /**
@@ -63,7 +68,8 @@ class PlanController extends Controller
      */
     public function edit(Plan $plan)
     {
-        //
+        $this->authorize('update', $plan);
+        return view('plan.create', ['plan' => $plan]);
     }
 
     /**

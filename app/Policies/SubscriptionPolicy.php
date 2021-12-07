@@ -43,7 +43,6 @@ class SubscriptionPolicy
      */
     public function create(Plan $plan)
     {
-        die;
         return true;
     }
 
@@ -56,10 +55,8 @@ class SubscriptionPolicy
      */
     public function update(Plan $plan, Subscription $subscription)
     {
-        // Read from the session if a user can update a session
+        // Read from the subscriptions from the session. During a session a user can update or delete hs own subscriptions
         $subscriptions = Session::get('subscriptions', []);
-        Log::warning("Subscriptions");
-        Log::warning($subscriptions);
         return $plan == $subscription->shift->plan || in_array($subscription->id, $subscriptions);
     }
 
@@ -96,6 +93,8 @@ class SubscriptionPolicy
      */
     public function forceDelete(Plan $plan, Subscription $subscription)
     {
-        //
+        // Read from the subscriptions from the session. During a session a user can update or delete hs own subscriptions
+        $subscriptions = Session::get('subscriptions', []);
+        return $plan == $subscription->shift->plan || in_array($subscription->id, $subscriptions);
     }
 }

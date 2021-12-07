@@ -3,6 +3,7 @@
     <h1 class="text-3xl mb-2">{{ $plan->title }}</h1>
     <div class="text-lg italic">{{ $plan->description }}</div>
     <div class="text-lg">Public link <a href="{{route("plan.subscription.show", ['plan' => $plan])}}">{{route("plan.subscription.show", ['plan' => $plan])}}</a></div>
+    <div class="text-lg">Admin link <a href="{{route("login", ['plan' => $plan])}}">{{route("login", ['plan' => $plan])}}</a></div>
     @if(count($plan->shifts) === 0)
         <div>{{__('shift.noshifts')}}</div>
     @else

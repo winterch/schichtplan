@@ -6,9 +6,6 @@ use App\Http\Requests\StoreShiftRequest;
 use App\Http\Requests\UpdateShiftRequest;
 use App\Models\Plan;
 use App\Models\Shift;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 class ShiftController extends Controller
@@ -74,6 +71,7 @@ class ShiftController extends Controller
      */
     public function edit(Plan $plan, Shift $shift)
     {
+        $this->authorize('update', $shift);
         $groups = $this->getGroups($plan);
         return view('shift.create', ['shift' => $shift, 'plan' => $plan, 'groups' => $groups]);
     }

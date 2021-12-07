@@ -7,5 +7,6 @@ return [
     'contactDesc' => 'Means of Contact. Warning: Will be publicly shown! (optional)',
     'mailDesc' => 'Your Mail (hidden)',
     'passwordDesc' => 'Password',
+    'samePassword' => 'The password will be the same',
     'save' => 'Save plan'
 ];

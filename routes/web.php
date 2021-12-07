@@ -16,7 +16,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home');
-});
+})->name('home');
+
+/**
+ * Display login form with plan id in url
+ */
+Route::get('/auth/login/{plan:unique_link?}', [\App\Http\Controllers\AuthController::class, 'loginForm'])
+->name('login');
+
+Route::get('/auth/logout', [\App\Http\Controllers\AuthController::class, 'logout'])
+    ->name('logout');
+
+Route::post('/auth/login/{plan:unique_link}', [\App\Http\Controllers\AuthController::class, 'login'])
+    ->name('auth.authenticate');
 
 /**
  * BC: old url for create a plan
@@ -27,11 +39,21 @@ Route::get('/plan/add', function () {
 });
 
 /**
+ * Create a new plan. This doesn't need auth
+ */
+Route::get('/plan/create', [\App\Http\Controllers\PlanController::class, 'create'])->name('plan.create');
+
+/**
+ * Store a new plan. This doesn't need auth
+ */
+Route::post('/plan', [\App\Http\Controllers\PlanController::class, 'store'])->name('plan.store');
+
+/**
  * Plan resource controller
  */
 Route::resource('plan', \App\Http\Controllers\PlanController::class)->only([
-    'create', 'store', 'update', 'destroy',
-]);
+    'edit', 'update', 'destroy',
+])->middleware('auth');
 
 /**
  * Shift resource controller
