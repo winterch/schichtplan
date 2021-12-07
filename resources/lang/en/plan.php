@@ -9,7 +9,8 @@ return [
     'passwordDesc' => 'Password',
     'samePassword' => 'The password will be the same',
     'save' => 'Save plan',
-    'unsubscribe' => 'unsubscribe',
-    'subscribe' => 'subscribe',
-    'editShifts' => 'Edit shifts'
+    'unsubscribe' => 'Unsubscribe',
+    'subscribe' => 'Subscribe',
+    'editShifts' => 'Edit shifts',
+    'editShift' => 'Edit shift'
 ];
