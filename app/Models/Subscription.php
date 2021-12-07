@@ -32,4 +32,7 @@ class Subscription extends Model
         'comment',
     ];
 
+    public function shift() {
+        return $this->belongsTo(Shift::class);
+    }
 }

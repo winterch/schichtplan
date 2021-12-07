@@ -33,26 +33,26 @@ class PlanController extends Controller
      */
     public function store(StorePlanRequest $request)
     {
-        // no specific validation
-        // validate
+        // no specific authorization
+        // validate the request
         $data = $request->validated();
         $plan = Plan::create($data);
         // auth user with provided details
         Auth::login($plan);
         // redirect
-        Session::flash('message', 'Successfully created plan. Add some shifts');
+        Session::flash('message', __('plan.successfullyCreated'));
         return redirect()->route('plan.shift.index', ['plan' => $plan->id]);
     }
 
     /**
      * Display the specified resource.
+     * Show a plan for subscribers
      *
      * @param  \App\Models\Plan  $plan
      * @return \Illuminate\Http\Response
      */
     public function show(Plan $plan)
     {
-        //
     }
 
     /**

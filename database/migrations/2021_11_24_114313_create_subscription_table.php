@@ -14,8 +14,15 @@ class CreateSubscriptionTable extends Migration
      */
     public function up()
     {
-        if (!Schema::hasTable('subscription')) {
-            Schema::create('subscription', function (Blueprint $table) {
+        if (Schema::hasTable('subscription')) {
+            Schema::rename('subscription', 'subscriptions');
+            Schema::table('subscriptions', function (Blueprint $table) {
+                $table->timestamps();
+            });
+        }
+
+        if (!Schema::hasTable('subscriptions')) {
+            Schema::create('subscriptions', function (Blueprint $table) {
                 $table->id();
                 // the typo is in the origin repo
                 $table->char('name', 60);
@@ -30,12 +37,6 @@ class CreateSubscriptionTable extends Migration
             });
         }
 
-        // add timestamps to existing table
-        if (!Schema::hasColumn('subscription', 'created_at')) {
-            Schema::table('subscription', function (Blueprint $table) {
-                $table->timestamps();
-            });
-        }
         Schema::enableForeignKeyConstraints();
     }
 
@@ -48,6 +49,6 @@ class CreateSubscriptionTable extends Migration
     public function down()
     {
         Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('subscription');
+        Schema::dropIfExists('subscriptions');
     }
 }
