@@ -27,6 +27,7 @@ class AuthController extends Controller
 
     /**
      * Preform a login for a user on her/his plan
+     * hint: There is no real user, just plans with email and password information
      * @param AuthLoginRequest $request
      * @param Plan $plan
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
@@ -52,7 +53,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Logout a user. Flush his/her session and redirect to the home site
+     * Logout a user and flush his/her session. Then redirect to the home site
      * @return \Illuminate\Http\RedirectResponse
      */
     public function logout()
