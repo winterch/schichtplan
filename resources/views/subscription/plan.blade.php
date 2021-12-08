@@ -1,6 +1,7 @@
 @extends('layout.app')
 @section('body')
     <h1 class="text-3xl mb-2">{{ $plan->title }}</h1>
+    @include('partials.flash')
     <div class="text-lg italic">{{ $plan->description }}</div>
     @if(count($plan->shifts) === 0)
         <div>{{__('shift.noshifts')}}</div>

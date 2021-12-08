@@ -1,6 +1,7 @@
 @extends('layout.app')
 @section('body')
     <h1 class="text-3xl mb-2">{{ $plan->title }}</h1>
+    @include('partials.flash')
     <div class="text-lg italic">{{ $plan->description }}</div>
     <div class="text-lg">Public link <a href="{{route("plan.subscription.show", ['plan' => $plan])}}">{{route("plan.subscription.show", ['plan' => $plan])}}</a></div>
     <div class="text-lg">Admin link <a href="{{route("login", ['plan' => $plan])}}">{{route("login", ['plan' => $plan])}}</a></div>
