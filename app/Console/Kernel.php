@@ -16,6 +16,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        // Clear the plans older than 30 days every day
+        $schedule->command('schichtplan:cleanup')->daily();
     }
 
     /**
