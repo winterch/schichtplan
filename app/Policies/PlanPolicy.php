@@ -4,90 +4,57 @@ namespace App\Policies;
 
 use App\Models\Plan;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Auth\Access\Response;
 
 class PlanPolicy
 {
     use HandlesAuthorization;
 
     /**
-     * Determine whether the user can view any models.
+     * Determine whether the user (a plan object) can view any plan
+     * This is always false
      *
-     * @param  \App\Models\Plan  $plan
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param Plan $userPlan
+     * @return Response|bool
      */
-    public function viewAny(Plan $plan)
+    public function viewAny(Plan $userPlan)
     {
         return false;
     }
 
     /**
-     * Determine whether the user can view the model.
+     * Determine whether the user (a plan object) can view the selected plan.
      *
-     * @param  \App\Models\Plan  $plan
-     * @param  \App\Models\Plan  $plan
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param Plan $userPlan
+     * @param Plan $plan
+     * @return Response|bool
      */
-    public function view(Plan $user, Plan $plan)
+    public function view(Plan $userPlan, Plan $plan)
     {
-        return $user->id === $plan->id;
+        return $userPlan->id === $plan->id;
     }
 
     /**
-     * Determine whether the user can create models.
+     * Determine whether the user (a plan object) can update the model.
      *
-     * @param  \App\Models\Plan  $plan
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param Plan $userPlan
+     * @param Plan $plan
+     * @return Response|bool
      */
-    public function create(Plan $plan)
+    public function update(Plan $userPlan, Plan $plan)
     {
-        //
+        return $userPlan->id === $plan->id;
     }
 
     /**
-     * Determine whether the user can update the model.
+     * Determine whether the user (a plan object) can permanently delete the model.
      *
-     * @param  \App\Models\Plan  $plan
-     * @param  \App\Models\Plan  $plan
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @param Plan $userPlan
+     * @param Plan $plan
+     * @return Response|bool
      */
-    public function update(Plan $user, Plan $plan)
+    public function forceDelete(Plan $userPlan, Plan $plan)
     {
-        return $user->id === $plan->id;
-    }
-
-    /**
-     * Determine whether the user can delete the model.
-     *
-     * @param  \App\Models\Plan  $plan
-     * @param  \App\Models\Plan  $plan
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function delete(Plan $user, Plan $plan)
-    {
-        return $user->id === $plan->id;
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param  \App\Models\Plan  $plan
-     * @param  \App\Models\Plan  $plan
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function restore(Plan $user, Plan $plan)
-    {
-        return $user->id === $plan->id;
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param  \App\Models\Plan  $plan
-     * @param  \App\Models\Plan  $plan
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function forceDelete(Plan $user, Plan $plan)
-    {
-        return $user->id === $plan->id;
+        return $userPlan->id === $plan->id;
     }
 }

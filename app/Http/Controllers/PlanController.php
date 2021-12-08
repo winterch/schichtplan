@@ -8,7 +8,6 @@ use App\Models\Plan;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 
 class PlanController extends Controller
@@ -16,40 +15,41 @@ class PlanController extends Controller
 
 
     /**
-     * Show the form for creating a new resource.
+     *  Display a form to create a plan
      *
      * @return \Illuminate\View\View
      */
     public function create()
     {
+        // no specific authorization - everybody can create a plan
         $plan = new Plan();
         return view('plan.create', ['plan' => $plan]);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created plan in the db
      *
-     * @param  \App\Http\Requests\StorePlanRequest  $request
+     * @param StorePlanRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StorePlanRequest $request)
     {
-        // no specific authorization
+        // no specific authorization - everybody can create a plan
         // validate the request
         $data = $request->validated();
         // Hash password with aragon2
+        // Todo: implement auth provider correctly
         $data['password'] = Hash::make($data['password'], config('hashing.bcrypt'));
         $plan = Plan::create($data);
-        // auth user with provided details
-        Auth::login($plan);
-        // redirect
+        // manually auth user with provided details
+        Auth::login($plan, true);
+        // redirect with success message
         Session::flash('message', __('plan.successfullyCreated'));
         return redirect()->route('plan.shift.index', ['plan' => $plan->id]);
     }
 
     /**
-     * Display the specified resource.
-     * Show a plan for subscribers
+     * Show a plan with all subscriptions
      *
      * @param  \App\Models\Plan  $plan
      * @return \Illuminate\Http\Response
@@ -61,7 +61,7 @@ class PlanController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the plan
      *
      * @param  \App\Models\Plan  $plan
      * @return \Illuminate\Http\Response
@@ -73,7 +73,7 @@ class PlanController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified plan in storage.
      *
      * @param  \App\Http\Requests\UpdatePlanRequest  $request
      * @param  \App\Models\Plan  $plan
@@ -81,17 +81,25 @@ class PlanController extends Controller
      */
     public function update(UpdatePlanRequest $request, Plan $plan)
     {
-        //
+        $this->authorize('update', $plan);
+        $data = $request->validated();
+        // prevent password to be overridden
+        unset($data['password']);
+        $plan->update($data);
+        // redirect to shifts overview
+        return redirect()->route('plan.shift.index', ['plan' => $plan->id]);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the plan from storage.
      *
      * @param  \App\Models\Plan  $plan
      * @return \Illuminate\Http\Response
      */
     public function destroy(Plan $plan)
     {
-        //
+        $this->authorize('forceDelete', $plan);
+        $plan->forceDelete();
+        return \redirect()->route('home');
     }
 }

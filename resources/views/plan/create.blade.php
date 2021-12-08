@@ -1,7 +1,12 @@
 @extends('layout.app')
 @section('body')
         <h1 class="text-3xl mb-2">{{ __('plan.heading') }}</h1>
-        <form method="post" action="{{route('plan.store')}}">
+        @if(isset($plan->id) && $plan->id > 0)
+            <form method="post" action="{{route('plan.update', ['plan' => $plan])}}">
+                @method("put")
+        @else
+            <form method="post" action="{{route('plan.store')}}">
+        @endif
             @csrf
             <div class="grid grid-rows-3 grid-flow-col gap-4">
                 <div>
@@ -27,12 +32,12 @@
             </div>
             <div>
                 <label for="owner_email" class="block text-gray-700 font-bold mb-1">{{__("plan.mailDesc")}}</label>
-                <input id="owner_email" name="owner_email" type="email" class="@error('owner_email') border-red-500 @enderror w-full block text-black p-1 text-lg mb-2 border rounded" value="{{old('owner_email', $plan->ownerEmail)}}">
+                <input id="owner_email" name="owner_email" type="email" class="@error('owner_email') border-red-500 @enderror w-full block text-black p-1 text-lg mb-2 border rounded" value="{{old('owner_email', $plan->owner_email)}}">
                 @error('owner_email')
                     <div class="text-red-500 text-xs italic">{{ $message }}</div>
                 @enderror
             </div>
-            @if($plan->exists())
+            @if($plan->password === "")
 
                 <div>
                     <label for="password" class="block text-gray-700 font-bold mb-1">{{__("plan.passwordDesc")}}</label>
@@ -53,8 +58,6 @@
                 </svg>
                 {{__('plan.save')}}
             </button>
-
         </form>
     </div>
-
 @endsection

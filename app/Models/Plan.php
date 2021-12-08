@@ -44,22 +44,41 @@ class Plan extends Model implements
     ];
 
     /**
+     * We will generate a uniqueLink on initial save
      * @inheritDoc
      * @param array $options
      * @return bool
      */
     public function save(array $options = [])
     {
-        // set remember token
-        $this->remember_token = $this->getRememberToken();
         // add a unique_link for newly created plans
         if(empty($this->unique_link)) {
             // seed random generator
             srand(self::make_seed());
-            $randval = rand();
-            $this->unique_link = md5($randval);
+            $randomVal = rand();
+            $this->unique_link = md5($randomVal);
         }
         return parent::save($options);
+    }
+
+    /**
+     * Get the associated shifts for the plan
+     * @return Shift[]
+     */
+    public function shifts()
+    {
+        // order by group, type and start date
+        return $this->hasMany(Shift::class)->orderBy('group')->orderBy('type')->orderBy('start');
+    }
+
+    /**
+     * Get the e-mail address where password reset links are sent.
+     * Used for reset password email
+     * @return string
+     */
+    public function getEmailForPasswordReset()
+    {
+        return $this->owner_email;
     }
 
     /**
@@ -70,15 +89,5 @@ class Plan extends Model implements
     {
         list($usec, $sec) = explode(' ', microtime());
         return $sec + $usec * 1000000;
-    }
-
-    /**
-     * Get the shifts for the plan
-     * @return Shift[]
-     */
-    public function shifts()
-    {
-        // order by group, tye and start date
-        return $this->hasMany(Shift::class)->orderBy('group')->orderBy('type')->orderBy('start');
     }
 }

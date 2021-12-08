@@ -12,5 +12,10 @@ return [
     'unsubscribe' => 'Unsubscribe',
     'subscribe' => 'Subscribe',
     'editShifts' => 'Edit shifts',
-    'editShift' => 'Edit shift'
+    'editShift' => 'Edit shift',
+    'titleRequired' => 'Title is required',
+    'descriptionRequired' => 'Description is required',
+    'ContactMax' => 'Max length of contact is 500 characters',
+    'emailRequired' => 'Email is required',
+    'passwordRequired' => 'Password is required'
 ];

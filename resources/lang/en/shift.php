@@ -15,5 +15,6 @@ return [
     'save' => 'Save shift',
     'manageSubscription' => 'Manage subscriptions',
     'edit' => 'Edit',
-    'cancel' => 'Cancel'
+    'cancel' => 'Cancel',
+    'editPlan' => 'Edit plan details'
 ];

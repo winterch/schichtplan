@@ -32,10 +32,10 @@ class CreatePlanTable extends Migration
                 $table->string('unique_link', 40)->unique();
                 $table->string('title', 200);
                 $table->string('description', 500);
-                $table->string('contact', 200);
+                $table->string('contact', 200)->nullable(true);
                 $table->string('owner_email', 200);
                 $table->char('password');
-                $table->char('remember_token');
+                $table->char('remember_token')->nullable(true);
                 $table->timestamps();
             });
         }

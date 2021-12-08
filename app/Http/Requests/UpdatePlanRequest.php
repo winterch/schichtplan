@@ -6,15 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UpdatePlanRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return true;
-    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -27,8 +18,7 @@ class UpdatePlanRequest extends FormRequest
             'title' => 'required|max:200',
             'description' => 'required|max:500',
             'contact' => 'max:500',
-            'owner_email' => 'required|email',
-            'password' => 'required|min:8',
+            'owner_email' => 'required|email'
         ];
     }
 
@@ -39,11 +29,10 @@ class UpdatePlanRequest extends FormRequest
     public function messages()
     {
         return [
-            'title.required' => "Title is required",
-            'description.required'  => "Description is required",
-            'contact.max'  => "Max length of contact is 500 characters",
-            'owner_email.required'  => "Email is required",
-            'password.required'  => "Password is required",
+            'title.required' => __("plan.titleRequired"),
+            'description.required'  => __('plan.descriptionRequired'),
+            'contact.max'  => __('plan.contactMax'),
+            'owner_email.required'  => __('plan.emailRequired'),
         ];
     }
 }
