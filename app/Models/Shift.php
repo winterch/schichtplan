@@ -24,10 +24,18 @@ class Shift extends Model
         'team_size',
     ];
 
+    /**
+     * Shift belongs to a plan
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function plan() {
         return $this->belongsTo(Plan::class);
     }
 
+    /**
+     * Shift can have many subscriptions
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function subscriptions() {
         return $this->hasMany(Subscription::class);
     }

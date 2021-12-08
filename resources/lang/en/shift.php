@@ -16,5 +16,15 @@ return [
     'manageSubscription' => 'Manage subscriptions',
     'edit' => 'Edit',
     'cancel' => 'Cancel',
-    'editPlan' => 'Edit plan details'
+    'editPlan' => 'Edit plan details',
+    'titleRequired' => 'Title is required',
+    'typeRequired' => 'Type is required',
+    'startRequired' => 'A start date is required',
+    'startBefore' => 'Start date has to be before the end date',
+    'endRequired' => 'A end date is required',
+    'endAfter' => 'End date has to be after the start date',
+    'team_sizeRequired' => 'Team size is required',
+    'successfullyDestroyed' => 'Successfully deleted shift',
+    'successfullyUpdated' => 'Successfully updated shift',
+    'successfullyCreated' => 'Successfully created shift',
 ];

@@ -30,7 +30,7 @@ class CreateShiftTable extends Migration
                 // the typo is in the origin repo
                 $table->char('typ', 60);
                 $table->string('title', 200);
-                $table->string('description', 500);
+                $table->string('description', 500)->nullable(true);
                 $table->dateTime('start');
                 $table->dateTime('end');
                 $table->integer('team_size', false, true);

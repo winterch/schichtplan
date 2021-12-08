@@ -6,29 +6,32 @@ use App\Http\Requests\StoreShiftRequest;
 use App\Http\Requests\UpdateShiftRequest;
 use App\Models\Plan;
 use App\Models\Shift;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
 
 class ShiftController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display an overview of shifts for a specified plan.
      *
      * @param Plan $plan
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index(Plan $plan)
     {
+        // user needs access to plan to view overview
         $this->authorize('view', $plan);
         return view('shift.index')->with(['plan' => $plan]);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new shift.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create(Plan $plan)
     {
+        // user needs access to plan to create a new shift
         $this->authorize('update', $plan);
         $groups = $this->getGroups($plan);
         $shift = new Shift();
@@ -36,38 +39,28 @@ class ShiftController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created shift in storage.
      *
-     * @param \App\Http\Requests\StoreShiftRequest $request
-     * @param int $plan
-     * @return \Illuminate\Http\Response
+     * @param StoreShiftRequest $request
+     * @param Plan $plan
+     * @return Response
      */
     public function store(StoreShiftRequest $request, Plan $plan)
     {
+        // user needs access to plan to create a new shift
         $this->authorize('update', $plan);
         $data = $request->validated();
-        $shift = $plan->shifts()->create($data);
-        Session::flash('info', 'Successfully created shift');
+        $plan->shifts()->create($data);
+        Session::flash('info', __('shift.successfullyCreated'));
         return redirect()->route('plan.shift.index', ['plan' => $plan]);
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Shift  $shift
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Shift $shift)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing a shift.
      *
      * @param Plan $plan
-     * @param \App\Models\Shift $shift
-     * @return \Illuminate\Http\Response
+     * @param Shift $shift
+     * @return Response
      */
     public function edit(Plan $plan, Shift $shift)
     {
@@ -77,37 +70,40 @@ class ShiftController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the a shift in storage.
      *
-     * @param  \App\Http\Requests\UpdateShiftRequest  $request
-     * @param  \App\Models\Shift  $shift
-     * @return \Illuminate\Http\Response
+     * @param StoreShiftRequest $request
+     * @param Plan $plan
+     * @param Shift $shift
+     * @return Response
      */
-    public function update(UpdateShiftRequest $request, Plan $plan, Shift $shift)
+    public function update(StoreShiftRequest $request, Plan $plan, Shift $shift)
     {
         $this->authorize('update', $shift);
         $data = $request->validated();
         $shift->update($data);
-        Session::flash('info', 'Shift successfully updated');
+        Session::flash('info', __('shift.successfullyUpdated'));
         return redirect()->route('plan.shift.index', ['plan' => $plan]);
 
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified shift from storage.
      *
-     * @param  \App\Models\Shift  $shift
-     * @return \Illuminate\Http\Response
+     * @param Shift $shift
+     * @return Response
      */
     public function destroy(Plan $plan, Shift $shift)
     {
         $this->authorize('forceDelete', $shift);
         $shift->forceDelete();
+        Session::flash('info', __('shift.successfullyDestroyed'));
         return redirect()->route('plan.shift.index', ['plan' => $plan]);
     }
 
     /**
-     * Return the number of shift goups present for the plan
+     * Return the number of shift groups present for the plan
+     * A group is an addition order option for shifts
      * @param Plan $plan
      * @return int
      */

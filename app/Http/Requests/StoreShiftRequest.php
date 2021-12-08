@@ -6,15 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreShiftRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return true;
-    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -27,10 +18,28 @@ class StoreShiftRequest extends FormRequest
             'title' => 'required|max:200',
             'type' => 'required|max:200',
             'description' => 'max:500',
-            'group' => 'int|numeric|max:100|nullable',
+            'group' => 'required|int|numeric|max:100',
             'start' => 'required|date|before:end',
             'end' => 'required|date|after:start',
             'team_size' => 'required|int|max:100|numeric',
+        ];
+    }
+
+    /**
+     * Messages for validation errors
+     * @return string[]
+     */
+    public function messages()
+    {
+        return [
+            'title.required' => __("shift.titleRequired"),
+            'type.required'  => __('shift.typeRequired'),
+            'start.required'  => __('shift.startRequired'),
+            'start.before'  => __('shift.startBefore'),
+            'end.required'  => __('shift.endRequired'),
+            'end.after'  => __('shift.endAfter'),
+            'team_size.required'  => __('shift.team_sizeRequired'),
+            'group.required' => __('shift.groupRequired')
         ];
     }
 }
