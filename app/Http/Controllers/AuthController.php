@@ -18,6 +18,13 @@ class AuthController extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
      */
     public function loginForm(Plan $plan) {
+        // If user is logged in redirect her/him to the plan.show route
+        $user = Auth::user();
+        if($user) {
+            // user is of type plan
+            return redirect()->route('plan.show', ['plan' => $user]);
+        }
+        // Check if we know the plan. If not go to home
         if(!isset($plan->id) || ($plan->id === 0)) {
             Session::flash('error', __('auth.planNotFound'));
             return \redirect()->route('home');

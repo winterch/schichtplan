@@ -6,8 +6,8 @@ use App\Http\Requests\StoreSubscriptionRequest;
 use App\Models\Plan;
 use App\Models\Shift;
 use App\Models\Subscription;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
@@ -44,6 +44,11 @@ class SubscriptionController extends Controller
         // For that reason we save those subscription in a session
         Session::push('subscriptions', $subscription->id);
         Session::flash('info', __('subscription.successfullyCreated'));
+        // A logged in user return to the plan.show route
+        $user = Auth::user();
+        if($user) {
+            return redirect()->route('plan.show', ['plan' => $plan]);
+        }
         return redirect()->route('plan.subscription.show', ['plan' => $plan]);
     }
 
@@ -71,7 +76,7 @@ class SubscriptionController extends Controller
     public function edit(Plan $plan, Shift $shift, Subscription $subscription)
     {
         // anonymous users owning the subscription (in the session) and the plan owners can update a subscription
-        $this->authorize('update', $subscription);
+        $this->checkAuthorize( $subscription);
         return view('subscription.create', ['plan' => $plan, 'shift' => $shift, 'subscription' => $subscription]);
     }
 
@@ -86,10 +91,15 @@ class SubscriptionController extends Controller
      */
     public function update(StoreSubscriptionRequest $request, Plan $plan, Shift $shift, Subscription $subscription)
     {
-        $this->authorize('update', $subscription);
+        $this->checkAuthorize( $subscription);
         $data = $request->validated();
         $subscription->update($data);
         Session::flash('info', __('subscription.successfullyUpdated'));
+        // A logged in user return to the plan.show route
+        $user = Auth::user();
+        if($user) {
+            return redirect()->route('plan.show', ['plan' => $plan]);
+        }
         return view('subscription.plan', ['plan' => $plan, 'subscriptions' => Session::get('subscriptions', [])]);
     }
 
@@ -103,11 +113,33 @@ class SubscriptionController extends Controller
      */
     public function destroy(Plan $plan, Shift $shift, Subscription $subscription)
     {
-        $this->authorize('forceDelete', $subscription);
+        $this->checkAuthorize($subscription);
         $subscription->forceDelete();
         // todo: check if this is working
         Session::forget('subscriptions.'.$subscription->id);
         Session::flash('info', __('subscription.successfullyDestroyed'));
         return view('subscription.plan', ['plan' => $plan, 'subscriptions' => Session::get('subscriptions', [])]);
+    }
+
+    /**
+     * This will chek if an authorized user or an anonymous user are legit to modify/delete the subscription
+     * @param Subscription $subscription
+     */
+    private function checkAuthorize(Subscription $subscription) {
+        // check if a user if logged in
+        $userPlan = Auth::user();
+        Log::info($userPlan);
+        if($userPlan) {
+            // check if the plan belongs to the user
+            if($userPlan->id === $subscription->shift->plan->id) {
+                return;
+            };
+        }
+        // check if the anonymous user owns the subscription
+        $subscriptions = Session::get('subscriptions', []);
+        if(in_array($subscription->id, $subscriptions)) {
+            return;
+        }
+        abort(403);
     }
 }
