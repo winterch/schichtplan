@@ -1,66 +1,92 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Schichtplan
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This is a very simple shift planer. An admin can define a plan with shifts and users can subscribe to one or more shifts. It can help to organize parties, festivals or political events. 
 
-## About Laravel
+## About Schichtplan
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Schichtplan was original developed by [o](https://code.immerda.ch/o) with [cakephp](https://book.cakephp.org/1.3/en/index.html) framework back in 2011. The current version use [laravel](https://github.com/laravel/framework) as a base and is compatible with modern php version (^7.3|^8.0). 
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Installation
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+You need to install the dependencies to run schichtplaner.
+```bash
+composer install
+```
 
-## Learning Laravel
+## Configure
+To run schichtplan you need to configure a database and a mail backend. You can choose between different database vendors such as mysql, postgres or sqlite (see also [laravel doc](https://github.com/laravel/framework)). Add a `.env` file with your configuration and credentials.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Please change the APP_KEY. The easiest way to change the app_key is to run `php artisan key:generate`. This will set the APP_KEY in your .env file
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```dotenv
+APP_NAME=Schichtplan
+APP_ENV=production
+APP_KEY=base64:YOU_NEED_TO_CHANGE_ME
+APP_DEBUG=false
+APP_URL=https://schichtplan.com
+LOG_LEVEL=info
 
-## Laravel Sponsors
+DB_CONNECTION=sqlite
+DB_DATABASE=/path/to/laravel/database/database.sqlite
+DB_FOREIGN_KEYS=true
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+MAIL_MAILER=smtp
+MAIL_HOST=mailhog
+MAIL_PORT=1025
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS=null
+MAIL_FROM_NAME="${APP_NAME}"
+```
 
-### Premium Partners
+After you generated the APP_KEY and configured your database connection, you have to run the databse migrations. This will setup or migrate needed database tables.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[CMS Max](https://www.cmsmax.com/)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-- **[Romega Software](https://romegasoftware.com)**
+```bash
+# Install or upgrade database tables
+php artisan migrate
+```
 
-## Contributing
+You should register a cronjob to cleanup plans without activity. For more information see the [laravel documentation](https://laravel.com/docs/8.x/scheduling) 
+```bash
+* * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1```
+```
+## Upgrade
+To upgrade from an older version of schichtplan (< 2.0) you need to delete all old files and then upload the new one. Configure your database credentials and run the installation step. This should migrate your database tables. After this step everything should work as excepted, if not please open an issue.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Commands
+There is a command to clean up old plans. Most of the time you want to run this in a schedule and don't need to invoke it directly.
+```bash
+php artisan schichtplan:cleanup
+```
 
-## Code of Conduct
+## Development
+If you find errors please open an issue or send a pull request!
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+To start devloping, clone the repo, install the dependencies and copy the `.env.example` to .env. You want to check the values in the `.env` file, before starting to develop.
+```bash
+# run dev server
+php artisan serve
+```
+You may need the frontend dependencies as well to make changes at the design.
+```bash
+# install frontedn dependencies (CSS/Bootstrap/JS)
+npm install
+# Build frontend assets
+npm run dev
+```
+If you change the design make sure you also commit the built assets.
+```bash
+# Build production assets 
+npm run prod
+```
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Schichtplan is free software and under [AGPL license](https://www.gnu.org/licenses/agpl-3.0.en.html)
+
+[Laravel](https://laravel.com) is Opensource software and under [MIT-License](https://opensource.org/licenses/MIT).
+
+[Flatpickr](https://opensource.org/licenses/MIT) is opensource software and under [MIT_license](https://opensource.org/licenses/MIT)
+
+[Tailwindcss](https://github.com/tailwindlabs/tailwindcss) is opensource software and under [MIT_license](https://opensource.org/licenses/MIT)
