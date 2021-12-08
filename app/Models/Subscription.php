@@ -32,6 +32,10 @@ class Subscription extends Model
         'comment',
     ];
 
+    /**
+     * Subscription belongs to a shift
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function shift() {
         return $this->belongsTo(Shift::class);
     }

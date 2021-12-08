@@ -28,7 +28,7 @@ class CreateSubscriptionTable extends Migration
                 $table->char('name', 60);
                 $table->string('phone', 20);
                 $table->string('email', 200);
-                $table->string('comment',500);
+                $table->string('comment',500)->nullable(true);
                 $table->foreignIdFor(\App\Models\Shift::class)
                     ->constrained()
                     ->onUpdate('cascade')

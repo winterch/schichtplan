@@ -7,95 +7,89 @@ use App\Models\Plan;
 use App\Models\Shift;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 class SubscriptionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new subscription.
      *
      * @param Plan $plan
      * @param Shift $shift
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create(Plan $plan, Shift $shift)   {
+        // no specific authorization - everybody with the link can create a subscription
         $subscription = new Subscription();
         return view('subscription.create', ['plan' => $plan, 'shift' => $shift, 'subscription' => $subscription]);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created subscription in storage.
      *
      * @param StoreSubscriptionRequest $request
      * @param Plan $plan
      * @param Shift $shift
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(StoreSubscriptionRequest $request, Plan $plan, Shift $shift)
     {
+        // no specific authorization - everybody with the link can create a subscription
         $data = $request->validated();
         $subscription = $shift->subscriptions()->create($data);
-        // a anonymous user can edit a subscription as long as he/she use the same session
+        // An anonymous user can edit her/his subscription as long as he/she use the same session
+        // For that reason we save those subscription in a session
         Session::push('subscriptions', $subscription->id);
-        Session::flash('message', __('subscription.successfullyCreated'));
+        Session::flash('info', __('subscription.successfullyCreated'));
         return redirect()->route('plan.subscription.show', ['plan' => $plan]);
-
     }
 
     /**
      * Display the specified resource.
-     * Plans are identified by a unique_link. If a user knows the unique_link she/he can access the subscription page
+     * Plans are identified by a unique_link. This is the shared secrete between users and owners of the plan
      *
      * @param Plan $plan
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show(Plan $plan)
     {
-        $subscriptions = Session::get('subscriptions', []);
-        return view('subscription.plan', ['plan' => $plan, 'subscriptions' => $subscriptions]);
+        // no specific authorization - everybody with the link can create a subscription
+        return view('subscription.plan', ['plan' => $plan, 'subscriptions' => Session::get('subscriptions', [])]);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified subscription.
      *
      * @param Plan $plan
      * @param Shift $shift
      * @param Subscription $subscription
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit(Plan $plan, Shift $shift, Subscription $subscription)
     {
-        // anonymous users owning the subscription and plan owners can update
-        Log::info($subscription);
+        // anonymous users owning the subscription (in the session) and the plan owners can update a subscription
         $this->authorize('update', $subscription);
         return view('subscription.create', ['plan' => $plan, 'shift' => $shift, 'subscription' => $subscription]);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified subscription in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param StoreSubscriptionRequest $request
      * @param Plan $plan
      * @param Shift $shift
      * @param Subscription $subscription
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(StoreSubscriptionRequest $request, Plan $plan, Shift $shift, Subscription $subscription)
     {
         $this->authorize('update', $subscription);
         $data = $request->validated();
         $subscription->update($data);
+        Session::flash('info', __('subscription.successfullyUpdated'));
         return view('subscription.plan', ['plan' => $plan, 'subscriptions' => Session::get('subscriptions', [])]);
     }
 
@@ -105,7 +99,7 @@ class SubscriptionController extends Controller
      * @param Plan $plan
      * @param Shift $shift
      * @param Subscription $subscription
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy(Plan $plan, Shift $shift, Subscription $subscription)
     {
@@ -113,6 +107,7 @@ class SubscriptionController extends Controller
         $subscription->forceDelete();
         // todo: check if this is working
         Session::forget('subscriptions.'.$subscription->id);
+        Session::flash('info', __('subscription.successfullyDestroyed'));
         return view('subscription.plan', ['plan' => $plan, 'subscriptions' => Session::get('subscriptions', [])]);
     }
 }

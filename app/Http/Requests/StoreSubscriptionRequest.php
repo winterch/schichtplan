@@ -6,15 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreSubscriptionRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return true;
-    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -28,6 +19,20 @@ class StoreSubscriptionRequest extends FormRequest
             'email' => 'required|email|max:100',
             'phone' => 'regex:/[0-9]{10,11}/',
             'comment' => 'max:500',
+        ];
+    }
+
+    /**
+     * Messages for validation errors
+     * @return string[]
+     */
+    public function messages()
+    {
+        return [
+            'name.required' => __("subscription.nameRequired"),
+            'email.required'  => __('subscription.emailRequired'),
+            'phone.regex'  => __('subscription.phoneRegex'),
+            'comment.max'  => __('subscription.commentMax'),
         ];
     }
 }

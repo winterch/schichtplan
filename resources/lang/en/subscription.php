@@ -5,6 +5,14 @@ return [
     'email' => 'Email',
     'comment' => 'Comment',
     'save' => 'Subscribe',
+    'cancel' => 'Cancel',
+    'update' => 'Update subscription',
     'unsubscribe' => 'Unsubscribe',
     'subscribe' => 'Subscribe',
+    'edit' => 'Edit',
+    'nameRequired' => 'Name is required',
+    'phoneRegex' => 'Phone number is invalid. Use numbers only.',
+    'emailRequired' => 'Email is required',
+    'commentMax' => 'Maximum 500 character comment',
+    'login' => 'Manage subscriptions'
 ];

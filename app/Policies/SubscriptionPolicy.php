@@ -13,40 +13,6 @@ class SubscriptionPolicy
     use HandlesAuthorization;
 
     /**
-     * Determine whether the user can view any models.
-     *
-     * @param  \App\Models\Plan  $plan
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function viewAny(Plan $plan)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can view the model.
-     *
-     * @param  \App\Models\Plan  $plan
-     * @param  \App\Models\Subscription  $subscription
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function view(Plan $plan, Subscription $subscription)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can create models.
-     *
-     * @param  \App\Models\Plan  $plan
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function create(Plan $plan)
-    {
-        return true;
-    }
-
-    /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\Plan  $plan
@@ -55,33 +21,9 @@ class SubscriptionPolicy
      */
     public function update(Plan $plan, Subscription $subscription)
     {
-        // Read from the subscriptions from the session. During a session a user can update or delete hs own subscriptions
+        // Read from the subscriptions from the session. During a session a user can update her/his own subscriptions
         $subscriptions = Session::get('subscriptions', []);
         return $plan == $subscription->shift->plan || in_array($subscription->id, $subscriptions);
-    }
-
-    /**
-     * Determine whether the user can delete the model.
-     *
-     * @param  \App\Models\Plan  $plan
-     * @param  \App\Models\Subscription  $subscription
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function delete(Plan $plan, Subscription $subscription)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param  \App\Models\Plan  $plan
-     * @param  \App\Models\Subscription  $subscription
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function restore(Plan $plan, Subscription $subscription)
-    {
-        //
     }
 
     /**
@@ -93,7 +35,7 @@ class SubscriptionPolicy
      */
     public function forceDelete(Plan $plan, Subscription $subscription)
     {
-        // Read from the subscriptions from the session. During a session a user can update or delete hs own subscriptions
+        // Read from the subscriptions from the session. During a session a user can delete his/her own subscriptions
         $subscriptions = Session::get('subscriptions', []);
         return $plan == $subscription->shift->plan || in_array($subscription->id, $subscriptions);
     }
