@@ -1,6 +1,12 @@
 <?php
 
+use App\Http\Controllers\PlanController;
+use App\Http\Controllers\ShiftController;
+use App\Http\Controllers\SubscriptionController;
+use App\Models\Plan;
+use App\Models\Shift;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +20,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/**
+ * Display home view, where users can create a plan
+ */
 Route::get('/', function () {
     return view('home');
 })->name('home');
@@ -24,85 +33,87 @@ Route::get('/', function () {
 Route::get('/auth/login/{plan:unique_link?}', [\App\Http\Controllers\AuthController::class, 'loginForm'])
 ->name('login');
 
+/**
+ * Logout an authenticated user
+ */
 Route::get('/auth/logout', [\App\Http\Controllers\AuthController::class, 'logout'])
     ->name('logout');
 
+/**
+ * Preform a login for a user
+ */
 Route::post('/auth/login/{plan:unique_link}', [\App\Http\Controllers\AuthController::class, 'login'])
     ->name('auth.authenticate');
 
 /**
- * BC: old url for create a plan
- * redirect to plan.create
+ * Create a new plan.
+ * Hint: This doesn't need any authentication. Everybody can do this
  */
-Route::get('/plan/add', function () {
-    return Redirect::route('plan.create');
-});
+Route::get('/plan/create', [PlanController::class, 'create'])->name('plan.create');
 
 /**
- * Create a new plan. This doesn't need auth
+ * Store a new plan.
+ * Hint: This doesn't need any authentication. Everybody can do this
  */
-Route::get('/plan/create', [\App\Http\Controllers\PlanController::class, 'create'])->name('plan.create');
-
-/**
- * Store a new plan. This doesn't need auth
- */
-Route::post('/plan', [\App\Http\Controllers\PlanController::class, 'store'])->name('plan.store');
+Route::post('/plan', [PlanController::class, 'store'])->name('plan.store');
 
 /**
  * Plan resource controller
+ * Hint: From here on a user have to be logged in
  */
-Route::resource('plan', \App\Http\Controllers\PlanController::class)->only([
+Route::resource('plan', PlanController::class)->only([
     'edit', 'update', 'destroy','show',
 ])->middleware('auth');
 
 /**
  * Shift resource controller
- * Hint: just for auth users
+ * Hint: Just for authenticated users
  */
-Route::resource('plan.shift', \App\Http\Controllers\ShiftController::class)->only([
+Route::resource('plan.shift', ShiftController::class)->only([
     'index', 'create', 'store', 'update', 'destroy','edit', 'show',
 ])->middleware('auth');
 
 
 /**
  * Route to view a plan with available shifts
+ * Hint: No authentication needed. If a user knows the unique_link she/he is allowed to subscribe
  */
-Route::get('/subscription/{plan:unique_link}', [\App\Http\Controllers\SubscriptionController::class, 'show'])
+Route::get('/subscription/{plan:unique_link}', [SubscriptionController::class, 'show'])
     ->name('plan.subscription.show');
 
 /**
  * Subscribe to a shift
+ * Hint: No authentication needed. If a user knows the unique_link she/he is allowed to subscribe
  */
-Route::get('/subscription/{plan:unique_link}/shift/{shift}', [\App\Http\Controllers\SubscriptionController::class, 'create'])
+Route::get('/subscription/{plan:unique_link}/shift/{shift}', [SubscriptionController::class, 'create'])
     ->name('plan.subscription.create');
 
 /**
  * Store new subscription
+ * Hint: No authentication needed. If a user knows the unique_link she/he is allowed to subscribe
  */
-Route::post('/subscription/{plan:unique_link}/shift/{shift}', [\App\Http\Controllers\SubscriptionController::class, 'store'])
+Route::post('/subscription/{plan:unique_link}/shift/{shift}', [SubscriptionController::class, 'store'])
     ->name('plan.shift.subscription.store');
+/**
+ * Edit subscription
+ * Hint: Just owner of the plan and the owner of the subscription can update a subscription
+ */
+Route::get('/subscription/{plan:unique_link}/shift/{shift}/{subscription}/edit', [SubscriptionController::class, 'edit'])
+    ->name('plan.shift.subscription.edit');
 
 /**
  * Update subscription
- * Hint: just owner of the plan can update a subscription
+ * Hint: Just owner of the plan and the owner of the subscription can update a subscription
  */
-Route::put('/subscription/{plan:unique_link}/shift/{shift}/{subscription}', [\App\Http\Controllers\SubscriptionController::class, 'update'])
+Route::put('/subscription/{plan:unique_link}/shift/{shift}/{subscription}', [SubscriptionController::class, 'update'])
     ->name('plan.shift.subscription.update');
 
 /**
  * Delete subscription
- * Hint: just owner of the plan can update a subscription
+ * Hint: Just owner of the plan and the owner of the subscription can update a subscription
  */
-Route::delete('/subscription/{plan:unique_link}/shift/{shift}/{subscription}', [\App\Http\Controllers\SubscriptionController::class, 'destroy'])
+Route::delete('/subscription/{plan:unique_link}/shift/{shift}/{subscription}', [SubscriptionController::class, 'destroy'])
     ->name('plan.shift.subscription.destroy');
-
-/**
- * Edit subscription
- * Hint: just owner of the plan can update a subscription
- */
-Route::get('/subscription/{plan:unique_link}/shift/{shift}/{subscription}/edit', [\App\Http\Controllers\SubscriptionController::class, 'edit'])
-    ->name('plan.shift.subscription.edit');
-
 
 /**
  * This route will change the local of the current user and save selection in the session
@@ -113,4 +124,56 @@ Route::get('/language/{locale}', function ($locale) {
     session()->put('locale', $locale);
     // go back
     return redirect()->back();
+});
+
+/**
+ * BC: old url for create a plan form
+ */
+Route::get('/plan/add', function () {
+    return Redirect::route('plan.create');
+});
+
+/**
+ * BC: old url for editing plan
+ */
+Route::get('/plans/edit/{plan}', function (Plan $plan) {
+    return Redirect::route('plan.shift.index', ['plan' => $plan ]);
+});
+
+/**
+ * BC: old url for adding shifts
+ */
+Route::get('/shifts/add/{plan}', function (Plan $plan) {
+    return Redirect::route('plan.shift.create', ['plan' => $plan ]);
+});
+
+/**
+ * BC: old url for editing shifts
+ */
+Route::get('/shifts/edit/{shift}', function (Shift $shift) {
+    return Redirect::route('plan.shift.edit', ['plan' => $shift->plan, 'shift' => $shift ]);
+});
+
+/**
+ * BC: old url for subscribing to shifts
+ */
+Route::get('/plans/show/{plan:unique_link}', function (Plan $plan) {
+    return Redirect::route('plan.subscription.show', ['plan' => $plan ]);
+});
+
+/**
+ * BC: old url for subscribe to a shift
+ */
+Route::get('/subscriptions/add/{shift}', function (Request $request, Shift $shift) {
+    $plan = Plan::Where('unique_link', '=', $request->query('unique_link'))->first();
+    if(!$plan) {
+        return abort(404);
+    }
+    return Redirect::route('plan.subscription.create', ['plan' => $plan, 'shift' => $shift ]);
+});
+/**
+ * BC: old url for subscribe to a shift
+ */
+Route::get('/plans/authenticate/{plan:unique_link}', function (Plan $plan) {
+    return Redirect::route('login', ['plan' => $plan]);
 });
