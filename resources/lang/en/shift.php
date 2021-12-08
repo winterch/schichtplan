@@ -13,6 +13,7 @@ return [
     'team_size' => 'No. volunteers',
     'action' => '',
     'save' => 'Save shift',
+    'delete' => 'Delete',
     'manageSubscription' => 'Manage subscriptions',
     'edit' => 'Edit',
     'cancel' => 'Cancel',

@@ -38,7 +38,7 @@
                             <form method="post" action="{{route('plan.shift.destroy', ['plan' => $shift->plan, 'shift'=>$shift])}}">
                                 @method('delete')
                                 @csrf
-                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                <button type="submit">{{__('shift.delete')}}</button>
                             </form>
                         </td>
                     </tr>
