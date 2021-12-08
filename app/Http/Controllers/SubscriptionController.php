@@ -118,6 +118,11 @@ class SubscriptionController extends Controller
         // todo: check if this is working
         Session::forget('subscriptions.'.$subscription->id);
         Session::flash('info', __('subscription.successfullyDestroyed'));
+        // A logged in user return to the plan.show route
+        $user = Auth::user();
+        if($user) {
+            return redirect()->route('plan.show', ['plan' => $plan]);
+        }
         return view('subscription.plan', ['plan' => $plan, 'subscriptions' => Session::get('subscriptions', [])]);
     }
 

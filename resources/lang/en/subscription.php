@@ -14,5 +14,9 @@ return [
     'phoneRegex' => 'Phone number is invalid. Use numbers only.',
     'emailRequired' => 'Email is required',
     'commentMax' => 'Maximum 500 character comment',
-    'login' => 'Manage subscriptions'
+    'login' => 'Manage subscriptions',
+    'successfullyDestroyed' => 'Successfully unsubscribed from shift',
+    'successfullyUpdated' => 'Successfully updated subscription',
+    'successfullyCreated' => 'Successfully subscribed to shift',
+
 ];
