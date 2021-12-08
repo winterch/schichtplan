@@ -37,7 +37,7 @@
                     <div class="text-red-500 text-xs italic">{{ $message }}</div>
                 @enderror
             </div>
-            @if($plan->password === "")
+            @if($plan->id <= 0)
 
                 <div>
                     <label for="password" class="block text-gray-700 font-bold mb-1">{{__("plan.passwordDesc")}}</label>

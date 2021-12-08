@@ -44,7 +44,7 @@ class PlanController extends Controller
         // manually auth user with provided details
         Auth::login($plan, true);
         // redirect with success message
-        Session::flash('message', __('plan.successfullyCreated'));
+        Session::flash('info', __('plan.successfullyCreated'));
         return redirect()->route('plan.shift.index', ['plan' => $plan->id]);
     }
 
@@ -87,6 +87,7 @@ class PlanController extends Controller
         unset($data['password']);
         $plan->update($data);
         // redirect to shifts overview
+        Session::flash('info', __('plan.successfullyUpdated'));
         return redirect()->route('plan.shift.index', ['plan' => $plan->id]);
     }
 
@@ -100,6 +101,7 @@ class PlanController extends Controller
     {
         $this->authorize('forceDelete', $plan);
         $plan->forceDelete();
+        Session::flash('info', __('plan.successfullyDestroyed'));
         return \redirect()->route('home');
     }
 }

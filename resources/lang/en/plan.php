@@ -1,6 +1,5 @@
 <?php
 return [
-    'successfullyCreated' => 'Successfully created plan. Add some shifts',
     'heading' => 'Create a new Plan',
     'title' => 'Title',
     'planDesc' => 'Describe this Plan. (Will be shown prominently to the subscribers)',
@@ -17,5 +16,8 @@ return [
     'descriptionRequired' => 'Description is required',
     'ContactMax' => 'Max length of contact is 500 characters',
     'emailRequired' => 'Email is required',
-    'passwordRequired' => 'Password is required'
+    'passwordRequired' => 'Password is required',
+    'successfullyDestroyed' => 'Successfully deleted plan',
+    'successfullyUpdated' => 'Successfully updated plan',
+    'successfullyCreated' => 'Successfully created plan',
 ];
