@@ -14,8 +14,7 @@ class CreateSubscriptionTable extends Migration
      */
     public function up()
     {
-        if (Schema::hasTable('subscription')) {
-            Schema::rename('subscription', 'subscriptions');
+        if (Schema::hasTable('subscriptions')) {
             Schema::table('subscriptions', function (Blueprint $table) {
                 $table->timestamps();
             });

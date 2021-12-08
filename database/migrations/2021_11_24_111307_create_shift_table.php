@@ -17,8 +17,7 @@ class CreateShiftTable extends Migration
         // Update existing shift tables
         // rename shift to shifts
         // add timestamps to existing table
-        if (Schema::hasTable('shift')) {
-            Schema::rename('shift', 'shifts');
+        if (Schema::hasTable('shifts')) {
             Schema::table('shifts', function (Blueprint $table) {
                 $table->timestamps();
             });

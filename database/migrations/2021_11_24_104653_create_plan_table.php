@@ -15,12 +15,10 @@ class CreatePlanTable extends Migration
     public function up()
     {
         // migrate from old < v2.0 plan to plans
-        if (Schema::hasTable('plan')) {
-            Schema::rename('plan', 'plans');
-            // add missing timestamps
+        if (Schema::hasTable('plans')) {
             Schema::table('plans', function (Blueprint $table) {
                 $table->timestamps();
-                $table->char('remember_token');
+                $table->char('remember_token')->nullable(true);
             });
         }
 
