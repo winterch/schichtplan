@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthLoginRequest;
 use App\Models\Plan;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use \Illuminate\Support\Facades\Session;
 
@@ -27,7 +25,7 @@ class AuthController extends Controller
         // Check if we know the plan. If not go to home
         if(!isset($plan->id) || ($plan->id === 0)) {
             Session::flash('error', __('auth.planNotFound'));
-            return \redirect()->route('home');
+            return redirect()->route('home');
         }
         return view('auth.login', ['plan' => $plan]);
     }
@@ -41,22 +39,15 @@ class AuthController extends Controller
      */
     public function login(AuthLoginRequest $request, Plan $plan) {
         $data = $request->validated();
-        // todo: implement attempt() method instead of own logic
-        // check if the emails are the same
-        if($plan->owner_email !== $data['email']) {
-            Log::Debug('Email does not match');
-            Session::flash('loginFailed', __('auth.failed'));
-            return view('auth.login', ['plan' => $plan]);
+        if (Auth::attempt($data)) {
+            Log::Debug('Login successful');
+            $request->session()->regenerate();
+            return redirect()->route('plan.shift.index', ['plan' => $plan]);
         }
-        // Compare password hashes
-        if(!Hash::check($data['password'], $plan->password)) {
-            Log::Debug('Password does not match');
-            Session::flash('loginFailed', __('auth.failed'));
-            return view('auth.login', ['plan' => $plan]);
-        }
-        // login user
-        Auth::Login($plan);
-        return redirect()->route('plan.shift.index', ['plan' => $plan]);
+        Log::Debug('Login failed');
+        return back()->withErrors([
+            'owner_email' => 'The provided credentials do not match our records.',
+        ])->onlyInput('owner_email');
     }
 
     /**

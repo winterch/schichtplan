@@ -12,8 +12,8 @@
             @csrf
             <div>
                 <label for="email" class="block text-gray-700 font-bold mb-1">{{__("auth.email")}}</label>
-                <input id="email" name="email" type="text" class="@error('email') border-red-500 @enderror w-full block text-black p-1 text-lg mb-2 border rounded" value="{{old('email', $plan->email)}}">
-                @error('email')
+                <input id="email" name="owner_email" type="text" class="@error('owner_email') border-red-500 @enderror w-full block text-black p-1 text-lg mb-2 border rounded" value="{{old('owner_email', $plan->email)}}">
+                @error('owner_email')
                 <div class="text-red-500 text-xs italic">{{ $message }}</div>
                 @enderror
             </div>
