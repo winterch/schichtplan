@@ -31,6 +31,7 @@
                 {{__('auth.login')}}
             </button>
         </form>
+            <small><a href="{{route('password.request', ['plan' => $plan])}}" >{{__('auth.forgotPassword')}}</a></small>
        </div>
     </div>
 @endsection

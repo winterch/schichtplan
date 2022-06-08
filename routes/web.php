@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ShiftController;
 use App\Http\Controllers\SubscriptionController;
@@ -30,20 +31,48 @@ Route::get('/', function () {
 /**
  * Display login form with plan id in url
  */
-Route::get('/auth/login/{plan:unique_link?}', [\App\Http\Controllers\AuthController::class, 'loginForm'])
+Route::get('/auth/login/{plan:unique_link?}', [AuthController::class, 'loginForm'])
 ->name('login');
 
 /**
  * Logout an authenticated user
  */
-Route::get('/auth/logout', [\App\Http\Controllers\AuthController::class, 'logout'])
+Route::get('/auth/logout', [AuthController::class, 'logout'])
     ->name('logout');
 
 /**
  * Preform a login for a user
  */
-Route::post('/auth/login/{plan:unique_link}', [\App\Http\Controllers\AuthController::class, 'login'])
+Route::post('/auth/login/{plan:unique_link}', [AuthController::class, 'login'])
     ->name('auth.authenticate');
+
+/**
+ * Display a password forgot form
+ */
+Route::get('/auth/forgot-password/{plan:unique_link}', [AuthController::class, 'forgotPasswordForm'])
+    ->middleware('guest')
+    ->name('password.request');
+
+/**
+ * Handle password forgot submission. Send the reset link to the user
+ */
+Route::post('/auth/forgot-password', [AuthController::class, 'forgotPassword'])
+    ->middleware('guest')
+    ->name('password.email');
+
+/**
+ * Show form to set new password
+ */
+Route::get('/auth/reset-password/{token}', [AuthController::class, 'resetPasswordForm'])
+    ->middleware('guest')
+    ->name('password.reset');
+
+/**
+ * Handle the reset password request
+ */
+Route::post('/auth/reset-password', [AuthController::class, "resetPassword"])
+    ->middleware('guest')
+    ->name('password.update');
 
 /**
  * Create a new plan.
