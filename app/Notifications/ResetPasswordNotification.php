@@ -42,9 +42,9 @@ class ResetPasswordNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('Mit dem folgenden Link kannst du dein Passwort für den Schichtplan zurücksetzteb.')
-                    ->action('Passwort zurücksetzten', $this->resetUrl)
-                    ->line('Cool das du den schichtplan verwendest');
+                    ->line(__('auth.resetEmailIntro'))
+                    ->action(__('auth.resetEmailAction'), $this->resetUrl)
+                    ->line(__('auth.resetEmailOutro'));
     }
 
     /**

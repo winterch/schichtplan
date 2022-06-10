@@ -24,6 +24,9 @@ return [
     'resetHeader' => 'Reset Password',
     'resetPassword' => 'reset',
     'forgotPasswordHeader' => 'forgot password?',
-    'forgotPassword' => 'Get new password'
+    'forgotPassword' => 'Get new password',
+    'resetEmailIntro' => 'With the following link you can reset your password for the shift planner.',
+    'resetEmailAction' => 'reset password',
+    'resetEmailOutro' => 'Cool you use the shift planner. Have fun.',
 
 ];

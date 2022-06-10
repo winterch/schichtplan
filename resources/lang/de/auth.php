@@ -24,5 +24,8 @@ return [
     'resetHeader' => 'Passwort zurücksetzen',
     'resetPassword' => 'zurücksetzen',
     'forgotPasswordHeader' => 'Passwort vergessen',
-    'forgotPassword' => 'Neues Passwort beantragen'
+    'forgotPassword' => 'Neues Passwort beantragen',
+    'resetEmailIntro' => 'Mit dem folgenden Link kannst du dein Passwort für den Schichtplan zurücksetzten.',
+    'resetEmailAction' => 'Passwort zurücksetzen',
+    'resetEmailOutro' => 'Cool das du den Schichtplan verwendest. Weiterhin viel Spass',
 ];
