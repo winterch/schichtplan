@@ -92,7 +92,7 @@ Route::post('/plan', [PlanController::class, 'store'])->name('plan.store');
  */
 Route::resource('plan', PlanController::class)->only([
     'edit', 'update', 'destroy','show',
-])->middleware('auth');
+])->middleware('auth')->scoped(["plan" => "unique_link"]);
 
 /**
  * Shift resource controller
@@ -100,7 +100,7 @@ Route::resource('plan', PlanController::class)->only([
  */
 Route::resource('plan.shift', ShiftController::class)->only([
     'index', 'create', 'store', 'update', 'destroy','edit', 'show',
-])->middleware('auth');
+])->middleware('auth')->scoped(["plan" => "unique_link"]);
 
 
 /**
