@@ -56,21 +56,21 @@ Route::get('/auth/forgot-password/{plan:unique_link}', [AuthController::class, '
 /**
  * Handle password forgot submission. Send the reset link to the user
  */
-Route::post('/auth/forgot-password', [AuthController::class, 'forgotPassword'])
+Route::post('/auth/forgot-password/{plan:unique_link}', [AuthController::class, 'forgotPassword'])
     ->middleware('guest')
     ->name('password.email');
 
 /**
  * Show form to set new password
  */
-Route::get('/auth/reset-password/{token}', [AuthController::class, 'resetPasswordForm'])
+Route::get('/auth/reset-password/{plan:unique_link}/{token}', [AuthController::class, 'resetPasswordForm'])
     ->middleware('guest')
     ->name('password.reset');
 
 /**
  * Handle the reset password request
  */
-Route::post('/auth/reset-password', [AuthController::class, "resetPassword"])
+Route::post('/auth/reset-password/{plan:unique_link}', [AuthController::class, "resetPassword"])
     ->middleware('guest')
     ->name('password.update');
 

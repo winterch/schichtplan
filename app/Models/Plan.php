@@ -11,6 +11,7 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Notifications\Notifiable;
+use App\Notifications\ResetPasswordNotification;
 
 class Plan extends Model implements
     AuthenticatableContract,
@@ -18,7 +19,7 @@ class Plan extends Model implements
     CanResetPasswordContract
 
 {
-    use \Illuminate\Auth\Authenticatable, Authorizable, CanResetPassword, HasFactory, Notifiable;
+    use \Illuminate\Auth\Authenticatable, Authorizable, CanResetPassword, HasFactory, Notifiable, CanResetPassword, CanResetPassword;
 
     /**
      * The attributes that are mass assignable.
@@ -82,6 +83,27 @@ class Plan extends Model implements
         return $this->owner_email;
     }
 
+    /**
+     * Route notifications for the mail channel.
+     * This is a fix for a laravel problem with the reset mail
+     *
+     * @param  \Illuminate\Notifications\Notification  $notification
+     * @return string
+     */
+    public function routeNotificationForMail($notification)
+    {
+        return $this->owner_email;
+    }
+
+    /**
+     * Send custom email to reset the password of a plan
+     * @param string $token
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $url = route('password.reset', ['token' => $token, 'plan' => $this]);
+        $this->notify(new ResetPasswordNotification($url));
+    }
     /**
      * Generate seed for random generator
      * @return float

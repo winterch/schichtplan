@@ -15,10 +15,15 @@ return [
 
     'failed' => 'These credentials do not match our records.',
     'password' => 'Password',
+    'passwordConfirmation' => 'confirm password',
     'email' => 'Email',
     'loginHeader' => 'Please login',
     'login' => 'login',
     'logout' => 'logout',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'resetHeader' => 'Reset Password',
+    'resetPassword' => 'reset',
+    'forgotPasswordHeader' => 'forgot password?',
+    'forgotPassword' => 'Get new password'
 
 ];

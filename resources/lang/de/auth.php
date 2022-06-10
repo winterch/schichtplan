@@ -15,10 +15,14 @@ return [
 
     'failed' => 'Anmedlung fehlgeschlage.',
     'password' => 'Passwort',
+    'passwordConfirmation' => 'Passwort bestätigen',
     'email' => 'Email',
     'loginHeader' => 'Bitte anmelden',
     'login' => 'Anmelden',
     'logout' => 'Abmelden',
     'throttle' => 'Zuviele Anmeldeversuche. Bitte versuchen sie es in :seconds Sekunden nochmals.',
-
+    'resetHeader' => 'Passwort zurücksetzen',
+    'resetPassword' => 'zurücksetzen',
+    'forgotPasswordHeader' => 'Passwort vergessen',
+    'forgotPassword' => 'Neues Passwort beantragen'
 ];

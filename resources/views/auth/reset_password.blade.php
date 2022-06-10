@@ -8,11 +8,11 @@
                     {{ Session::get('loginFailed') }}
                 </div>
             @endif
-            <form method="post" action="{{route('password.update')}}">
+            <form method="post" action="{{route('password.update', ['plan' => $plan])}}">
                 <input type="hidden" name="token" value="{{$token}}">
                 @csrf
                 <div>
-                    <label for="owner_email" class="block text-gray-700 font-bold mb-1">{{__("auth.owner_email")}}</label>
+                    <label for="owner_email" class="block text-gray-700 font-bold mb-1">{{__("auth.email")}}</label>
                     <input id="owner_email" name="owner_email" type="text" class="@error('owner_email') border-red-500 @enderror w-full block text-black p-1 text-lg mb-2 border rounded" value="">
                     @error('owner_email')
                     <div class="text-red-500 text-xs italic">{{ $message }}</div>
@@ -26,7 +26,7 @@
                     @enderror
                 </div>
                 <div>
-                    <label for="password_confirmation" class="block text-gray-700 font-bold mb-1">{{__("auth.password_confirmation")}}</label>
+                    <label for="password_confirmation" class="block text-gray-700 font-bold mb-1">{{__("auth.passwordConfirmation")}}</label>
                     <input id="password_confirmation" name="password_confirmation" type="password" class="@error('password_confirmation') border-red-500 @enderror w-full block text-black p-1 text-lg mb-2 border rounded" value="">
                     @error('password_confirmation')
                     <div class="text-red-500 text-xs italic">{{ $message }}</div>

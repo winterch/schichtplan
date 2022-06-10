@@ -7,6 +7,7 @@ use App\Http\Requests\AuthPasswordForgotRequest;
 use App\Http\Requests\AuthResetPasswordRequest;
 use App\Models\Plan;
 use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -47,7 +48,8 @@ class AuthController extends Controller
     public function login(AuthLoginRequest $request, Plan $plan)
     {
         $data = $request->validated();
-        if (Auth::attempt($data)) {
+        // A owner_email can own several plans. So we need to check the plan as well
+        if (Auth::attempt(['owner_email' => $data['owner_email'], 'password' => $data['password'], 'unique_link' => $plan->unique_link])) {
             Log::Debug('Login successful');
             $request->session()->regenerate();
             return redirect()->route('plan.shift.index', ['plan' => $plan]);
@@ -88,7 +90,8 @@ class AuthController extends Controller
     public function forgotPassword(AuthPasswordForgotRequest $request, Plan $plan): \Illuminate\Http\RedirectResponse
     {
         $data = $request->validated();
-        // todo: add validation for the plan
+        // todo: check if owner_email = $plan->owner_email
+        $data['unique_link'] =  $plan->unique_link;
         $status = Password::sendResetLink(
             $data
         );
@@ -100,22 +103,25 @@ class AuthController extends Controller
 
     /**
      * Show form to enter new PW for a plan
-     * @param $token
+     * @param Plan $plan
+     * @param string $token
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function resetPasswordForm(string $token)
+    public function resetPasswordForm(Plan $plan, string $token)
     {
-        return view('auth.reset_password', ['token' => $token]);
+        return view('auth.reset_password', ['token' => $token, 'plan' => $plan]);
     }
 
     /**
      * Reset the password or display an error
      * @param AuthResetPasswordRequest $request
+     * @param Plan $plan
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function resetPassword(AuthResetPasswordRequest $request)
+    public function resetPassword(AuthResetPasswordRequest $request, Plan $plan)
     {
         $data = $request->validated();
+        $data['unique_link'] = $plan->unique_link;
         $status = Password::reset(
             $data,
             function ($plan, $password) {
@@ -129,7 +135,7 @@ class AuthController extends Controller
         );
 
         return $status === Password::PASSWORD_RESET
-            ? redirect()->route('login')->with('status', __($status))
+            ? redirect()->route('login', ['plan' => $plan])->with('status', __($status))
             : back()->withErrors(['owner_email' => [__($status)]]);
     }
 }
