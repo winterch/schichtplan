@@ -19,7 +19,7 @@ class Plan extends Model implements
     CanResetPasswordContract
 
 {
-    use \Illuminate\Auth\Authenticatable, Authorizable, CanResetPassword, HasFactory, Notifiable, CanResetPassword, CanResetPassword;
+    use \Illuminate\Auth\Authenticatable, Authorizable, CanResetPassword, HasFactory, Notifiable, CanResetPassword;
 
     /**
      * The attributes that are mass assignable.
@@ -65,7 +65,7 @@ class Plan extends Model implements
 
     /**
      * Get the associated shifts for the plan
-     * @return Shift[]
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function shifts()
     {
@@ -87,23 +87,24 @@ class Plan extends Model implements
      * Route notifications for the mail channel.
      * This is a fix for a laravel problem with the reset mail
      *
-     * @param  \Illuminate\Notifications\Notification  $notification
      * @return string
      */
-    public function routeNotificationForMail($notification)
+    public function routeNotificationForMail()
     {
         return $this->owner_email;
     }
 
     /**
-     * Send custom email to reset the password of a plan
+     * Send custom mail to reset the password of a plan
      * @param string $token
      */
     public function sendPasswordResetNotification($token)
     {
+        // Build the route to reset the PW. This has to include the plan unique_link
         $url = route('password.reset', ['token' => $token, 'plan' => $this]);
         $this->notify(new ResetPasswordNotification($url));
     }
+
     /**
      * Generate seed for random generator
      * @return float

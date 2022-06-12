@@ -1,6 +1,7 @@
 @extends('layout.app')
 @section('body')
     <h1 class="text-3xl mb-2">{{ __('home.Shiftplan') }}</h1>
+    @include('partials.flash')
 
     <p class="block mb-4">{{ __('home.shiftplanInfo') }}</p>
 

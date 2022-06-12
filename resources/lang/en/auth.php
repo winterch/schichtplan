@@ -28,5 +28,5 @@ return [
     'resetEmailIntro' => 'With the following link you can reset your password for the shift planner.',
     'resetEmailAction' => 'reset password',
     'resetEmailOutro' => 'Cool you use the shift planner. Have fun.',
-
+    'logoutSuccess' => 'Logout successful'
 ];

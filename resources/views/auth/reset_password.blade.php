@@ -3,11 +3,6 @@
     <div class="w-full h-full flex justify-center items-center ">
         <div class="md:w-1/2 lg:w-1/4 bg-green-50 p-4 rounded mt-4 md:mt-12 lg:mt-32">
             <h1 class="text-3xl mb-2">{{ __('auth.resetHeader') }}</h1>
-            @if(Session::has('loginFailed'))
-                <div class="text-red-500 italic w-full py-2">
-                    {{ Session::get('loginFailed') }}
-                </div>
-            @endif
             <form method="post" action="{{route('password.update', ['plan' => $plan])}}">
                 <input type="hidden" name="token" value="{{$token}}">
                 @csrf
