@@ -11,6 +11,7 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 use App\Notifications\ResetPasswordNotification;
 
 class Plan extends Model implements
@@ -46,7 +47,6 @@ class Plan extends Model implements
     ];
 
     /**
-     * We will generate a uniqueLink on initial save
      * @inheritDoc
      * @param array $options
      * @return bool
@@ -54,11 +54,11 @@ class Plan extends Model implements
     public function save(array $options = [])
     {
         // add a unique_link for newly created plans
-        if(empty($this->unique_link)) {
-            // seed random generator
-            srand(self::make_seed());
-            $randomVal = rand();
-            $this->unique_link = md5($randomVal);
+        if(empty($this->edit_id)) {
+            $this->edit_id = Str::random(24);
+        }
+        if(empty($this->view_id)) {
+            $this->view_id = Str::random(32);
         }
         return parent::save($options);
     }

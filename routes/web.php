@@ -28,121 +28,6 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-/**
- * Display login form with plan id in url
- */
-Route::get('/auth/login/{plan:unique_link?}', [AuthController::class, 'loginForm'])
-->name('login');
-
-/**
- * Logout an authenticated user
- */
-Route::get('/auth/logout', [AuthController::class, 'logout'])
-    ->name('logout');
-
-/**
- * Preform a login for a user
- */
-Route::post('/auth/login/{plan:unique_link}', [AuthController::class, 'login'])
-    ->name('auth.authenticate');
-
-/**
- * Display a password forgot form
- */
-Route::get('/auth/forgot-password/{plan:unique_link}', [AuthController::class, 'forgotPasswordForm'])
-    ->middleware('guest')
-    ->name('password.request');
-
-/**
- * Handle password forgot submission. Send the reset link to the user
- */
-Route::post('/auth/forgot-password/{plan:unique_link}', [AuthController::class, 'forgotPassword'])
-    ->middleware('guest')
-    ->name('password.email');
-
-/**
- * Show form to set new password
- */
-Route::get('/auth/reset-password/{plan:unique_link}/{token}', [AuthController::class, 'resetPasswordForm'])
-    ->middleware('guest')
-    ->name('password.reset');
-
-/**
- * Handle the reset password request
- */
-Route::post('/auth/reset-password/{plan:unique_link}', [AuthController::class, "resetPassword"])
-    ->middleware('guest')
-    ->name('password.update');
-
-/**
- * Create a new plan.
- * Hint: This doesn't need any authentication. Everybody can do this
- */
-Route::get('/plan/create', [PlanController::class, 'create'])->name('plan.create');
-
-/**
- * Store a new plan.
- * Hint: This doesn't need any authentication. Everybody can do this
- */
-Route::post('/plan', [PlanController::class, 'store'])->name('plan.store');
-
-/**
- * Plan resource controller
- * Hint: From here on a user have to be logged in
- */
-Route::resource('plan', PlanController::class)->only([
-    'edit', 'update', 'destroy','show',
-])->middleware('auth')->scoped(["plan" => "unique_link"]);
-
-/**
- * Shift resource controller
- * Hint: Just for authenticated users
- */
-Route::resource('plan.shift', ShiftController::class)->only([
-    'index', 'create', 'store', 'update', 'destroy','edit', 'show',
-])->middleware('auth')->scoped(["plan" => "unique_link"]);
-
-
-/**
- * Route to view a plan with available shifts
- * Hint: No authentication needed. If a user knows the unique_link she/he is allowed to subscribe
- */
-Route::get('/subscription/{plan:unique_link}', [SubscriptionController::class, 'show'])
-    ->name('plan.subscription.show');
-
-/**
- * Subscribe to a shift
- * Hint: No authentication needed. If a user knows the unique_link she/he is allowed to subscribe
- */
-Route::get('/subscription/{plan:unique_link}/shift/{shift}', [SubscriptionController::class, 'create'])
-    ->name('plan.subscription.create');
-
-/**
- * Store new subscription
- * Hint: No authentication needed. If a user knows the unique_link she/he is allowed to subscribe
- */
-Route::post('/subscription/{plan:unique_link}/shift/{shift}', [SubscriptionController::class, 'store'])
-    ->name('plan.shift.subscription.store');
-/**
- * Edit subscription
- * Hint: Just owner of the plan and the owner of the subscription can update a subscription
- */
-Route::get('/subscription/{plan:unique_link}/shift/{shift}/{subscription}/edit', [SubscriptionController::class, 'edit'])
-    ->name('plan.shift.subscription.edit');
-
-/**
- * Update subscription
- * Hint: Just owner of the plan and the owner of the subscription can update a subscription
- */
-Route::put('/subscription/{plan:unique_link}/shift/{shift}/{subscription}', [SubscriptionController::class, 'update'])
-    ->name('plan.shift.subscription.update');
-
-/**
- * Delete subscription
- * Hint: Just owner of the plan and the owner of the subscription can update a subscription
- */
-Route::delete('/subscription/{plan:unique_link}/shift/{shift}/{subscription}', [SubscriptionController::class, 'destroy'])
-    ->name('plan.shift.subscription.destroy');
 
 /**
  * This route will change the local of the current user and save selection in the session
@@ -156,53 +41,69 @@ Route::get('/language/{locale}', function ($locale) {
 });
 
 /**
- * BC: old url for create a plan form
+ * Create a new plan.
  */
-Route::get('/plan/add', function () {
-    return Redirect::route('plan.create');
-});
+Route::get('/plan/create', [PlanController::class, 'create'])
+  ->name('plan.create');
+Route::post('/plan/create', [PlanController::class, 'store'])
+  ->name('plan.store');
 
 /**
- * BC: old url for editing plan
+ * Unauthenticated show plan.
  */
-Route::get('/plans/edit/{plan}', function (Plan $plan) {
-    return Redirect::route('plan.shift.index', ['plan' => $plan ]);
-});
+Route::get('/s/{plan:view_id}', [PlanController::class, 'show'])
+  ->name('plan.show');
+
+
+/*****************************************
+ *  Routes for Plan owners (need edit_id)
+ *****************************************  */
 
 /**
- * BC: old url for adding shifts
+ * Edit plan details.
  */
-Route::get('/shifts/add/{plan}', function (Plan $plan) {
-    return Redirect::route('plan.shift.create', ['plan' => $plan ]);
-});
+Route::get('/plan/{plan:edit_id}/edit', [PlanController::class, 'edit'])
+  ->name('plan.edit');
+Route::put('/plan/{plan:edit_id}/update', [PlanController::class, 'update'])
+  ->name('plan.update');
 
 /**
- * BC: old url for editing shifts
+ * Edit plan shifts.
  */
-Route::get('/shifts/edit/{shift}', function (Shift $shift) {
-    return Redirect::route('plan.shift.edit', ['plan' => $shift->plan, 'shift' => $shift ]);
-});
+Route::get('/plan/{plan:edit_id}', [ShiftController::class, 'index'])
+  ->name('plan.shift.index');
+Route::get('/plan/{plan:edit_id}/shift/create', [ShiftController::class, 'create'])
+  ->name('plan.shift.create');
+Route::post('/plan/{plan:edit_id}/shift/store', [ShiftController::class, 'store'])
+  ->name('plan.shift.store');
+Route::get('/plan/{plan:edit_id}/shift/{shift}/edit', [ShiftController::class, 'edit'])
+  ->name('plan.shift.edit');
+Route::post('/plan/{plan:edit_id}/shift/{shift}/destroy', [ShiftController::class, 'destroy'])
+  ->name('plan.shift.destroy');
+Route::put('/plan/{plan:edit_id}/shift/{shift}/update', [ShiftController::class, 'update'])
+  ->name('plan.shift.update');
 
 /**
- * BC: old url for subscribing to shifts
+ * Edit subscription
  */
-Route::get('/plans/show/{plan:unique_link}', function (Plan $plan) {
-    return Redirect::route('plan.subscription.show', ['plan' => $plan ]);
-});
+Route::get('/plan/{plan:edit_id}/shift/{shift}/{subscription}/edit', [SubscriptionController::class, 'edit'])
+    ->name('plan.shift.subscription.edit');
+Route::put('/plan/{plan:edit_id}/shift/{shift}/{subscription}', [SubscriptionController::class, 'update'])
+    ->name('plan.shift.subscription.update');
+Route::delete('/plan/{plan:edit_id}/shift/{shift}/{subscription}', [SubscriptionController::class, 'destroy'])
+    ->name('plan.shift.subscription.destroy');
+
+
+/*****************************************
+ *  Routes for everybody (need view_id)
+ *****************************************  */
 
 /**
- * BC: old url for subscribe to a shift
+ * Subscribe to a shift
  */
-Route::get('/subscriptions/add/{shift}', function (Request $request, Shift $shift) {
-    $plan = Plan::Where('unique_link', '=', $request->query('unique_link'))->first();
-    if(!$plan) {
-        return abort(404);
-    }
-    return Redirect::route('plan.subscription.create', ['plan' => $plan, 'shift' => $shift ]);
-});
-/**
- * BC: old url for subscribe to a shift
- */
-Route::get('/plans/authenticate/{plan:unique_link}', function (Plan $plan) {
-    return Redirect::route('login', ['plan' => $plan]);
-});
+Route::get('/s/{plan:view_id}/shift/{shift}', [SubscriptionController::class, 'create'])
+    ->name('plan.subscription.create');
+Route::post('/s/{plan:view_id}/shift/{shift}', [SubscriptionController::class, 'store'])
+    ->name('plan.shift.subscription.store');
+
+

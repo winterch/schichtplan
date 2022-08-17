@@ -37,20 +37,6 @@
                     <div class="text-red-500 text-xs italic">{{ $message }}</div>
                 @enderror
             </div>
-            @if($plan->id <= 0)
-
-                <div>
-                    <label for="password" class="block text-gray-700 font-bold mb-1">{{__("plan.passwordDesc")}}</label>
-                    <input id="password" name="password" type="password" class="@error('password') border-red-500 @enderror w-full block text-black p-1 text-lg mb-2 border rounded">
-                    @error('password')
-                        <div class="text-red-500 text-xs italic">{{ $message }}</div>
-                    @enderror
-                </div>
-                @else
-                <div>
-                    {{__('plan.samePassword')}}
-                </div>
-           @endif
             </div>
             <button type="submit" class="bg-green-800 hover:bg-green-600 py-2 px-4 rounded mb-4 inline-block text-white font-bold">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">

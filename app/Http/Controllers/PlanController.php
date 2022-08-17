@@ -9,6 +9,7 @@ use App\Models\Plan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
 class PlanController extends Controller
 {
@@ -37,15 +38,10 @@ class PlanController extends Controller
         // no specific authorization - everybody can create a plan
         // validate the request
         $data = $request->validated();
-        // Hash password with aragon2
-        // Todo: implement auth provider correctly
-        $data['password'] = Hash::make($data['password'], config('hashing.bcrypt'));
         $plan = Plan::create($data);
-        // manually auth user with provided details
-        Auth::login($plan, true);
         // redirect with success message
         Session::flash('info', __('plan.successfullyCreated'));
-        return redirect()->route('plan.shift.index', ['plan' => $plan->id]);
+        return redirect()->route('plan.shift.index', ['plan' => $plan->edit_id]);
     }
 
     /**
@@ -56,7 +52,6 @@ class PlanController extends Controller
      */
     public function show(Plan $plan)
     {
-        $this->authorize('view', $plan);
         return view('plan.show', ['plan' => $plan]);
     }
 
@@ -68,7 +63,6 @@ class PlanController extends Controller
      */
     public function edit(Plan $plan)
     {
-        $this->authorize('update', $plan);
         return view('plan.create', ['plan' => $plan]);
     }
 
@@ -81,14 +75,15 @@ class PlanController extends Controller
      */
     public function update(UpdatePlanRequest $request, Plan $plan)
     {
-        $this->authorize('update', $plan);
         $data = $request->validated();
-        // prevent password to be overridden
-        unset($data['password']);
+        // prevent to be overridden
+        unset($data['edit_id']);
+        unset($data['view_id']);
+        unset($data['id']);
         $plan->update($data);
         // redirect to shifts overview
         Session::flash('info', __('plan.successfullyUpdated'));
-        return redirect()->route('plan.shift.index', ['plan' => $plan->id]);
+        return redirect()->route('plan.shift.index', ['plan' => $plan->edit_id]);
     }
 
     /**
@@ -99,7 +94,6 @@ class PlanController extends Controller
      */
     public function destroy(Plan $plan)
     {
-        $this->authorize('forceDelete', $plan);
         $plan->forceDelete();
         Session::flash('info', __('plan.successfullyDestroyed'));
         return \redirect()->route('home');

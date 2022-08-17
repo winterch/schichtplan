@@ -10,8 +10,7 @@ return [
     'save' => 'Save plan',
     'unsubscribe' => 'Unsubscribe',
     'subscribe' => 'Subscribe',
-    'editShifts' => 'Edit shifts',
-    'editShift' => 'Edit shift',
+    'edit' => 'Edit',
     'titleRequired' => 'Title is required',
     'descriptionRequired' => 'Description is required',
     'ContactMax' => 'Max length of contact is 500 characters',
@@ -20,4 +19,5 @@ return [
     'successfullyDestroyed' => 'Successfully deleted plan',
     'successfullyUpdated' => 'Successfully updated plan',
     'successfullyCreated' => 'Successfully created plan',
+    'responsible' => 'Responsible for the content',
 ];

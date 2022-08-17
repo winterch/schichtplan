@@ -18,7 +18,6 @@ class StorePlanRequest extends FormRequest
             'description' => 'required|max:500',
             'contact' => 'max:500',
             'owner_email' => 'required|email',
-            'password' => 'required|min:8',
         ];
     }
 
@@ -33,7 +32,6 @@ class StorePlanRequest extends FormRequest
             'description.required'  => __('plan.descriptionRequired'),
             'contact.max'  => __('plan.contactMax'),
             'owner_email.required'  => __('plan.emailRequired'),
-            'password.required'  => __('plan.passwordRequired'),
         ];
     }
 }

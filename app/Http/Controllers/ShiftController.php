@@ -19,8 +19,6 @@ class ShiftController extends Controller
      */
     public function index(Plan $plan)
     {
-        // user needs access to plan to view overview
-        $this->authorize('view', $plan);
         return view('shift.index')->with(['plan' => $plan]);
     }
 
@@ -32,7 +30,6 @@ class ShiftController extends Controller
     public function create(Plan $plan)
     {
         // user needs access to plan to create a new shift
-        $this->authorize('update', $plan);
         $groups = $this->getGroups($plan);
         $shift = new Shift();
         return view('shift.create', ['plan' => $plan, 'shift' => $shift, 'groups' => $groups]);
@@ -47,8 +44,6 @@ class ShiftController extends Controller
      */
     public function store(StoreShiftRequest $request, Plan $plan)
     {
-        // user needs access to plan to create a new shift
-        $this->authorize('update', $plan);
         $data = $request->validated();
         $plan->shifts()->create($data);
         Session::flash('info', __('shift.successfullyCreated'));
@@ -64,7 +59,6 @@ class ShiftController extends Controller
      */
     public function edit(Plan $plan, Shift $shift)
     {
-        $this->authorize('update', $shift);
         $groups = $this->getGroups($plan);
         return view('shift.create', ['shift' => $shift, 'plan' => $plan, 'groups' => $groups]);
     }
@@ -79,7 +73,6 @@ class ShiftController extends Controller
      */
     public function update(StoreShiftRequest $request, Plan $plan, Shift $shift)
     {
-        $this->authorize('update', $shift);
         $data = $request->validated();
         $shift->update($data);
         Session::flash('info', __('shift.successfullyUpdated'));
@@ -95,7 +88,6 @@ class ShiftController extends Controller
      */
     public function destroy(Plan $plan, Shift $shift)
     {
-        $this->authorize('forceDelete', $shift);
         $shift->forceDelete();
         Session::flash('info', __('shift.successfullyDestroyed'));
         return redirect()->route('plan.shift.index', ['plan' => $plan]);

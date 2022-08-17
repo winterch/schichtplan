@@ -10,8 +10,7 @@ return [
     'save' => 'Schitplan speichern',
     'unsubscribe' => 'Auschreiben',
     'subscribe' => 'Einschreiben',
-    'editShifts' => 'Schichten bearbeiten',
-    'editShift' => 'Bearbeiten',
+    'edit' => 'Bearbeiten',
     'titleRequired' => 'Ein Titel wird benötigt',
     'descriptionRequired' => 'Eine Beschreibung wird benötigt',
     'contactMax' => 'Maximum 500 buchstaben',
@@ -20,4 +19,5 @@ return [
     'successfullyDestroyed' => 'Schictplan wurde gelöscht',
     'successfullyUpdated' => 'Schichtplan wurde aktualisiert',
     'successfullyCreated' => 'Schichtplan wurde erstellt',
+    'responsible' => 'Verantwortlich für den Inhalt',
 ];

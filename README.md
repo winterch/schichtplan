@@ -81,6 +81,16 @@ If you change the design make sure you also commit the built assets.
 npm run prod
 ```
 
+## Containerized development env
+
+```bash
+CR=podman
+$CR run --rm -it -v .:/app docker.io/library/composer install
+sqlite3 database/database.sqlite "VACUUM;"
+$CR run --rm --env-file=.env -it -v .:/app docker.io/library/php:8 bash -c "cd /app && php artisan migrate"
+$CR run --rm --env-file=.env --net=host -p 8000:8000 -it -v .:/app docker.io/library/php:8 bash -c "cd /app && php artisan serve"
+```
+
 ## License
 
 Schichtplan is free software and under [AGPL license](https://www.gnu.org/licenses/agpl-3.0.en.html)

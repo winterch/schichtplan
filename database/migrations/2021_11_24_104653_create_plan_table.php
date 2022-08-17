@@ -14,26 +14,16 @@ class CreatePlanTable extends Migration
      */
     public function up()
     {
-        // migrate from old < v2.0 plan to plans
-        if (Schema::hasTable('plans')) {
-            Schema::table('plans', function (Blueprint $table) {
-                $table->timestamps();
-                $table->char('remember_token')->nullable(true);
-            });
-        }
-
         // Table doesn't exist. We need to create it
         if (!Schema::hasTable('plans')) {
             Schema::create('plans', function (Blueprint $table) {
                 $table->id();
-                // f.e. ac55616963a1624843019fd68af114f754d2baee
-                $table->string('unique_link', 40)->unique();
+                $table->string('edit_id', 40)->unique();
+                $table->string('view_id', 40)->unique();
                 $table->string('title', 200);
                 $table->string('description', 500);
                 $table->string('contact', 200)->nullable(true);
                 $table->string('owner_email', 200);
-                $table->char('password');
-                $table->char('remember_token')->nullable(true);
                 $table->timestamps();
             });
         }
