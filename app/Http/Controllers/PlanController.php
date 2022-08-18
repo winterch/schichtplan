@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 
 class PlanController extends Controller
 {
@@ -41,7 +42,7 @@ class PlanController extends Controller
         $plan = Plan::create($data);
         // redirect with success message
         Session::flash('info', __('plan.successfullyCreated'));
-        return redirect()->route('plan.shift.index', ['plan' => $plan->edit_id]);
+        return redirect()->route('plan.admin', ['plan' => $plan]);
     }
 
     /**
@@ -56,6 +57,18 @@ class PlanController extends Controller
     }
 
     /**
+     * Display an overview of shifts for a specified plan.
+     *
+     * @param Plan $plan
+     * @return Response
+     */
+    public function admin(Plan $plan)
+    {
+        $this->auth($plan);
+        return view('plan.admin')->with(['plan' => $plan]);
+    }
+
+    /**
      * Show the form for editing the plan
      *
      * @param  \App\Models\Plan  $plan
@@ -63,6 +76,7 @@ class PlanController extends Controller
      */
     public function edit(Plan $plan)
     {
+        $this->auth($plan);
         return view('plan.create', ['plan' => $plan]);
     }
 
@@ -75,6 +89,7 @@ class PlanController extends Controller
      */
     public function update(UpdatePlanRequest $request, Plan $plan)
     {
+        $this->auth($plan);
         $data = $request->validated();
         // prevent to be overridden
         unset($data['edit_id']);
@@ -83,7 +98,7 @@ class PlanController extends Controller
         $plan->update($data);
         // redirect to shifts overview
         Session::flash('info', __('plan.successfullyUpdated'));
-        return redirect()->route('plan.shift.index', ['plan' => $plan->edit_id]);
+        return redirect()->route('plan.admin', ['plan' => $plan]);
     }
 
     /**
@@ -94,6 +109,7 @@ class PlanController extends Controller
      */
     public function destroy(Plan $plan)
     {
+        $this->auth($plan);
         $plan->forceDelete();
         Session::flash('info', __('plan.successfullyDestroyed'));
         return \redirect()->route('home');

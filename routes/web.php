@@ -62,6 +62,8 @@ Route::get('/s/{plan:view_id}', [PlanController::class, 'show'])
 /**
  * Edit plan details.
  */
+Route::get('/plan/{plan:edit_id}', [PlanController::class, 'admin'])
+  ->name('plan.admin');
 Route::get('/plan/{plan:edit_id}/edit', [PlanController::class, 'edit'])
   ->name('plan.edit');
 Route::put('/plan/{plan:edit_id}/update', [PlanController::class, 'update'])
@@ -70,8 +72,6 @@ Route::put('/plan/{plan:edit_id}/update', [PlanController::class, 'update'])
 /**
  * Edit plan shifts.
  */
-Route::get('/plan/{plan:edit_id}', [ShiftController::class, 'index'])
-  ->name('plan.shift.index');
 Route::get('/plan/{plan:edit_id}/shift/create', [ShiftController::class, 'create'])
   ->name('plan.shift.create');
 Route::post('/plan/{plan:edit_id}/shift/store', [ShiftController::class, 'store'])

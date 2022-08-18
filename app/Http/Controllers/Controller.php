@@ -9,5 +9,10 @@ use Illuminate\Routing\Controller as BaseController;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    use DispatchesJobs, ValidatesRequests;
+
+    protected function auth(\App\Models\Plan $plan) {
+        if (!strpos(\Request::url(), $plan->edit_id))
+            abort(401);
+    }
 }

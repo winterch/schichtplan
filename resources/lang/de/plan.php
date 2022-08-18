@@ -20,4 +20,5 @@ return [
     'successfullyUpdated' => 'Schichtplan wurde aktualisiert',
     'successfullyCreated' => 'Schichtplan wurde erstellt',
     'responsible' => 'Verantwortlich für den Inhalt',
+    'publish' => 'Veröffentlichen',
 ];

@@ -42,20 +42,7 @@ class SubscriptionController extends Controller
         // For that reason we save those subscription in a session
         Session::push('subscriptions', $subscription->id);
         Session::flash('info', __('subscription.successfullyCreated'));
-        return redirect()->route('plan.show', ['plan' => $plan->view_id]);
-    }
-
-    /**
-     * Display the specified resource.
-     * Plans are identified by a unique_link. This is the shared secrete between users and owners of the plan
-     *
-     * @param Plan $plan
-     * @return Response
-     */
-    public function show(Plan $plan)
-    {
-        // no specific authorization - everybody with the link can create a subscription
-        return view('subscription.plan', ['plan' => $plan, 'subscriptions' => Session::get('subscriptions', [])]);
+        return redirect()->route('plan.show', ['plan' => $plan]);
     }
 
     /**
@@ -68,6 +55,7 @@ class SubscriptionController extends Controller
      */
     public function edit(Plan $plan, Shift $shift, Subscription $subscription)
     {
+        $this->auth($plan);
         return view('subscription.create', ['plan' => $plan, 'shift' => $shift, 'subscription' => $subscription]);
     }
 
@@ -82,10 +70,11 @@ class SubscriptionController extends Controller
      */
     public function update(StoreSubscriptionRequest $request, Plan $plan, Shift $shift, Subscription $subscription)
     {
+        $this->auth($plan);
         $data = $request->validated();
         $subscription->update($data);
         Session::flash('info', __('subscription.successfullyUpdated'));
-        return redirect()->route('plan.shift.index', ['plan' => $plan]);
+        return redirect()->route('plan.admin', ['plan' => $plan]);
     }
 
     /**
@@ -98,10 +87,11 @@ class SubscriptionController extends Controller
      */
     public function destroy(Plan $plan, Shift $shift, Subscription $subscription)
     {
+        $this->auth($plan);
         $subscription->forceDelete();
         // todo: check if this is working
         Session::forget('subscriptions.'.$subscription->id);
         Session::flash('info', __('subscription.successfullyDestroyed'));
-        return redirect()->route('plan.shift.index', ['plan' => $plan]);
+        return redirect()->route('plan.admin', ['plan' => $plan]);
     }
 }

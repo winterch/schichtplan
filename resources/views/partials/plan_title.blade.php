@@ -2,5 +2,7 @@
 <br>
 <div class="text-lg italic">{{ $plan->description }}</div>
 <br>
-<div class="text-lg">{{ __('plan.responsible') }}: {{ $plan->contact }}</div>
-<br>
+@if (!empty($plan->contact))
+  <div class="text-lg">{{ __('plan.responsible') }}: {{ $plan->contact }}</div>
+  <br>
+@endif

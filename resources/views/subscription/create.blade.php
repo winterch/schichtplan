@@ -50,7 +50,7 @@
                     {{__('subscription.save')}}
                 @endif
             </button>
-            <a class="bg-green-800 hover:bg-green-600 py-2 px-4 rounded mb-4 inline-block text-white font-bold" href="{{route('plan.show', ['plan' => $plan->view_id])}}">
+            <a class="bg-green-800 hover:bg-green-600 py-2 px-4 rounded mb-4 inline-block text-white font-bold" href="{{ url()->previous() }}">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
