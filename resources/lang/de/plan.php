@@ -22,4 +22,6 @@ return [
     'responsible' => 'Verantwortlich für den Inhalt',
     'publish' => 'Veröffentlichen',
     'subscribed' => 'Eingetragen',
+    'sort_help' => 'Sortiert nach Gruppe, Typ, Datum',
+    'admin_help' => 'Auf dieser Seite kannst du Schichten definieren und einsehen, wer sich darauf eingeschrieben hat. Klicke auf Publizieren, um einen teilbaren Link zum Einschreiben zu erstellen.'
 ];

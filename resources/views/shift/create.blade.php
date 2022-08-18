@@ -2,6 +2,9 @@
 @section('body')
     <h1 class="text-3xl mb-2">{{ __('shift.createHeading') }}</h1>
 
+    {{ __('plan.sort_help') }}
+    <br>
+    <br>
     @if(isset($shift->id) && $shift->id > 0)
         <form method="post" action="{{route('plan.shift.update', ['plan' => $plan, 'shift' => $shift])}}">
         @method("put")

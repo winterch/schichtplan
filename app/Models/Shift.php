@@ -25,6 +25,20 @@ class Shift extends Model
     ];
 
     /**
+     * @inheritDoc
+     * @param array $options
+     * @return bool
+     */
+    public function save(array $options = [])
+    {
+        // add a unique_link for newly created plans
+        if(empty($this->type)) {
+            $this->type = '';
+        }
+        return parent::save($options);
+    }
+
+    /**
      * Shift belongs to a plan
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

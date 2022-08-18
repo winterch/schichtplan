@@ -22,4 +22,6 @@ return [
     'responsible' => 'Responsible for the content',
     'publish' => 'Publish',
     'subscribed' => 'Subscribed',
+    'sort_help' => 'Ordered by group, type, date',
+    'admin_help' => 'This Page allows you to define shifts and see who subscribed to them. To generate a link that you can send to people click on publish.'
 ];

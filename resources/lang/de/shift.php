@@ -3,7 +3,7 @@ return [
     'add' => 'Schicht hinzufügen',
     'noshifts' => 'Noch keine Schichten definiert',
     'createHeading' => 'Neue Schicht',
-    'type' => 'Type',
+    'type' => 'Typ',
     'title' => 'Titel',
     'description' => 'Beschreibung',
     'group' => 'Zusätzliche Gruppierung',

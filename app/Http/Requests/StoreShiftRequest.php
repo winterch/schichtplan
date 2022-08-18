@@ -16,7 +16,7 @@ class StoreShiftRequest extends FormRequest
     {
         return [
             'title' => 'required|max:200',
-            'type' => 'required|max:200',
+            'type' => 'max:200',
             'description' => 'max:500',
             'group' => 'required|int|numeric|max:100',
             'start' => 'required|date|before:end',
@@ -33,7 +33,6 @@ class StoreShiftRequest extends FormRequest
     {
         return [
             'title.required' => __("shift.titleRequired"),
-            'type.required'  => __('shift.typeRequired'),
             'start.required'  => __('shift.startRequired'),
             'start.before'  => __('shift.startBefore'),
             'end.required'  => __('shift.endRequired'),

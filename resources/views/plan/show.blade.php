@@ -2,6 +2,7 @@
 @section('body')
     @include('partials.flash')
     @include('partials.plan_title')
+    <br>
     @if(count($plan->shifts) === 0)
         <div>{{__('shift.noshifts')}}</div>
     @else
@@ -24,6 +25,7 @@
                         </tr>
                         </thead>
                         <tbody>
+                        @endif
                         <tr class="border-b">
                             <td class="text-sm px-0 py-4">{{$shift->type}}</td>
                             <td class="text-sm px-4 py-4">{{$shift->title}}</td>
