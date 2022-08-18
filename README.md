@@ -88,6 +88,7 @@ CR=podman
 $CR run --rm -it -v .:/app docker.io/library/composer install
 sqlite3 database/database.sqlite "VACUUM;"
 $CR run --rm --env-file=.env -it -v .:/app docker.io/library/php:8 bash -c "cd /app && php artisan migrate"
+$CR run --rm --entrypoint bash -it -v .:/app docker.io/library/node -c 'cd /app && npm install && npm run dev'
 $CR run --rm --env-file=.env --net=host -p 8000:8000 -it -v .:/app docker.io/library/php:8 bash -c "cd /app && php artisan serve"
 ```
 

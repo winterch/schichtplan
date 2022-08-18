@@ -21,4 +21,5 @@ return [
     'successfullyCreated' => 'Successfully created plan',
     'responsible' => 'Responsible for the content',
     'publish' => 'Publish',
+    'subscribed' => 'Subscribed',
 ];

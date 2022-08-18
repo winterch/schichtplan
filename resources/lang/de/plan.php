@@ -21,4 +21,5 @@ return [
     'successfullyCreated' => 'Schichtplan wurde erstellt',
     'responsible' => 'Verantwortlich für den Inhalt',
     'publish' => 'Veröffentlichen',
+    'subscribed' => 'Eingetragen',
 ];

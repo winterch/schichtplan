@@ -8,27 +8,29 @@
         @foreach($plan->shifts as $index => $shift)
             {{--  Header of a new group --}}
             @if($loop->first || ($plan->shifts[$index - 1]->group !== $shift->group))
-                <div class="p-4 bg-green-50 rounded mb-4">
-                    <table class="table-fixed w-full">
-                        <thead>
+             <div class="flex flex-col">
+               <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                 <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                   <div class="overflow-x-auto">
+                     <table class="min-w-full">
+                       <thead class="bg-green-50">
                         <tr>
-                            <th class="w-1/6 px-4 py-2">{{__('shift.type')}}</th>
-                            <th class="w-1/6 px-4 py-2">{{__('shift.title')}}</th>
-                            <th class="w-1/6 px-4 py-2">{{__('shift.description')}}</th>
-                            <th class="w-1/6 px-4 py-2">{{__('shift.startDesc')}}</th>
-                            <th class="w-1/6 px-4 py-2">{{__('shift.endDesc')}}</th>
-                            <th class="w-1/6 px-4 py-2">{{__('shift.action')}}</th>
+                            <th scope="col" class="text-sm px-2 py-4 text-left">{{__('shift.type')}}</th>
+                            <th scope="col" class="text-sm px-4 py-4 text-left">{{__('shift.title')}}</th>
+                            <th scope="col" class="text-sm max-w-sm px-4 py-4 text-left">{{__('shift.description')}}</th>
+                            <th scope="col" class="text-sm px-6 py-4 text-left">{{__('shift.startDesc')}}</th>
+                            <th scope="col" class="text-sm px-4 py-4 text-left">{{__('shift.endDesc')}}</th>
+                            <th scope="col" class="text-sm px-4 py-4 text-left">{{__('shift.action')}}</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @endif
-                        <tr class="align-top">
-                            <td class="border px-4 py-2 border-black">{{$shift->type}}</td>
-                            <td class="border px-4 py-2 border-black">{{$shift->title}}</td>
-                            <td class="border px-4 py-2 border-black">{{$shift->description}}</td>
-                            <td class="border px-4 py-2 border-black">{{$shift->start}}</td>
-                            <td class="border px-4 py-2 border-black">{{$shift->end}}</td>
-                            <td class="border px-4 py-2 border-black">
+                        <tr class="border-b">
+                            <td class="text-sm px-0 py-4">{{$shift->type}}</td>
+                            <td class="text-sm px-4 py-4">{{$shift->title}}</td>
+                            <td class="text-sm max-w-xs px-6 py-4">{{$shift->description}}</td>
+                            <td class="text-sm px-4 py-4">{{$shift->start}}</td>
+                            <td class="text-sm px-4 py-4">{{$shift->end}}</td>
+                            <td class="text-sm px-4 py-4">
                                 @if ($shift->team_size > $shift->subscriptions->count())
                                   <a href="{{route('plan.subscription.create', ['plan' => $shift->plan->view_id, 'shift'=> $shift])}}" class="w-32 bg-green-800 hover:bg-green-600 py-2 px-2 rounded mb-1 inline-block text-white text-sm font-bold">
                                       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline" viewBox="0 0 20 20" fill="currentColor">
@@ -38,14 +40,17 @@
                                   </a>
                                 @endif
 
-                                {{ $shift->subscriptions->count() }} / {{ $shift->team_size }}
+                                {{ $shift->subscriptions->count() }}&nbsp;/&nbsp;{{ $shift->team_size }}
                             </td>
                         </tr>
                         {{--  Footer of a group--}}
                         @if((isset($plan->shifts[$index + 1]) && $plan->shifts[$index + 1]->group !== $shift->group) || $loop->last)
-                        </tbody>
-                    </table>
-                </div>
+                       </tbody>
+                     </table>
+                   </div>
+                 </div>
+               </div>
+             </div>
             @endif
         @endforeach
     @endif
