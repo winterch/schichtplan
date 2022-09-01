@@ -16,22 +16,38 @@
                      <table class="min-w-full">
                        <thead class="bg-green-50">
                         <tr>
+                            @if($plan->anyType())
                             <th scope="col" class="text-sm px-2 py-4 text-left">{{__('shift.type')}}</th>
+                            @endif
                             <th scope="col" class="text-sm px-4 py-4 text-left">{{__('shift.title')}}</th>
                             <th scope="col" class="text-sm max-w-sm px-4 py-4 text-left">{{__('shift.description')}}</th>
                             <th scope="col" class="text-sm px-6 py-4 text-left">{{__('shift.startDesc')}}</th>
                             <th scope="col" class="text-sm px-4 py-4 text-left">{{__('shift.endDesc')}}</th>
+                            <th scope="col" class="text-sm px-4 py-4 text-left"></th>
                             <th scope="col" class="text-sm px-4 py-4 text-left">{{__('shift.action')}}</th>
                         </tr>
                         </thead>
                         <tbody>
                         @endif
                         <tr class="border-b">
+                            @if($plan->anyType())
                             <td class="text-sm px-0 py-4">{{$shift->type}}</td>
+                            @endif
                             <td class="text-sm px-4 py-4">{{$shift->title}}</td>
                             <td class="text-sm max-w-xs px-6 py-4">{{$shift->description}}</td>
                             <td class="text-sm px-4 py-4">{{$shift->start}}</td>
                             <td class="text-sm px-4 py-4">{{$shift->end}}</td>
+                            <td class="text-sm px-4 py-4">
+                                {{ $shift->subscriptions->count() }}&nbsp;/&nbsp;{{ $shift->team_size }}
+                                @if($shift->subscriptions->count() > 0)
+                                 :
+                                @endif
+                                <i>
+                                @foreach($shift->subscriptions as $subscription)
+                                  {{$subscription->name}}@if($subscription != $shift->subscriptions->last()), @endif
+                                @endforeach
+                                </i>
+                            </td>
                             <td class="text-sm px-4 py-4">
                                 @if ($shift->team_size > $shift->subscriptions->count())
                                   <a href="{{route('plan.subscription.create', ['plan' => $shift->plan->view_id, 'shift'=> $shift])}}" class="w-32 bg-green-800 hover:bg-green-600 py-2 px-2 rounded mb-1 inline-block text-white text-sm font-bold">
@@ -41,8 +57,6 @@
                                       {{__('plan.subscribe')}}
                                   </a>
                                 @endif
-
-                                {{ $shift->subscriptions->count() }}&nbsp;/&nbsp;{{ $shift->team_size }}
                             </td>
                         </tr>
                         {{--  Footer of a group--}}
@@ -56,4 +70,7 @@
             @endif
         @endforeach
     @endif
+    <div class="py-20">
+    <a href="{{route('plan.recover')}}">{{__('plan.show_subscriptions')}}</a>
+    </div>
 @endsection

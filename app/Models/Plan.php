@@ -73,6 +73,15 @@ class Plan extends Model implements
         return $this->hasMany(Shift::class)->orderBy('group')->orderBy('type')->orderBy('start');
     }
 
+    public function anyType()
+    {
+        foreach ($this->shifts as $shift) {
+            if ($shift->type !== '')
+                return true;
+        }
+        return false;
+    }
+
     /**
      * Get the e-mail address where password reset links are sent.
      * Used for reset password email

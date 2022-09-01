@@ -12,14 +12,7 @@
         <form method="post" action="{{route('plan.shift.store', ['plan' => $plan])}}">
     @endif
         @csrf
-        <div class="grid grid-rows-4 grid-flow-row gap-4 md:grid-flow-col">
-            <div>
-                <label for="type" class="block text-gray-700 font-bold mb-1">{{__("shift.type")}}</label>
-                <input id="type" name="type" type="text" class="@error('type') border-red-500 @enderror w-full block text-black p-1 text-lg mb-2 border rounded" value="{{old('type', $shift->type)}}">
-                @error('type')
-                <div class="text-red-500 text-xs italic">{{ $message }}</div>
-                @enderror
-            </div>
+        <div class="grid grid-rows-3 grid-flow-row gap-4 md:grid-flow-col">
             <div>
                 <label for="title" class="block text-gray-700 font-bold mb-1">{{__("shift.title")}}</label>
                 <input id="title" name="title" type="text" class="@error('title') border-red-500 @enderror w-full block text-black p-1 text-lg mb-2 border rounded" value="{{old('title', $shift->title)}}">
@@ -31,17 +24,6 @@
                 <label for="description" class="block text-gray-700 font-bold mb-1">{{__("shift.description")}}</label>
                 <textarea id="description" name="description" class="@error('description') border-red-500 @enderror w-full h-full block text-black p-1 text-lg mb-2 border rounded">{{old('description', $shift->description)}}</textarea>
                 @error('description')
-                <div class="text-red-500 text-xs italic">{{ $message }}</div>
-                @enderror
-            </div>
-            <div>
-                <label for="group" class="block text-gray-700 font-bold mb-1">{{__("shift.group")}}</label>
-                <select id="group" name="group" class="@error('group') border-red-500 @enderror w-full block text-black p-1 text-lg mb-2 border rounded" >
-                    @for($i = 0; $i <= $groups; $i++)
-                        <option value="{{$i}}" @if($i == $shift->group) selected @endif>{{$i}}</option>
-                    @endfor
-                </select>
-                @error('group')
                 <div class="text-red-500 text-xs italic">{{ $message }}</div>
                 @enderror
             </div>
@@ -66,6 +48,29 @@
                 <div class="text-red-500 text-xs italic">{{ $message }}</div>
                 @enderror
             </div>
+        </div>
+        <div class="my-3 bg-gray-100 ">
+        {{__("shift.optional")}}
+        <div class="grid grid-rows-1 p-3 grid-flow-row gap-4 md:grid-flow-col">
+            <div>
+                <label for="type" class="block text-gray-700 font-bold mb-1">{{__("shift.type")}}</label>
+                <input id="type" name="type" type="text" class="@error('type') border-red-500 @enderror w-full block text-black p-1 text-lg mb-2 border rounded" value="{{old('type', $shift->type)}}">
+                @error('type')
+                <div class="text-red-500 text-xs italic">{{ $message }}</div>
+                @enderror
+            </div>
+            <div>
+                <label for="group" class="block font-bold mb-1">{{__("shift.group")}}</label>
+                <select id="group" name="group" class="@error('group') border-red-500 @enderror w-full block text-black p-1 text-lg mb-2 border rounded" >
+                    @for($i = 0; $i <= $groups; $i++)
+                        <option value="{{$i}}" @if($i == $shift->group) selected @endif>{{$i}}</option>
+                    @endfor
+                </select>
+                @error('group')
+                <div class="text-red-500 text-xs italic">{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
         </div>
         <button type="submit" class="bg-green-800 hover:bg-green-600 py-2 px-4 rounded mb-4 inline-block text-white font-bold">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">

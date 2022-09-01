@@ -1,5 +1,6 @@
 <?php
 return [
+    'nameDesc' => 'Name/Alias (öffentlich)',
     'name' => 'Name',
     'phone' => 'Telefon',
     'email' => 'Email',
@@ -10,6 +11,7 @@ return [
     'unsubscribe' => 'Ausschreiben',
     'subscribe' => 'Einschreiben',
     'edit' => 'Editieren',
+    'missing' => 'fehlend',
     'nameRequired' => 'Ein Name wird benötigt',
     'phoneRegex' => 'Die Telefonnummer ist ungültig. Nur Zahlen verwenden.',
     'emailRequired' => 'Eine Emai wird benötigt',

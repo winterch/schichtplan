@@ -14,6 +14,10 @@
 
     <p class="italic">{{__('home.deleteInfo') }}</p>
 
+    <div class="py-4">
+    <a href="{{route('plan.recover')}}">{{__('plan.recover')}}</a>
+    </div>
+
     <div class="flex justify-end text-sm">
         {!! __('home.copyleft') !!}
     </div>

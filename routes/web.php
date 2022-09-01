@@ -28,6 +28,7 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
+Route::get('/cron', [PlanController::class, 'cron'])->name('cron');
 
 /**
  * This route will change the local of the current user and save selection in the session
@@ -54,16 +55,26 @@ Route::post('/plan/create', [PlanController::class, 'store'])
 Route::get('/s/{plan:view_id}', [PlanController::class, 'show'])
   ->name('plan.show');
 
+/**
+ * Recover plans.
+ */
+Route::get('/recover', [PlanController::class, 'recover'])
+  ->name('plan.recover');
+Route::post('/recover', [PlanController::class, 'doRecover'])
+  ->name('plan.recover');
 
 /*****************************************
  *  Routes for Plan owners (need edit_id)
  *****************************************  */
 
+Route::get('/plan/{plan:edit_id}', [PlanController::class, 'admin'])
+  ->name('plan.admin');
+Route::get('/plan/{plan:edit_id}/subscriptions', [PlanController::class, 'admin_subscriptions'])
+  ->name('plan.admin_subscriptions');
+
 /**
  * Edit plan details.
  */
-Route::get('/plan/{plan:edit_id}', [PlanController::class, 'admin'])
-  ->name('plan.admin');
 Route::get('/plan/{plan:edit_id}/edit', [PlanController::class, 'edit'])
   ->name('plan.edit');
 Route::put('/plan/{plan:edit_id}/update', [PlanController::class, 'update'])
@@ -78,7 +89,7 @@ Route::post('/plan/{plan:edit_id}/shift/store', [ShiftController::class, 'store'
   ->name('plan.shift.store');
 Route::get('/plan/{plan:edit_id}/shift/{shift}/edit', [ShiftController::class, 'edit'])
   ->name('plan.shift.edit');
-Route::post('/plan/{plan:edit_id}/shift/{shift}/destroy', [ShiftController::class, 'destroy'])
+Route::delete('/plan/{plan:edit_id}/shift/{shift}/destroy', [ShiftController::class, 'destroy'])
   ->name('plan.shift.destroy');
 Route::put('/plan/{plan:edit_id}/shift/{shift}/update', [ShiftController::class, 'update'])
   ->name('plan.shift.update');

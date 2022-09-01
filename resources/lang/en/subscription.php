@@ -1,5 +1,6 @@
 <?php
 return [
+    'nameDesc' => 'Name/Alias (public)',
     'name' => 'Name',
     'phone' => 'Phone',
     'email' => 'Email',
@@ -10,6 +11,7 @@ return [
     'unsubscribe' => 'Unsubscribe',
     'subscribe' => 'Subscribe',
     'edit' => 'Edit',
+    'missing' => 'missing',
     'nameRequired' => 'Name is required',
     'phoneRegex' => 'Phone number is invalid. Use numbers only.',
     'emailRequired' => 'Email is required',
