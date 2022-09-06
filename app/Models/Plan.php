@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Notifications\SendLinksNotification;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +13,6 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
-use App\Notifications\ResetPasswordNotification;
 
 class Plan extends Model implements
     AuthenticatableContract,
@@ -44,6 +44,8 @@ class Plan extends Model implements
         'password',
         'owner_email',
         'remember_token',
+        'edit_id',
+        'view_id'
     ];
 
     /**
@@ -83,16 +85,6 @@ class Plan extends Model implements
     }
 
     /**
-     * Get the e-mail address where password reset links are sent.
-     * Used for reset password email
-     * @return string
-     */
-    public function getEmailForPasswordReset()
-    {
-        return $this->owner_email;
-    }
-
-    /**
      * Route notifications for the mail channel.
      * This is a fix for a laravel problem with the reset mail
      *
@@ -103,24 +95,13 @@ class Plan extends Model implements
         return $this->owner_email;
     }
 
-    /**
-     * Send custom mail to reset the password of a plan
-     * @param string $token
-     */
-    public function sendPasswordResetNotification($token)
-    {
-        // Build the route to reset the PW. This has to include the plan unique_link
-        $url = route('password.reset', ['token' => $token, 'plan' => $this]);
-        $this->notify(new ResetPasswordNotification($url));
-    }
 
     /**
-     * Generate seed for random generator
-     * @return float
+     * Send a notification with the edit and view links to the owner of the plan
      */
-    private static function make_seed()
-    {
-        list($usec, $sec) = explode(' ', microtime());
-        return $sec + $usec * 1000000;
+    public function sendLinksNotification() {
+        $adminLink = route('plan.admin', ['plan' => $this->edit_id]);
+        $viewLink = route('plan.show', ['plan' => $this->view_id]);
+        $this->notify(new SendLinksNotification($this->title, $adminLink, $viewLink));
     }
 }

@@ -8,11 +8,9 @@ use App\Http\Requests\UpdatePlanRequest;
 use App\Models\Plan;
 use App\Models\Shift;
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
+
 
 use Illuminate\Support\Facades\DB;
 
@@ -44,6 +42,10 @@ class PlanController extends Controller
         // validate the request
         $data = $request->validated();
         $plan = Plan::create($data);
+        // If user enables notification, she/he will get the links to edit and view the plan into the inbox
+        if((bool)$request->input('notification', 0)) {
+            $plan->sendLinksNotification();
+        }
         // redirect with success message
         Session::flash('info', __('plan.successfullyCreated'));
         return redirect()->route('plan.admin', ['plan' => $plan]);
@@ -78,23 +80,15 @@ class PlanController extends Controller
     public function doRecover(RecoverPlanRequest $request)
     {
         $email = $request->validated()['owner_email'];
-        $plans = DB::table('plans')->where('owner_email', $email)->get();
-        $res = [];
-        foreach ($plans as $plan) {
-          $res[] = [
-            'title' => $plan->title,
-            'admin' => route('plan.admin', ['plan' => $plan->edit_id]),
-            'public' => route('plan.show', ['plan' => $plan->view_id]),
-          ];
+        $plans = Plan::where('owner_email', $email)->get();
+        if(count($plans) > 0) {
+            foreach ($plans as $plan) {
+                $plan->sendLinksNotification();
+            }
         }
-
-        if (sizeof($res) > 0) {
-          // TODO send email with this stuff:
-          print_r($res);
-        }
-
+        // Show message anyway. So is not possible to check if an address has a plan
         Session::flash('info', __('plan.successfullyRecovered'));
-        return view('plan.do_recover', ['plans' => $res]);
+        return view('plan.do_recover');
     }
 
     /**

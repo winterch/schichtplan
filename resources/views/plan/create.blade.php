@@ -37,6 +37,13 @@
                     <div class="text-red-500 text-xs italic">{{ $message }}</div>
                 @enderror
             </div>
+            <div>
+                <label for="notification" class="block text-gray-700 font-bold mb-1">{{__("plan.notification")}}</label>
+                <input id="notification" name="notification" type="checkbox" class="@error('notification') border-red-500 @enderror w-auto inlineblock text-black p-1 text-lg mb-2 border rounded" value="1" checked> {{__("plan.notifyMe")}}
+                @error('notification')
+                    <div class="text-red-500 text-xs italic">{{ $message }}</div>
+                @enderror
+            </div>
             </div>
             <button type="submit" class="bg-green-800 hover:bg-green-600 py-2 px-4 rounded mb-4 inline-block text-white font-bold">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">

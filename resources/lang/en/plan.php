@@ -29,7 +29,14 @@ return [
     'recover' => 'Forgot plan link?',
     'recover_help' => 'Enter your email address to receive the admin link of your plans.',
     'successfullyRecovered' => 'If you have active plans you will receive them by email now',
+    'failedRecovered' => 'Could not find a plan for emailaddress',
     'sort_help' => 'Ordered by group, type, date',
     'admin_help' => 'This Page allows you to define shifts. Save this address!',
-    'admin_subscriptions_help' => 'These people subscribed to your shifts.'
+    'admin_subscriptions_help' => 'These people subscribed to your shifts.',
+    'linksEmailSubscribers' => 'Cool you create a plan on the shiftplaner. First you should polish your plan and create all shifts. Then you can share the following link with your audience. They can subscribe themself to a shift.',
+    'linksEmailAdmin' => 'To update you plan, add one more shifts or see the subscribers, click link. Don\'t share this url, its the key to edit your plan and give access to all subscribers.',
+    'notification' => 'Mail me the links to edit and share the pan',
+    'notifyMe' => 'Send an email with the links',
+    'linksEmailEditPlan' => 'Edit the plan',
+    'linksEmailSubject' => 'Manage shiftplan: '
 ];
