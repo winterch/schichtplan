@@ -3,24 +3,14 @@
 namespace App\Models;
 
 use App\Notifications\SendLinksNotification;
-use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Foundation\Auth\Access\Authorizable;
-use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 
-class Plan extends Model implements
-    AuthenticatableContract,
-    AuthorizableContract,
-    CanResetPasswordContract
-
+class Plan extends Model
 {
-    use \Illuminate\Auth\Authenticatable, Authorizable, CanResetPassword, HasFactory, Notifiable, CanResetPassword;
+    use HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -32,7 +22,6 @@ class Plan extends Model implements
         'description',
         'contact',
         'owner_email',
-        'password',
     ];
 
     /**
@@ -41,9 +30,7 @@ class Plan extends Model implements
      * @var array
      */
     protected $hidden = [
-        'password',
         'owner_email',
-        'remember_token',
         'edit_id',
         'view_id'
     ];
@@ -75,6 +62,10 @@ class Plan extends Model implements
         return $this->hasMany(Shift::class)->orderBy('group')->orderBy('type')->orderBy('start');
     }
 
+    /**
+     * Check if any of the associated shifts has a specific type
+     * @return bool
+     */
     public function anyType()
     {
         foreach ($this->shifts as $shift) {

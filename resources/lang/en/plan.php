@@ -29,7 +29,6 @@ return [
     'recover' => 'Forgot plan link?',
     'recover_help' => 'Enter your email address to receive the admin link of your plans.',
     'successfullyRecovered' => 'If you have active plans you will receive them by email now',
-    'failedRecovered' => 'Could not find a plan for emailaddress',
     'sort_help' => 'Ordered by group, type, date',
     'admin_help' => 'This Page allows you to define shifts. Save this address!',
     'admin_subscriptions_help' => 'These people subscribed to your shifts.',

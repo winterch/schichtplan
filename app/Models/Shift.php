@@ -31,7 +31,7 @@ class Shift extends Model
      */
     public function save(array $options = [])
     {
-        // add a unique_link for newly created plans
+        // Empty types
         if(empty($this->type)) {
             $this->type = '';
         }

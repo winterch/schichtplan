@@ -31,5 +31,11 @@ return [
     'successfullyRecovered' => 'Falls du aktive Pläne hast wurden diese an dich gesendet',
     'sort_help' => 'Sortiert nach Gruppierung, Typ, Datum',
     'admin_help' => 'Auf dieser Seite kannst du Schichten definieren. Speichere diese Adresse!',
-    'admin_subscriptions_help' => 'Diese Personen haben sich auf deine Schichten eingeschrieben.'
+    'admin_subscriptions_help' => 'Diese Personen haben sich auf deine Schichten eingeschrieben.',
+    'linksEmailSubscribers' => 'Schön hast du einen Schichtplan erstellt. Als erstes solltest du deinen Schichtplan mit Leben füllen und einige Schichten erstellen. Danach kannst du folgenden Link mit deinen Freund*innen teilen. Sie können sich dann selbständig in eine der Schichten einschreiben.',
+    'linksEmailAdmin' => 'Um deinen Schichtplan zu editieren, neue Schichten hinzuzufügen und eine Liste der Helfenden zu erhalten, klick auf den folgenden Link. Diesen Link darfst du nicht teilen. Er ermöglicht es deinen Schichtplan zu verändern und alle Helfer*innen einzusehen.',
+    'notification' => 'Die Links zum Einschreiben und Editieren des Schichtplans zustellen',
+    'notifyMe' => 'Sende mir die Links',
+    'linksEmailEditPlan' => 'Schichtplan editieren',
+    'linksEmailSubject' => 'Manage dein Schichtplan: '
 ];
