@@ -21,8 +21,8 @@
                             @endif
                             <th scope="col" class="text-sm px-4 py-4 text-left">{{__('shift.title')}}</th>
                             <th scope="col" class="text-sm max-w-sm px-4 py-4 text-left">{{__('shift.description')}}</th>
-                            <th scope="col" class="text-sm px-6 py-4 text-left">{{__('shift.startDesc')}}</th>
-                            <th scope="col" class="text-sm px-4 py-4 text-left">{{__('shift.endDesc')}}</th>
+                            <th scope="col" class="text-sm px-6 py-4">{{__('shift.startDesc')}}</th>
+                            <th scope="col" class="text-sm px-4 py-4">{{__('shift.endDesc')}}</th>
                             <th scope="col" class="text-sm px-4 py-4 text-left"></th>
                             <th scope="col" class="text-sm px-4 py-4 text-left">{{__('shift.action')}}</th>
                         </tr>
@@ -35,8 +35,8 @@
                             @endif
                             <td class="text-sm px-4 py-4">{{$shift->title}}</td>
                             <td class="text-sm max-w-xs px-6 py-4">{{$shift->description}}</td>
-                            <td class="text-sm px-4 py-4">{{$shift->start}}</td>
-                            <td class="text-sm px-4 py-4">{{$shift->end}}</td>
+                            <td class="text-sm text-right px-4 py-1">{{Date::parse($shift->start)->formatLocalized("%a %d. %b '%y - %H:%M")}}</td>
+                            <td class="text-sm text-right px-4 py-1">{{Date::parse($shift->end)->formatLocalized("%a %d. %b '%y - %H:%M")}}</td>
                             <td class="text-sm px-4 py-4">
                                 {{ $shift->subscriptions->count() }}&nbsp;/&nbsp;{{ $shift->team_size }}
                                 @if($shift->subscriptions->count() > 0)
