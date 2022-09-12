@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreShiftRequest;
+use App\Http\Requests\RepetitionType;
 use App\Http\Requests\UpdateShiftRequest;
 use App\Models\Plan;
 use App\Models\Shift;
@@ -22,7 +23,8 @@ class ShiftController extends Controller
         // user needs access to plan to create a new shift
         $groups = $this->getGroups($plan);
         $shift = new Shift();
-        return view('shift.create', ['plan' => $plan, 'shift' => $shift, 'groups' => $groups]);
+        return view('shift.create', ['plan' => $plan, 'shift' => $shift, 'groups' => $groups,
+             'repetition_types' => RepetitionType::cases()], );
     }
 
     /**
@@ -37,6 +39,13 @@ class ShiftController extends Controller
         $this->auth($plan);
         $data = $request->validated();
         $plan->shifts()->create($data);
+        if ($data['repetition_type'] != RepetitionType::None) {
+            for ($i = 0; $i < $data['repetition']-1; ++$i) {
+                $data['start'] = RepetitionType::timeDiff($data['repetition_type'], $data['start']);
+                $data['end'] = RepetitionType::timeDiff($data['repetition_type'], $data['end']);
+                $plan->shifts()->create($data);
+            }
+        }
         Session::flash('info', __('shift.successfullyCreated'));
         return redirect()->route('plan.admin', ['plan' => $plan]);
     }

@@ -30,4 +30,9 @@ return [
     'successfullyDestroyed' => 'Successfully deleted shift',
     'successfullyUpdated' => 'Successfully updated shift',
     'successfullyCreated' => 'Successfully created shift',
+    'repetition' => 'Repeating',
+    'none' => 'Not repeating',
+    'daily' => 'Daily',
+    'hourly' => 'Hourly',
+    'weekly' => 'Weekly',
 ];

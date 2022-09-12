@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class StoreShiftRequest extends FormRequest
 {
@@ -22,6 +24,8 @@ class StoreShiftRequest extends FormRequest
             'start' => 'required|date|before:end',
             'end' => 'required|date|after:start',
             'team_size' => 'required|int|max:100|numeric',
+            'repetition' => 'int|min:1|max:50|numeric',
+            'repetition_type' => Rule::in(RepetitionType::cases()),
         ];
     }
 

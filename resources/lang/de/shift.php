@@ -30,4 +30,9 @@ return [
     'successfullyDestroyed' => 'Schicht gelöscht',
     'successfullyUpdated' => 'Schicht aktualisiert',
     'successfullyCreated' => 'Schicht erstellt',
+    'repetition' => 'Wiederkehrend',
+    'none' => 'Nicht wiederkehrend',
+    'daily' => 'Täglich',
+    'hourly' => 'Stündlich',
+    'weekly' => 'Wöchentlich',
 ];

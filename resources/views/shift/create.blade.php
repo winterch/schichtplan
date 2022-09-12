@@ -70,7 +70,24 @@
                 <div class="text-red-500 text-xs italic">{{ $message }}</div>
                 @enderror
             </div>
-        </div>
+           @if(!isset($shift->id))
+           <div>
+                <label for="group" class="block font-bold mb-1">{{__("shift.repetition")}}</label>
+                <input id="repetition" name="repetition" type="number" class="@error('repetition') border-red-500 @enderror text-black p-1 text-lg mb-2 border rounded" value="{{old('repetition', 1)}}">
+                @error('repetition')
+                <div class="text-red-500 text-xs italic">{{ $message }}</div>
+                @enderror
+                x
+                <select id="repetition_type" name="repetition_type" class="@error('repetition_type') border-red-500 @enderror text-black p-1 text-lg mb-2 border rounded" >
+                    @foreach($repetition_types as $type)
+                        <option value="{{$type}}" @if($type == old('repetition_type')) selected @endif>{{__("shift.".$type)}}</option>
+                    @endforeach
+                </select>
+                @error('repetition_type')
+                <div class="text-red-500 text-xs italic">{{ $message }}</div>
+                @enderror
+            </div>
+            @endif
         </div>
         <button type="submit" class="bg-green-800 hover:bg-green-600 py-2 px-4 rounded mb-4 inline-block text-white font-bold">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
