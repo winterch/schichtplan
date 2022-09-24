@@ -1,11 +1,11 @@
 <?php
 return [
     'heading' => 'Neuen Schichtplan erstellen',
-    'title' => 'Title',
+    'title' => 'Titel',
     'planDesc' => 'Beschreibung',
     'contactDesc' => 'Kontaktmöglichkeit. Achtung: öffentlich publiziert! (optional)',
-    'mail' => 'Deine Email',
-    'mailDesc' => 'Deine Email (wird nicht angezeigt)',
+    'mail' => 'Deine E-Mail',
+    'mailDesc' => 'Deine E-Mail (wird nicht angezeigt)',
     'passwordDesc' => 'Passwort',
     'samePassword' => 'Das von dir gewählte Passwort',
     'save' => 'Schichtplan speichern',
@@ -15,7 +15,7 @@ return [
     'titleRequired' => 'Ein Titel wird benötigt',
     'descriptionRequired' => 'Eine Beschreibung wird benötigt',
     'contactMax' => 'Maximum 500 Buchstaben',
-    'emailRequired' => 'Eine Email wird benötigt',
+    'emailRequired' => 'Eine E-Mail wird benötigt',
     'passwordRequired' => 'Ein Passwort wird benötigt',
     'successfullyDestroyed' => 'Schichtplan wurde gelöscht',
     'successfullyUpdated' => 'Schichtplan wurde aktualisiert',
