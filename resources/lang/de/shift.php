@@ -18,7 +18,7 @@ return [
     'manageSubscription' => 'Einschreibungen verwalten',
     'edit' => 'Bearbeiten',
     'cancel' => 'Abbrechen',
-    'optional' => 'optional',
+    'optional' => 'Optional',
     'editPlan' => 'Schichtplan bearbeiten',
     'titleRequired' => 'Ein Titel wird benötigt',
     'typeRequired' => 'Ein Type wird benötigt',

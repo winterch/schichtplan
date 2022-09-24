@@ -18,7 +18,7 @@ return [
     'manageSubscription' => 'Manage subscriptions',
     'edit' => 'Edit',
     'cancel' => 'Cancel',
-    'optional' => 'optional',
+    'optional' => 'Optional',
     'editPlan' => 'Edit plan details',
     'titleRequired' => 'Title is required',
     'typeRequired' => 'Type is required',
