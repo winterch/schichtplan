@@ -17,6 +17,6 @@ return [
     'sent' => 'Du bekommst ein Passwort-Reset-Link per email zugestellt.',
     'throttled' => 'Bitte warten bevor du es wieder versuchst',
     'token' => 'Das Passwort Reset Token ist ungültig.',
-    'user' => "Wir können keinen Schitplan für deine Emailadresse finden.",
+    'user' => "Wir können keinen Schitplan für deine E-mailadresse finden.",
     'credentials' => "Deine Angaben stimmen nicht"
 ];
