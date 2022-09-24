@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'failed' => 'Anmedlung fehlgeschlage.',
+    'failed' => 'Anmeldung fehlgeschlagen',
     'password' => 'Passwort',
     'passwordConfirmation' => 'Passwort bestätigen',
     'email' => 'Email',
