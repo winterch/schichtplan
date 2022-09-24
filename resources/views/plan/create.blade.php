@@ -8,7 +8,7 @@
             <form method="post" action="{{route('plan.store')}}">
         @endif
             @csrf
-            <div class="grid grid-rows-3 grid-flow-col gap-4">
+            <div class="grid md:grid-rows-3 md:grid-flow-col md:gap-4">
                 <div>
                     <label for="title" class="block text-gray-700 font-bold mb-1">{{__("plan.title")}}</label>
                     <input id="title" name="title" type="text" class="@error('title') border-red-500 @enderror w-full block text-black p-1 text-lg mb-2 border rounded" value="{{old('title', $plan->title)}}">

@@ -1,7 +1,7 @@
-<div class="flex justify-center pt-8 md:justify-end sm:pt-0">
+<div class="flex sm:pt-8 sm:justify-end pt-0 justify-end">
 @foreach($available_locales as $locale_name => $available_locale)
         @if($available_locale !== $current_locale)
-            <a class="bg-green-800 hover:bg-green-600 py-2 px-4 rounded mr-4 text-white font-bold"
+            <a class="bg-green-800 hover:bg-green-600 py-2 px-4 rounded md:mr-4 text-white font-bold"
                href="/language/{{ $available_locale }}">
                 <span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">

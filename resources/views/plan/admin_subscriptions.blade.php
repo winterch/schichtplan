@@ -33,7 +33,7 @@
         @foreach($plan->shifts as $index => $shift)
             {{--  Header of a new group --}}
             @if($loop->first || ($plan->shifts[$index - 1]->group !== $shift->group))
-                       <thead class="border-b bg-red-50">
+                    <thead class="border-b bg-red-50">
                     <tr>
                         <th class="text-sm px-0 py-4 text-left"></th>
                         <th class="text-sm px-0 py-4 text-left"></th>
@@ -42,7 +42,7 @@
                         <th class="text-sm px-0 py-4 text-left">{{__('subscription.phone')}}</th>
                         <th class="text-sm px-0 py-4 text-left">{{__('subscription.email')}}</th>
                         <th class="text-sm px-0 py-4 text-left">{{__('subscription.comment')}}</th>
-                        <th class="text-sm px-0 py-4 text-left" colspan=2>{{__('shift.action')}}</th>
+                        <th class="text-sm px-0 py-4 text-left" colspan="2">{{__('shift.action')}}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -59,7 +59,7 @@
                         <td class="text-sm text-right px-4 py-1">{{Date::parse($shift->start)->formatLocalized("%a %d. %b '%y - %H:%M")}}</td>
                         <td class="text-sm text-right px-4 py-1">{{Date::parse($shift->end)->formatLocalized("%a %d. %b '%y - %H:%M")}}</td>
                     @else
-                        <td colspan=3></td>
+                        <td colspan="3"></td>
                     @endif
 
                         <td class="px-4">
@@ -108,7 +108,7 @@
                 @else
                   <td colspan=3></td>
                 @endif
-              <td class="bg-red-100 px-4" colspan=6>
+              <td class="bg-red-100 px-4" colspan="6">
                 <b>
                 {{$shift->team_size - $shift->subscriptions->count()}} {{__('subscription.missing')}}
                 </b>

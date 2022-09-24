@@ -11,7 +11,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-<div class="container mr-auto ml-auto mt-8">
+<div class="container sm:mr-auto sm:ml-auto md:mt-8 p-2">
     @include('partials.language_switcher')
     @yield('body')
 </div>

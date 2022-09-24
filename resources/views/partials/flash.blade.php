@@ -1,11 +1,11 @@
 @if(Session::has('fail'))
-    <div class="m-6 py-6 w-full bg-red-50 border border-red-500 p-4 rounded">
+    <div class="sm:m-6 sm:py-6 w-full bg-red-50 border border-red-500 p-4 my-2 rounded">
         {{Session::get('fail')}}
     </div>
 @endif
 
 @if(Session::has('info'))
-    <div class="m-6 py-6 w-full bg-blue-50 border border-blue-500 p-4 rounded text-xl">
+    <div class="sm:m-6 sm:py-6 w-full bg-blue-50 border border-blue-500 p-4 my-2 rounded text-xl">
         {{Session::get('info')}}
     </div>
 @endif
