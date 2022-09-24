@@ -24,7 +24,7 @@ return [
     'typeRequired' => 'Ein Type wird benötigt',
     'startRequired' => 'Ein Startdatum wird benötigt',
     'startBefore' => 'Das Startdatum muss vor dem Enddatum liegen',
-    'endRequired' => 'Ein Enddatum wird bennötit',
+    'endRequired' => 'Ein Enddatum wird benötigt',
     'endAfter' => 'Das Enddatum muss nach dem Startdatum liegen',
     'team_sizeRequired' => 'Die Anzahl Helfer*innen wird benötigt',
     'successfullyDestroyed' => 'Schicht gelöscht',
