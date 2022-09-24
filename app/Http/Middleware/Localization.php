@@ -21,6 +21,12 @@ class Localization
     {
         if (Session::has('locale')) {
             App::setLocale(Session::get('locale'));
+            // Small hack to set the LC_TIME. de or en does no work on all systems
+            $local = "en_US";
+            if(Session::get('locale') === "de") {
+                $local = "de_DE";
+            }
+            setlocale(LC_TIME, $local);
         }
         return $next($request);
     }

@@ -105,7 +105,7 @@ return [
     */
     'available_locales' => [
         'English' => 'en',
-        'Deustch' => 'de',
+        'Deutsch' => 'de',
     ],
 
     /*
