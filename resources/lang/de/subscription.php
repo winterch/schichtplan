@@ -14,7 +14,7 @@ return [
     'missing' => 'fehlend',
     'nameRequired' => 'Ein Name wird benötigt',
     'phoneRegex' => 'Die Telefonnummer ist ungültig. Nur Zahlen verwenden.',
-    'emailRequired' => 'Eine Emai wird benötigt',
+    'emailRequired' => 'Eine Email wird benötigt',
     'commentMax' => 'Maximum 500 Buchstaben',
     'login' => 'Einschreibungen verwalten',
     'successfullyDestroyed' => 'Anmeldung gelöscht',
