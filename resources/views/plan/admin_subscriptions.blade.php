@@ -103,8 +103,8 @@
                 @endif
                 @if ($shift->subscriptions->count() === 0)
                   <td class="text-left text-sm px-4 py-1">{{$shift->title}}</td>
-                  <td class="text-left text-sm px-4 py-1">{{$shift->start}}</td>
-                  <td class="text-left text-sm px-4 py-1">{{$shift->end}}</td>
+                  <td class="text-sm text-right px-4 py-1">{{Date::parse($shift->start)->formatLocalized("%a %d. %b '%y - %H:%M")}}</td>
+                  <td class="text-sm text-right px-4 py-1">{{Date::parse($shift->end)->formatLocalized("%a %d. %b '%y - %H:%M")}}</td>
                 @else
                   <td colspan=3></td>
                 @endif
