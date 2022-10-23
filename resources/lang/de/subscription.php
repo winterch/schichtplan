@@ -20,5 +20,5 @@ return [
     'successfullyDestroyed' => 'Anmeldung gelöscht',
     'successfullyUpdated' => 'Anmeldung aktualisiert',
     'successfullyCreated' => 'Anmeldung erstellt',
-
+    'enoughSubscription' => 'Alle Schichten sind bereits besetzt'
 ];
