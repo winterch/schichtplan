@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class {{ class }} extends Migration
+class AlterSubcriptionPhoneNullable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class {{ class }} extends Migration
      */
     public function up()
     {
-        Schema::table('{{ table }}', function (Blueprint $table) {
-            //
+        Schema::table('subscriptions', function (Blueprint $table) {
+            $table->string('phone', 20)->nullable(true)->change();
         });
     }
 
@@ -25,8 +25,8 @@ class {{ class }} extends Migration
      */
     public function down()
     {
-        Schema::table('{{ table }}', function (Blueprint $table) {
-            //
+        Schema::table('subscriptions', function (Blueprint $table) {
+            $table->string('phone', 20)->nullable(false)->change();
         });
     }
 }
