@@ -51,6 +51,11 @@
                 </svg>
                 {{__('plan.save')}}
             </button>
+            @if(isset($plan->id) && $plan->id > 0)
+                <a class="bg-green-800 hover:bg-green-600 py-2 px-4 rounded mb-4 inline-block text-white font-bold" href="{{ route('plan.admin', $plan) }}">
+                    {{__('plan.cancel')}}
+                </a>
+            @endif
         </form>
     </div>
 @endsection

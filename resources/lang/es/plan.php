@@ -9,6 +9,7 @@ return [
     'passwordDesc' => 'Contraseña',
     'samePassword' => 'La contraseña que elegiste',
     'save' => 'Guardar plan de turnos',
+    'cancel' => 'Cancelar',
     'unsubscribe' => 'Darse de baja',
     'subscribe' => 'Suscribir',
     'edit' => 'Editar descripción del plan',

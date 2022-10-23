@@ -9,6 +9,7 @@ return [
     'passwordDesc' => 'Password',
     'samePassword' => 'The password will be the same',
     'save' => 'Save plan',
+    'cancel' => 'Cancel',
     'unsubscribe' => 'Unsubscribe',
     'subscribe' => 'Subscribe',
     'edit' => 'Edit Plan Description',
