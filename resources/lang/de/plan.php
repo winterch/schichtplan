@@ -9,6 +9,7 @@ return [
     'passwordDesc' => 'Passwort',
     'samePassword' => 'Das von dir gewählte Passwort',
     'save' => 'Schichtplan speichern',
+    'cancel' => 'Abbrechen',
     'unsubscribe' => 'Ausschreiben',
     'subscribe' => 'Einschreiben',
     'edit' => 'Planbeschreibung Bearbeiten',
