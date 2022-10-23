@@ -63,7 +63,7 @@
                 <label for="group" class="block font-bold mb-1">{{__("shift.group")}}</label>
                 <select id="group" name="group" class="@error('group') border-red-500 @enderror w-full block text-black p-1 text-lg mb-2 border rounded" >
                     @for($i = 0; $i <= $groups; $i++)
-                        <option value="{{$i}}" @if($i == $shift->group) selected @endif>{{$i}}</option>
+                        <option value="{{$i}}" @if($i == $shift->group || $i == old('group')) selected @endif>{{$i}}</option>
                     @endfor
                 </select>
                 @error('group')
