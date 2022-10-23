@@ -35,6 +35,11 @@ class SubscriptionController extends Controller
      */
     public function store(StoreSubscriptionRequest $request, Plan $plan, Shift $shift)
     {
+        // check if there are already enough subscriptions
+        if($shift->team_size <= $shift->subscriptions()->count()) {
+            Session::flash('fail', __('subscription.enoughSubscription'));
+            return redirect()->route('plan.show', ['plan' => $plan]);
+        }
         // no specific authorization - everybody with the link can create a subscription
         $data = $request->validated();
         $subscription = $shift->subscriptions()->create($data);

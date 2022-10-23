@@ -20,5 +20,5 @@ return [
     'successfullyDestroyed' => 'Successfully unsubscribed from shift',
     'successfullyUpdated' => 'Successfully updated subscription',
     'successfullyCreated' => 'Successfully subscribed to shift',
-
+    'enoughSubscription' => "All shifts are taken"
 ];

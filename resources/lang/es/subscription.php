@@ -20,5 +20,5 @@ return [
     'successfullyDestroyed' => 'Registro eliminado',
     'successfullyUpdated' => 'Registro actualizado',
     'successfullyCreated' => 'Registro creado',
-
+    'enoughSubscription' => 'Todos los turnos se toman'
 ];
