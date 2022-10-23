@@ -1,5 +1,8 @@
 import flatpickr from "flatpickr";
 
+/**
+ * Add flatpickr for events
+ */
 function addEvents() {
     const e = new Date();
     e.setHours(0);
@@ -27,4 +30,22 @@ function addEvents() {
     }
 }
 
+/**
+ * Add a confirmation dialog before deleting a shift
+ */
+function deleteShift() {
+    const forms = document.querySelectorAll('form.delete-shift');
+    if(forms.length > 0) {
+        forms.forEach((form) => {
+            const msg = form.dataset['confirmDeleteMsg'];
+            form.addEventListener('submit', function (event) {
+                if (!confirm(msg)) {
+                    event.preventDefault();
+                }
+            });
+        });
+    }
+}
+
 document.addEventListener('DOMContentLoaded', addEvents);
+document.addEventListener('DOMContentLoaded', deleteShift);

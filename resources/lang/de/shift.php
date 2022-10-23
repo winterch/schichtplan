@@ -35,4 +35,5 @@ return [
     'daily' => 'Täglich',
     'hourly' => 'Stündlich',
     'weekly' => 'Wöchentlich',
+    'confirmDelete' => 'Bist du sicher, dass du die Schicht löschen willst?'
 ];

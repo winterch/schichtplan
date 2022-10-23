@@ -35,4 +35,5 @@ return [
     'daily' => 'Daily',
     'hourly' => 'Hourly',
     'weekly' => 'Weekly',
+    'confirmDelete' => 'Are you sure to delete this shift?'
 ];

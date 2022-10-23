@@ -35,4 +35,5 @@ return [
     'daily' => 'todos los días',
     'hourly' => 'todas las horas',
     'weekly' => 'todas las semanas',
+    'confirmDelete' => '¿Estás seguro de que quieres borrar el turno?'
 ];
