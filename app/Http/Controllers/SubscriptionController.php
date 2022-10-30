@@ -7,7 +7,6 @@ use App\Models\Plan;
 use App\Models\Shift;
 use App\Models\Subscription;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 class SubscriptionController extends Controller
@@ -21,6 +20,8 @@ class SubscriptionController extends Controller
      * @return Response
      */
     public function create(Plan $plan, Shift $shift)   {
+        // anonymous users can just add a shift for the authorized plan
+        $this->authSubscriber($plan, $shift);
         $subscription = new Subscription();
         return view('subscription.create', ['plan' => $plan, 'shift' => $shift, 'subscription' => $subscription]);
     }
@@ -35,17 +36,15 @@ class SubscriptionController extends Controller
      */
     public function store(StoreSubscriptionRequest $request, Plan $plan, Shift $shift)
     {
+        // anonymous users can just add a shift for the authorized plan
+        $this->authSubscriber($plan, $shift);
         // check if there are already enough subscriptions
         if($shift->team_size <= $shift->subscriptions()->count()) {
             Session::flash('fail', __('subscription.enoughSubscription'));
             return redirect()->route('plan.show', ['plan' => $plan]);
         }
-        // no specific authorization - everybody with the link can create a subscription
         $data = $request->validated();
-        $subscription = $shift->subscriptions()->create($data);
-        // An anonymous user can edit her/his subscription as long as he/she use the same session
-        // For that reason we save those subscription in a session
-        Session::push('subscriptions', $subscription->id);
+        $shift->subscriptions()->create($data);
         Session::flash('info', __('subscription.successfullyCreated'));
         return redirect()->route('plan.show', ['plan' => $plan]);
     }
@@ -61,6 +60,7 @@ class SubscriptionController extends Controller
     public function edit(Plan $plan, Shift $shift, Subscription $subscription)
     {
         $this->auth($plan);
+        $this->authorize('update', $subscription);
         return view('subscription.create', ['plan' => $plan, 'shift' => $shift, 'subscription' => $subscription]);
     }
 
@@ -76,6 +76,7 @@ class SubscriptionController extends Controller
     public function update(StoreSubscriptionRequest $request, Plan $plan, Shift $shift, Subscription $subscription)
     {
         $this->auth($plan);
+        $this->authorize('update', $subscription);
         $data = $request->validated();
         $subscription->update($data);
         Session::flash('info', __('subscription.successfullyUpdated'));
@@ -93,9 +94,8 @@ class SubscriptionController extends Controller
     public function destroy(Plan $plan, Shift $shift, Subscription $subscription)
     {
         $this->auth($plan);
+        $this->authorize('forceDelete', $subscription);
         $subscription->forceDelete();
-        // todo: check if this is working
-        Session::forget('subscriptions.'.$subscription->id);
         Session::flash('info', __('subscription.successfullyDestroyed'));
         return redirect()->route('plan.admin', ['plan' => $plan]);
     }

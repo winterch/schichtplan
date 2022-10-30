@@ -14,6 +14,17 @@ class ShiftPolicy
     use HandlesAuthorization;
 
     /**
+     * Determine whether the user can create a shit.
+     *
+     * @param  \App\Models\Plan  $plan
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function create(Plan $plan)
+    {
+        return true;
+    }
+
+    /**
      * Determine whether the user can update the model.
      *
      * @param Plan $userPlan
