@@ -5,12 +5,18 @@ namespace App\Models;
 use App\Notifications\SendLinksNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Foundation\Auth\Access\Authorizable;
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 
-class Plan extends Model
-{
-    use HasFactory, Notifiable;
+class Plan extends Model implements
+    AuthenticatableContract,
+    AuthorizableContract {
+
+    use  Authorizable, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -94,5 +100,34 @@ class Plan extends Model
         $adminLink = route('plan.admin', ['plan' => $this->edit_id]);
         $viewLink = route('plan.show', ['plan' => $this->view_id]);
         $this->notify(new SendLinksNotification($this->title, $adminLink, $viewLink));
+    }
+
+    public function getAuthIdentifierName()
+    {
+        $this->edit_id;
+    }
+
+    public function getAuthIdentifier()
+    {
+        $this->edit_id;
+    }
+
+    public function getAuthPassword()
+    {
+        return null;
+    }
+
+    public function getRememberToken()
+    {
+        return null;
+    }
+
+    public function setRememberToken($value)
+    {
+    }
+
+    public function getRememberTokenName()
+    {
+        return null;
     }
 }

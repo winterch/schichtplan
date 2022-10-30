@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreShiftRequest;
 use App\Http\Requests\RepetitionType;
-use App\Http\Requests\UpdateShiftRequest;
 use App\Models\Plan;
 use App\Models\Shift;
 use Illuminate\Http\Response;
@@ -15,12 +14,15 @@ class ShiftController extends Controller
     /**
      * Show the form for creating a new shift.
      *
+     * @param Plan $plan
      * @return Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function create(Plan $plan)
     {
-        $this->auth($plan);
         // user needs access to plan to create a new shift
+        $this->auth($plan);
+        $this->authorize("create", Shift::class);
         $groups = $this->getGroups($plan);
         $shift = new Shift();
         return view('shift.create', ['plan' => $plan, 'shift' => $shift, 'groups' => $groups,
@@ -37,6 +39,7 @@ class ShiftController extends Controller
     public function store(StoreShiftRequest $request, Plan $plan)
     {
         $this->auth($plan);
+        $this->authorize("create", Shift::class);
         $data = $request->validated();
         $plan->shifts()->create($data);
         if ($data['repetition_type'] != RepetitionType::None) {
@@ -60,6 +63,7 @@ class ShiftController extends Controller
     public function edit(Plan $plan, Shift $shift)
     {
         $this->auth($plan);
+        $this->authorize('update', $shift);
         $groups = $this->getGroups($plan);
         return view('shift.create', ['shift' => $shift, 'plan' => $plan, 'groups' => $groups]);
     }
@@ -75,6 +79,7 @@ class ShiftController extends Controller
     public function update(StoreShiftRequest $request, Plan $plan, Shift $shift)
     {
         $this->auth($plan);
+        $this->authorize('update',$shift);
         $data = $request->validated();
         $shift->update($data);
         Session::flash('info', __('shift.successfullyUpdated'));
@@ -91,6 +96,7 @@ class ShiftController extends Controller
     public function destroy(Plan $plan, Shift $shift)
     {
         $this->auth($plan);
+        $this->authorize('forceDelete', $shift);
         $shift->forceDelete();
         Session::flash('info', __('shift.successfullyDestroyed'));
         return redirect()->route('plan.admin', ['plan' => $plan]);

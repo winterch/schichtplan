@@ -83,6 +83,7 @@ class PlanController extends Controller
         $plans = Plan::where('owner_email', $email)->get();
         if(count($plans) > 0) {
             foreach ($plans as $plan) {
+                // todo: send just one email
                 $plan->sendLinksNotification();
             }
         }
@@ -93,7 +94,7 @@ class PlanController extends Controller
 
     /**
      * Cleanup old plans.
-     *
+     * todo: we may want to delete this
      */
     public function cron()
     {
@@ -118,6 +119,7 @@ class PlanController extends Controller
     public function admin(Plan $plan)
     {
         $this->auth($plan);
+        $this->authorize("view", $plan);
         return view('plan.admin')->with(['plan' => $plan]);
     }
 
@@ -130,6 +132,7 @@ class PlanController extends Controller
     public function admin_subscriptions(Plan $plan)
     {
         $this->auth($plan);
+        $this->authorize("view", $plan);
         return view('plan.admin_subscriptions')->with(['plan' => $plan]);
     }
 
@@ -142,6 +145,7 @@ class PlanController extends Controller
     public function edit(Plan $plan)
     {
         $this->auth($plan);
+        $this->authorize("update", $plan);
         return view('plan.create', ['plan' => $plan]);
     }
 
@@ -155,11 +159,8 @@ class PlanController extends Controller
     public function update(UpdatePlanRequest $request, Plan $plan)
     {
         $this->auth($plan);
+        $this->authorize("update", $plan);
         $data = $request->validated();
-        // prevent to be overridden
-        unset($data['edit_id']);
-        unset($data['view_id']);
-        unset($data['id']);
         $plan->update($data);
         // redirect to shifts overview
         Session::flash('info', __('plan.successfullyUpdated'));
@@ -175,6 +176,7 @@ class PlanController extends Controller
     public function destroy(Plan $plan)
     {
         $this->auth($plan);
+        $this->authorize("forceDelete", $plan);
         $plan->forceDelete();
         Session::flash('info', __('plan.successfullyDestroyed'));
         return \redirect()->route('home');
