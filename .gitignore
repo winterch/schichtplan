@@ -15,5 +15,3 @@ yarn-error.log
 /.idea
 /.vscode
 *.swp
-public/css/app.css
-public/js/app.js

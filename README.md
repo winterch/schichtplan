@@ -78,6 +78,12 @@ npm run dev
 php artisan serve
 ```
 
+If you change the design make sure you also commit the built assets.
+```bash
+# Build production assets
+npm run prod
+```
+
 ## Containerized development env
 
 ```bash
