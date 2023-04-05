@@ -36,5 +36,6 @@ return [
     'linksEmailAdmin' => 'Um deinen Schichtplan zu editieren, neue Schichten hinzuzufügen und eine Liste der Helfenden zu erhalten, klick auf den folgenden Link. Diesen Link darfst du nicht teilen. Er ermöglicht es deinen Schichtplan zu verändern und alle Helfer*innen einzusehen.',
     'notifyMe' => 'Sende mir Links zum späteren Bearbeiten des Schichtplans',
     'linksEmailEditPlan' => 'Schichtplan editieren',
-    'linksEmailSubject' => 'Manage dein Schichtplan: '
+    'linksEmailSubject' => 'Manage dein Schichtplan: ',
+    'allowUnsubscribe' => 'Erlaube Teilnehmenden sich selbständig wieder auszutragen',
 ];

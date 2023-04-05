@@ -117,4 +117,8 @@ Route::get('/s/{plan:view_id}/shift/{shift}', [SubscriptionController::class, 'c
 Route::post('/s/{plan:view_id}/shift/{shift}', [SubscriptionController::class, 'store'])
     ->name('plan.shift.subscription.store');
 
+Route::post('/s/{plan:view_id}/shift/{shift}/remove', [SubscriptionController::class, 'doRemove'])->name('plan.subscription.doRemove');
+Route::get('/s/{plan:view_id}/shift/{shift}/remove', [SubscriptionController::class, 'remove'])->name('plan.subscription.remove');
 
+Route::post('/s/{plan:view_id}/shift/{shift}/remove/{confirmation}', [SubscriptionController::class, 'doConfirmRemove'])->name('plan.subscription.doConfirmRemove');
+Route::get('/s/{plan:view_id}/shift/{shift}/remove/{confirmation}', [SubscriptionController::class, 'confirmRemove'])->name('plan.subscription.confirmRemove');

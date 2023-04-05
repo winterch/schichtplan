@@ -18,6 +18,7 @@ class StoreSubscriptionRequest extends FormRequest
             'name' => 'required|max:100',
             'email' => 'required|email|max:100',
             'phone' => 'nullable|regex:/[0-9\s]{10,15}/',
+            'notification' => 'boolean',
             'comment' => 'max:500',
         ];
     }

@@ -93,7 +93,7 @@ class PlanController extends Controller
     }
 
     /**
-     * Cleanup old plans.
+     * Cleanup old plans and notify.
      * todo: we may want to delete this
      */
     public function cron()
@@ -107,6 +107,25 @@ class PlanController extends Controller
           $plan = Plan::findOrFail($p->id);
           if ($plan->shifts->count() === 0)
             $plan->delete();
+        }
+        $done = array();
+        $toNotify = DB::table('shifts')
+          ->whereDate('start', '=', date('Y-m-d', strtotime('+1 day')))
+          ->where('notified', '<>', '1')->get();
+        foreach ($toNotify as $n) {
+          $shift = Shift::findOrFail($n->id);
+          $planid = $shift->plan()->get()[0]->id;
+          $done[$planid] = array();
+          foreach ($shift->subscriptions()->get() as $sub) {
+            if ($sub->notification) {
+              if (!isset($done[$planid][$sub->email])) {
+                $sub->sendReminder();
+                $done[$planid][$sub->email] = true;
+              }
+            }
+          }
+          $shift->notified = true;
+          $shift->save();
         }
     }
 
@@ -161,6 +180,9 @@ class PlanController extends Controller
         $this->auth($plan);
         $this->authorize("update", $plan);
         $data = $request->validated();
+        if (!isset($data['allow_unsubscribe'])) {
+          $data['allow_unsubscribe'] = false;
+        }
         $plan->update($data);
         // redirect to shifts overview
         Session::flash('info', __('plan.successfullyUpdated'));

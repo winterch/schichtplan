@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreSubscriptionRequest;
+use App\Http\Requests\RemoveSubscriptionRequest;
 use App\Models\Plan;
 use App\Models\Shift;
 use App\Models\Subscription;
@@ -23,7 +24,49 @@ class SubscriptionController extends Controller
         // anonymous users can just add a shift for the authorized plan
         $this->authSubscriber($plan, $shift);
         $subscription = new Subscription();
+        $subscription->notification = true;
         return view('subscription.create', ['plan' => $plan, 'shift' => $shift, 'subscription' => $subscription]);
+    }
+
+    /*
+     * Form for unsubscribe via email
+     */
+    public function remove(Plan $plan, Shift $shift)   {
+        $this->authSubscriber($plan, $shift);
+        return view('subscription.remove', ['plan' => $plan, 'shift' => $shift]);
+    }
+
+    public function doRemove(RemoveSubscriptionRequest $request, Plan $plan, Shift $shift)   {
+        $this->authSubscriber($plan, $shift);
+        $data = $request->validated();
+        foreach ($shift->subscriptions as $sub) {
+          if ($sub->email == $data['email']) {
+            $sub->sendUnsubscribeConfirmation();
+          }
+        }
+        Session::flash('info', __('subscription.removeEmail'));
+        return redirect()->route('plan.show', ['plan' => $plan]);
+    }
+
+    /*
+     * Confirm unsubscribe link
+     */
+    public function confirmRemove(Plan $plan, Shift $shift, string $confirmation)   {
+        $this->authSubscriber($plan, $shift);
+        return view('subscription.confirmRemove',
+          ['plan' => $plan, 'shift' => $shift, 'confirmation' => $confirmation]);
+    }
+    public function doConfirmRemove(Plan $plan, Shift $shift, string $confirmation)   {
+        $this->authSubscriber($plan, $shift);
+        if ($plan->allow_unsubscribe) {
+          foreach ($shift->subscriptions as $sub) {
+            if ($sub->confirmation == $confirmation) {
+              $sub->delete();
+              Session::flash('info', __('subscription.successfullyRemoved'));
+            }
+          }
+        }
+        return redirect()->route('plan.show', ['plan' => $plan]);
     }
 
     /**
@@ -78,9 +121,12 @@ class SubscriptionController extends Controller
         $this->auth($plan);
         $this->authorize('update', $subscription);
         $data = $request->validated();
+        if (!isset($data['notification'])) {
+          $data['notification'] = false;
+        }
         $subscription->update($data);
         Session::flash('info', __('subscription.successfullyUpdated'));
-        return redirect()->route('plan.admin', ['plan' => $plan]);
+        return redirect()->route('plan.admin_subscriptions', ['plan' => $plan]);
     }
 
     /**

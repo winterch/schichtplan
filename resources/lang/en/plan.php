@@ -36,5 +36,6 @@ return [
     'linksEmailAdmin' => 'To update you plan, add one more shifts or see the subscribers, click link. Don\'t share this url, its the key to edit your plan and give access to all subscribers.',
     'notifyMe' => 'Send me links to edit the plan later',
     'linksEmailEditPlan' => 'Edit the plan',
-    'linksEmailSubject' => 'Manage shiftplan: '
+    'linksEmailSubject' => 'Manage shiftplan: ',
+    'allowUnsubscribe' => 'Allow people to unsubsribe from their shifts themselves.'
 ];
