@@ -10,7 +10,7 @@ Schichtplan was original developed by [o](https://code.immerda.ch/o) with [cakep
 
 You need to install the dependencies to run schichtplaner.
 ```bash
-composer install
+./setup.sh
 ```
 
 ## Configure
@@ -52,7 +52,7 @@ You should register a cronjob to cleanup plans without activity. For more inform
 * * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1```
 ```
 ## Upgrade
-To upgrade from an older version of schichtplan (< 2.0) you need to delete all old files and then upload the new one. Configure your database credentials and run the installation step. This should migrate your database tables. After this step everything should work as excepted, if not please open an issue.
+There is no upgrade path from older version of schichtplan (< 2.0).
 
 ## Commands
 There is a command to clean up old plans. Most of the time you want to run this in a schedule and don't need to invoke it directly.
@@ -64,31 +64,25 @@ php artisan schichtplan:cleanup
 If you find errors please open an issue or send a pull request!
 
 To start devloping, clone the repo, install the dependencies and copy the `.env.example` to .env. You want to check the values in the `.env` file, before starting to develop.
-```bash
-# run dev server
-php artisan serve
-```
-You may need the frontend dependencies as well to make changes at the design.
+
+You need the frontend dependencies as well.
 ```bash
 # install frontedn dependencies (CSS/Bootstrap/JS)
 npm install
 # Build frontend assets
 npm run dev
 ```
-If you change the design make sure you also commit the built assets.
+
 ```bash
-# Build production assets 
-npm run prod
+# run dev server
+php artisan serve
 ```
 
 ## Containerized development env
 
 ```bash
+./setup.sh
 CR=podman
-$CR run --rm -it -v .:/app docker.io/library/composer install
-sqlite3 database/database.sqlite "VACUUM;"
-$CR run --rm --env-file=.env -it -v .:/app docker.io/library/php:8 bash -c "cd /app && php artisan migrate"
-$CR run --rm --entrypoint bash -it -v .:/app docker.io/library/node -c 'cd /app && npm install && npm run dev'
 $CR run --rm --env-file=.env --net=host -p 8000:8000 -it -v .:/app docker.io/library/php:8 bash -c "cd /app && php artisan serve"
 ```
 
