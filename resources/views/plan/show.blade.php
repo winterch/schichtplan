@@ -8,17 +8,21 @@
     @else
         @foreach($plan->shifts as $index => $shift)
             {{--  Header of a new group --}}
-            @if($loop->first || ($plan->shifts[$index - 1]->group !== $shift->group))
+            @if($loop->first || ($plan->shifts[$index - 1]->type !== $shift->type))
              <div class="flex flex-col">
                <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
                  <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
                    <div class="overflow-x-auto">
                      <table class="min-w-full">
+                       @if($shift->type !== "")
+                       <thead class="">
+                         <tr class=""><td colspan="6" class="pt-10 bg-green-100 px-0 py-4 text-center">
+                           <b>{{ $shift->type }}</b>
+                         </td></tr>
+                       </thead>
+                       @endif
                        <thead class="bg-green-50">
                         <tr>
-                            @if($plan->anyType())
-                            <th scope="col" class="text-sm px-2 py-4 text-left">{{__('shift.type')}}</th>
-                            @endif
                             <th scope="col" class="text-sm px-4 py-4 text-left">{{__('shift.title')}}</th>
                             <th scope="col" class="text-sm max-w-sm px-4 py-4 text-left">{{__('shift.description')}}</th>
                             <th scope="col" class="text-sm px-6 py-4">{{__('shift.startDesc')}}</th>
@@ -30,9 +34,6 @@
                         <tbody>
                         @endif
                         <tr class="border-b">
-                            @if($plan->anyType())
-                            <td class="text-sm px-0 py-4">{{$shift->type}}</td>
-                            @endif
                             <td class="text-sm px-4 py-4">{{$shift->title}}</td>
                             <td class="text-sm max-w-xs px-6 py-4">{{$shift->description}}</td>
                             <td class="text-sm text-right px-4 py-1">{{Date::parse($shift->start)->formatLocalized("%a %d. %b '%y - %H:%M")}}</td>

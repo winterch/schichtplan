@@ -2,7 +2,14 @@
 @section('body')
     @include('partials.flash')
 
-    <h1 class="text-3xl mb-2">{{ $plan->title }}</h1>
+    <div class="text-3xl mb-2">{{ $plan->title }}
+      <a class="bg-green-800 hover:bg-green-600 py-1 px-2 rounded mb-4 inline-block text-white font-bold align-middle" href="{{route('plan.edit', ['plan' => $plan])}}">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+      </svg>
+      </a>
+    </div>
+
 
     <div class="py-4">
       {{ __('plan.admin_help') }}
@@ -50,10 +57,16 @@
               <table class="min-w-full">
         @foreach($plan->shifts as $index => $shift)
             {{--  Header of a new group --}}
-            @if($loop->first || ($plan->shifts[$index - 1]->group !== $shift->group))
-                       <thead class="border-b bg-red-50">
+            @if($loop->first || ($plan->shifts[$index - 1]->type !== $shift->type))
+              @if($shift->type !== "")
+                <thead class="">
+                <tr><td colspan="6" class="bg-green-100 pt-10 px-0 py-4 text-center">
+                  <b>{{ $shift->type }}</b>
+                </td></tr>
+                </thead>
+              @endif
+              <thead class="border-b bg-red-50">
                     <tr>
-                        <th class="text-sm px-2 py-4 text-left">{{__('shift.type')}}</th>
                         <th class="text-sm px-0 py-4 text-left">{{__('shift.title')}}</th>
                         <th class="text-sm px-0 py-4 text-left">{{__('shift.description')}}</th>
                         <th class="text-sm px-0 py-4">{{__('shift.startDesc')}}</th>
@@ -69,7 +82,6 @@
                     @else
                       <tr class="bg-gray-200">
                     @endif
-                        <td class="text-sm px-4 py-1">{{$shift->type}}</td>
                         <td class="text-sm px-4 py-1">{{$shift->title}}</td>
                         <td class="text-sm px-4 py-1">{{$shift->description}}</td>
                         <td class="text-sm text-right px-4 py-1">{{Date::parse($shift->start)->formatLocalized("%a %d. %b '%y - %H:%M")}}</td>
@@ -111,11 +123,5 @@
 
     <br>
     <br>
-    <a class="bg-green-800 hover:bg-green-600 py-2 px-4 rounded mb-4 inline-block text-white font-bold align-middle" href="{{route('plan.edit', ['plan' => $plan])}}">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-        </svg>
-        {{__('plan.edit')}}
-    </a>
 
 @endsection
