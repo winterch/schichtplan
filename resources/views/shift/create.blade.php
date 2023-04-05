@@ -12,7 +12,7 @@
         <form method="post" action="{{route('plan.shift.store', ['plan' => $plan])}}">
     @endif
         @csrf
-        <div class="grid grid-rows-3 grid-flow-row gap-4 md:grid-flow-col">
+        <div class="grid grid-rows-6 grid-flow-row gap-4 md:grid-flow-col">
             <div>
                 <label for="title" class="block text-gray-700 font-bold mb-1">{{__("shift.title")}}</label>
                 <input id="title" name="title" type="text" class="@error('title') border-red-500 @enderror w-full block text-black p-1 text-lg mb-2 border rounded" value="{{old('title', $shift->title)}}">
@@ -29,14 +29,14 @@
             </div>
             <div>
                 <label for="start" class="block text-gray-700 font-bold mb-1">{{__("shift.startDesc")}}</label>
-                <input id="start" name="start" type="date" class="@error('start') border-red-500 @enderror datepicker w-full block text-black p-1 text-lg mb-2 border rounded" value="{{old('start', $shift->start)}}">
+                <input id="start" name="start" type="datetime" class="@error('start') border-red-500 @enderror datepicker w-full block text-black p-1 text-lg mb-2 border rounded" value="{{old('start', $shift->start)}}">
                 @error('start')
                 <div class="text-red-500 text-xs italic">{{ $message }}</div>
                 @enderror
             </div>
             <div>
                 <label for="end" class="block text-gray-700 font-bold mb-1">{{__("shift.endDesc")}}</label>
-                <input id="end" name="end" type="date" class="@error('end') border-red-500 @enderror datepicker w-full block text-black p-1 text-lg mb-2 border rounded" value="{{old('end', $shift->end)}}">
+                <input id="end" name="end" type="datetime" class="@error('end') border-red-500 @enderror datepicker w-full block text-black p-1 text-lg mb-2 border rounded" value="{{old('end', $shift->end)}}">
                 @error('end')
                 <div class="text-red-500 text-xs italic">{{ $message }}</div>
                 @enderror
@@ -51,6 +51,7 @@
         </div>
         <div class="my-3 bg-gray-100 ">
         {{__("shift.optional")}}
+        <input id="group" name="group" type="hidden" value="0">
         <div class="grid grid-rows-1 p-3 grid-flow-row gap-4 md:grid-flow-col">
             <div>
                 <label for="type" class="block text-gray-700 font-bold mb-1">{{__("shift.type")}}</label>
@@ -59,19 +60,8 @@
                 <div class="text-red-500 text-xs italic">{{ $message }}</div>
                 @enderror
             </div>
-            <div>
-                <label for="group" class="block font-bold mb-1">{{__("shift.group")}}</label>
-                <select id="group" name="group" class="@error('group') border-red-500 @enderror w-full block text-black p-1 text-lg mb-2 border rounded" >
-                    @for($i = 0; $i <= $groups; $i++)
-                        <option value="{{$i}}" @if($i == $shift->group || $i == old('group')) selected @endif>{{$i}}</option>
-                    @endfor
-                </select>
-                @error('group')
-                <div class="text-red-500 text-xs italic">{{ $message }}</div>
-                @enderror
-            </div>
            @if(!isset($shift->id))
-           <div>
+           <div class="ml-10">
                 <label for="group" class="block font-bold mb-1">{{__("shift.repetition")}}</label>
                 <input id="repetition" name="repetition" type="number" class="@error('repetition') border-red-500 @enderror text-black p-1 text-lg mb-2 border rounded" value="{{old('repetition', 1)}}">
                 @error('repetition')
@@ -88,6 +78,7 @@
                 @enderror
             </div>
             @endif
+        </div>
         </div>
         <button type="submit" class="bg-green-800 hover:bg-green-600 py-2 px-4 rounded mb-4 inline-block text-white font-bold">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">

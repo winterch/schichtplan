@@ -20,7 +20,7 @@ class StoreShiftRequest extends FormRequest
             'title' => 'required|max:200',
             'type' => 'max:200',
             'description' => 'max:500',
-            'group' => 'required|int|numeric|max:100|min:0',
+            'group' => 'int|numeric|max:100|min:0',
             'start' => 'required|date|before:end',
             'end' => 'required|date|after:start',
             'team_size' => 'required|int|max:100|min:1|numeric',
@@ -42,7 +42,6 @@ class StoreShiftRequest extends FormRequest
             'end.required'  => __('shift.endRequired'),
             'end.after'  => __('shift.endAfter'),
             'team_size.required'  => __('shift.team_sizeRequired'),
-            'group.required' => __('shift.groupRequired')
         ];
     }
 }

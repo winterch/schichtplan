@@ -8,7 +8,7 @@ return [
     'save' => 'Speichern',
     'cancel' => 'Abbrechen',
     'update' => 'Aktualisieren',
-    'unsubscribe' => 'Ausschreiben',
+    'unsubscribe' => 'Austragen',
     'subscribe' => 'Einschreiben',
     'edit' => 'Editieren',
     'missing' => 'fehlend',
