@@ -10,7 +10,7 @@
         <form method="post" action="{{route('plan.shift.subscription.store', ['plan' => $plan, 'shift' => $shift])}}">
     @endif
             @csrf
-            <div class="grid grid-rows-3 grid-flow-row gap-4 md:grid-flow-col mb-4">
+            <div class="grid grid-rows-4 grid-flow-row gap-4 md:grid-flow-col mb-4">
                 <div>
                     <label for="type" class="block text-gray-700 font-bold mb-1">{{__("subscription.nameDesc")}}</label>
                     <input id="name" name="name" type="text" class="@error('type') border-red-500 @enderror w-full block text-black p-1 text-lg mb-2 border rounded" value="{{old('name', $subscription->name)}}">
@@ -30,6 +30,12 @@
                     <input id="email" name="email" type="email" class="@error('email') border-red-500 @enderror w-full block text-black p-1 text-lg mb-2 border rounded" value="{{old('email', $subscription->email)}}">
                     @error('email')
                     <div class="text-red-500 text-xs italic">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="py-2">
+                    <input id="notification" name="notification" type="checkbox" class="@error('notification') border-red-500 @enderror w-auto inlineblock text-black p-1     text-lg mb-2 border rounded" value="1" {{ old('notification', $subscription->notification) ? 'checked' : '' }} > {{__("subscription.notifyMe")}}
+                    @error('notification')
+                        <div class="text-red-500 text-xs italic">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="row-span-3 flex flex-col">
