@@ -25,10 +25,10 @@ return [
     'confirmRemoveHelp' => 'Yes, I want to unsubscribe from ',
     'unsubscribeConfirmation' => 'Confirm unsubscription',
     'confirmUnsubscribe' => 'Click on the following link to unsubscribe from your shift:',
-    'confirmUnsubscribeEnd' => "If you didn't try to unsubscribe from a shift, you can ignore this email",
+    'confirmUnsubscribeEnd' => "If you didn't try to unsubscribe from a shift, you can ignore this email.",
     'removeEmail' => "Please check your email to confirm.",
     'successfullyRemoved' => "You are now unsubscribed.",
-    'notifyMe' => 'Notify me one day before my shift starts',
+    'notifyMe' => 'Notify me one day before my shift starts.',
     'reminder' => 'You have an upcomming shift tomorrow',
     'reminderBody' => "Don't forget the shift(s) you subscribed to. See the plan for details: ",
 ];

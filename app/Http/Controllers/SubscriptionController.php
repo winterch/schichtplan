@@ -58,10 +58,12 @@ class SubscriptionController extends Controller
     }
     public function doConfirmRemove(Plan $plan, Shift $shift, string $confirmation)   {
         $this->authSubscriber($plan, $shift);
-        foreach ($shift->subscriptions as $sub) {
-          if ($sub->confirmation == $confirmation) {
-            $sub->delete();
-            Session::flash('info', __('subscription.successfullyRemoved'));
+        if ($plan->allow_unsubscribe) {
+          foreach ($shift->subscriptions as $sub) {
+            if ($sub->confirmation == $confirmation) {
+              $sub->delete();
+              Session::flash('info', __('subscription.successfullyRemoved'));
+            }
           }
         }
         return redirect()->route('plan.show', ['plan' => $plan]);

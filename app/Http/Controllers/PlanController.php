@@ -109,7 +109,9 @@ class PlanController extends Controller
             $plan->delete();
         }
         $done = array();
-        $toNotify = DB::table('shifts')->whereDate('start', '=', date('Y-m-d', strtotime('+1 day')))->where('notified', '<>', '1')->get();
+        $toNotify = DB::table('shifts')
+          ->whereDate('start', '=', date('Y-m-d', strtotime('+1 day')))
+          ->where('notified', '<>', '1')->get();
         foreach ($toNotify as $n) {
           $shift = Shift::findOrFail($n->id);
           $planid = $shift->plan()->get()[0]->id;
@@ -178,6 +180,9 @@ class PlanController extends Controller
         $this->auth($plan);
         $this->authorize("update", $plan);
         $data = $request->validated();
+        if (!isset($data['allow_unsubscribe'])) {
+          $data['allow_unsubscribe'] = false;
+        }
         $plan->update($data);
         // redirect to shifts overview
         Session::flash('info', __('plan.successfullyUpdated'));

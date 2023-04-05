@@ -37,6 +37,12 @@
                     <div class="text-red-500 text-xs italic">{{ $message }}</div>
                 @enderror
             </div>
+            <div class="py-2 mb-5">
+                <input id="allow_unsubscribe" name="allow_unsubscribe" type="checkbox" class="@error('allow_unsubscribe') border-red-500 @enderror w-auto inlineblock text-black p-1     text-lg mb-2 border rounded" value="1" {{ old('allow_unsubscribe', $plan->allow_unsubscribe) ? 'checked' : '' }} > {{__("plan.allowUnsubscribe")}}
+                @error('allow_unsubscribe')
+                    <div class="text-red-500 text-xs italic">{{ $message }}</div>
+                @enderror
+            </div>
             @if(!isset($plan->id))
             <div class="py-2">
                 <input id="notification" name="notification" type="checkbox" class="@error('notification') border-red-500 @enderror w-auto inlineblock text-black p-1 text-lg mb-2 border rounded" value="1" checked> {{__("plan.notifyMe")}}

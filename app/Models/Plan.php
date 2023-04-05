@@ -28,6 +28,7 @@ class Plan extends Model implements
         'description',
         'contact',
         'owner_email',
+        'allow_unsubscribe',
     ];
 
     /**

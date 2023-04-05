@@ -41,9 +41,11 @@ class SendShiftReminder extends Notification
      */
     public function toMail($notifiable)
     {
+        # TODO: remember the lang of the subscription
         return (new MailMessage)
-            ->subject(__('subscription.reminder'))
-            ->line(__('subscription.reminderBody'))
+            ->subject(__('subscription.reminder', locale: 'de') . " / " . __('subscription.reminder', locale: 'en'))
+            ->line(__('subscription.reminderBody', locale: 'de'))
+            ->line(__('subscription.reminderBody', locale: 'en'))
             ->line($this->planLink);
     }
 
