@@ -30,13 +30,6 @@
         </svg>
         {{__('plan.show_subscriptions')}}
     </a>
-    <br>
-    <a class="bg-green-800 hover:bg-green-600 py-2 px-4 rounded mb-4 inline-block text-white font-bold align-middle" href="{{route('plan.export', ['plan' => $plan])}}">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-        </svg>
-        {{__('plan.export')}}
-    </a>
     </div>
     @endif
 
@@ -128,6 +121,36 @@
         </svg>
         {{__('shift.add')}}
     </a>
+
+    <br>
+    <br>
+
+    <a class="bg-green-800 hover:bg-green-600 py-2 px-4 rounded mb-4 inline-block text-white font-bold align-middle" href="{{route('plan.export', ['plan' => $plan])}}">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+        </svg>
+        {{__('plan.export')}}
+    </a>
+
+    <div style="height: 5em; margin: 1em 0;">
+    <a id="openImportButton" href="#import" class="bg-green-800 hover:bg-green-600 py-2 px-4 rounded mb-4 inline-block text-white font-bold sm:w-auto">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+        </svg>
+        {{__('plan.import')}}
+    </a>
+
+    <div style="display:none" id="importForm">
+    {{ __('plan.importHelp') }}
+    <a id="#import" />
+    <form id="importPlanForm" method="post" action="{{route('plan.import', ['plan' => $plan])}}" enctype="multipart/form-data">
+    @csrf
+    <input type="file"
+       id="import" name="import"
+       accept="text/csv">
+    </form>
+    </div>
+    </div>
 
     <br>
     <br>
