@@ -30,5 +30,5 @@ return [
     'successfullyRemoved' => "Du bist nun ausgetragen.",
     'notifyMe' => 'Errinner mich einen Tag bevor meine Schicht beginnt.',
     'reminder' => 'Du hast morgen eine Schicht',
-    'reminderBody' => "Vergiss nicht die Schicht(en), für die du dich morgen eingetragen hast. Infos findest du im entsprechenden Schichtplan: ",
+    'reminderBody' => "Vergiss nicht die Schicht(en), für die du dich morgen eingetragen hast. Infos findest du im entsprechenden Schichtplan.",
 ];

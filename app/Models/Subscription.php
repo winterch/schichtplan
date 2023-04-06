@@ -50,16 +50,27 @@ class Subscription extends Model
         $this->confirmation = Str::random(24);
         $this->save();
         $link = route('plan.subscription.confirmRemove', [
-          'plan' => $this->shift()->get()[0]->plan()->get()[0],
-          'shift' => $this->shift()->get()[0],
-          'confirmation' => $this->confirmation]);
+            'plan' => $this->shift()->get()[0]->plan()->get()[0],
+            'shift' => $this->shift()->get()[0],
+            'confirmation' => $this->confirmation]);
         $this->notify(new SendUnsubscribeConfirmation($link));
     }
 
     public function sendReminder() {
-        $viewLink = route('plan.show',
-          ['plan' => $this->shift()->get()[0]->plan()->get()[0]->view_id]);
-        $this->notify(new SendShiftReminder($viewLink));
+        $plan = $this->shift()->get()[0]->plan()->get()[0];
+        $viewLink = route('plan.show', ['plan' => $plan->view_id]);
+        $summary = array();
+        foreach ($plan->shifts()->get() as $shift) {
+            foreach ($shift->subscriptions()->get() as $sub) {
+                if ($sub->email == $this->email) {
+                    $summary[] = $shift->title . ': '. 
+                        explode(' ', $shift->start)[1].' - '.
+                        explode(' ',$shift->end)[1];
+                    break;
+                }
+            }
+        }
+        $this->notify(new SendShiftReminder($viewLink, join(', ', $summary)));
     }
 
 }

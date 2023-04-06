@@ -32,10 +32,13 @@ return [
     'sort_help' => 'Sortiert nach Kategorie, Datum, Zeit',
     'admin_help' => 'Auf dieser Seite kannst du die Schichten bearbeiten.',
     'admin_subscriptions_help' => 'Diese Personen haben sich auf deine Schichten eingeschrieben.',
+    'allLinksEmail' => 'Hier sind all deine Schichtpläne',
     'linksEmailSubscribers' => 'Schön hast du einen Schichtplan erstellt. Als erstes solltest du deinen Schichtplan mit Leben füllen und einige Schichten erstellen. Danach kannst du folgenden Link mit deinen Freund*innen teilen. Sie können sich dann selbständig in eine der Schichten einschreiben.',
     'linksEmailAdmin' => 'Um deinen Schichtplan zu editieren, neue Schichten hinzuzufügen und eine Liste der Helfenden zu erhalten, klick auf den folgenden Link. Diesen Link darfst du nicht teilen. Er ermöglicht es deinen Schichtplan zu verändern und alle Helfer*innen einzusehen.',
     'notifyMe' => 'Sende mir Links zum späteren Bearbeiten des Schichtplans',
     'linksEmailEditPlan' => 'Schichtplan editieren',
+    'linksEmailPlan' => 'Zum Schichtplan',
+    'allLinksEmailSubject' => 'Alle deine Schichtpläne',
     'linksEmailSubject' => 'Manage dein Schichtplan: ',
     'allowUnsubscribe' => 'Erlaube Teilnehmenden sich selbständig wieder auszutragen',
 ];

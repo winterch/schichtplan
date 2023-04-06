@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Notifications\SendLinksNotification;
+use App\Notifications\SendAllLinksNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable;
@@ -101,6 +102,16 @@ class Plan extends Model implements
         $adminLink = route('plan.admin', ['plan' => $this->edit_id]);
         $viewLink = route('plan.show', ['plan' => $this->view_id]);
         $this->notify(new SendLinksNotification($this->title, $adminLink, $viewLink));
+    }
+
+    public function sendAllLinksNotification($plans) {
+        $links = array();
+        foreach ($plans as $plan) {
+            $links[] = [
+              $plan->title,
+              route('plan.show', ['plan' => $plan->view_id])];
+        }
+        $this->notify(new SendAllLinksNotification($links));
     }
 
     public function getAuthIdentifierName()

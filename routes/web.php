@@ -58,9 +58,9 @@ Route::get('/s/{plan:view_id}', [PlanController::class, 'show'])
 /**
  * Recover plans.
  */
-Route::get('/recover', [PlanController::class, 'recover'])
+Route::get('/recover/{plan:view_id?}', [PlanController::class, 'recover'])
   ->name('plan.recover');
-Route::post('/recover', [PlanController::class, 'doRecover'])
+Route::post('/recover/{plan:view_id?}', [PlanController::class, 'doRecover'])
   ->name('plan.recover');
 
 /*****************************************
