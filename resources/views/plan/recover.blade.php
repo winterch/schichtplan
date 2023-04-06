@@ -3,7 +3,7 @@
         <div class="py-2">
         {{__('plan.recover_help')}}
         </div>
-        <form method="post" action="{{route('plan.recover')}}">
+        <form method="post" action="{{route('plan.recover', [$plan->view_id])}}">
             @csrf
             <div class="grid grid-rows-1 grid-flow-col gap-4">
                 <div>

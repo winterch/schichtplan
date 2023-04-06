@@ -7,21 +7,19 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class SendShiftReminder extends Notification
+class SendAllLinksNotification extends Notification
 {
     use Queueable;
 
-    private string $planLink;
-    private string $shifts;
+    private array $links;
 
     /**
      * Create a new notification instance.
      *
      */
-    public function __construct(string $planLink, string $shifts)
+    public function __construct(array $links)
     {
-        $this->planLink = $planLink;
-        $this->shifts = $shifts;
+        $this->links = $links;
     }
 
     /**
@@ -43,13 +41,14 @@ class SendShiftReminder extends Notification
      */
     public function toMail($notifiable)
     {
-        # TODO: remember the lang of the subscription
-        return (new MailMessage)
-            ->subject(__('subscription.reminder', locale: 'de') . " / " . __('subscription.reminder', locale: 'en'))
-            ->line(__('subscription.reminderBody', locale: 'de'))
-            ->line(__('subscription.reminderBody', locale: 'en'))
-            ->line($this->shifts)
-            ->action(__('plan.linksEmailPlan'), $this->planLink);
+        $msg = (new MailMessage)
+            ->subject(__('plan.allLinksEmailSubject'))
+            ->line(__('plan.allLinksEmail'));
+        foreach ($this->links as $l) {
+            $msg = $msg->line($l[0] . ':')
+                        ->action(__('plan.linksEmailPlan'), $l[1]);
+        }
+        return $msg;
     }
 
     /**

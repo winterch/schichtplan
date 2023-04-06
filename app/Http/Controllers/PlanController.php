@@ -67,9 +67,9 @@ class PlanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function recover()
+    public function recover(Plan $plan)
     {
-        return view('plan.recover');
+        return view('plan.recover', ['plan' => $plan]);
     }
     /**
      * Recover plans
@@ -77,15 +77,16 @@ class PlanController extends Controller
      * @param RecoverPlanRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function doRecover(RecoverPlanRequest $request)
+    public function doRecover(RecoverPlanRequest $request, Plan $plan)
     {
         $email = $request->validated()['owner_email'];
-        $plans = Plan::where('owner_email', $email)->get();
-        if(count($plans) > 0) {
-            foreach ($plans as $plan) {
-                // todo: send just one email
-                $plan->sendLinksNotification();
-            }
+        if ($plan->id) {
+          $plan->sendLinksNotification();
+        } else {
+          $plans = Plan::where('owner_email', $email)->get();
+          if(count($plans) > 0) {
+              $plans[0]->sendAllLinksNotification($plans);
+          }
         }
         // Show message anyway. So is not possible to check if an address has a plan
         Session::flash('info', __('plan.successfullyRecovered'));
@@ -113,19 +114,20 @@ class PlanController extends Controller
           ->whereDate('start', '=', date('Y-m-d', strtotime('+1 day')))
           ->where('notified', '<>', '1')->get();
         foreach ($toNotify as $n) {
-          $shift = Shift::findOrFail($n->id);
-          $planid = $shift->plan()->get()[0]->id;
-          $done[$planid] = array();
-          foreach ($shift->subscriptions()->get() as $sub) {
-            if ($sub->notification) {
-              if (!isset($done[$planid][$sub->email])) {
-                $sub->sendReminder();
-                $done[$planid][$sub->email] = true;
-              }
+            $shift = Shift::findOrFail($n->id);
+            $planid = $shift->plan()->get()[0]->id;
+            if (!isset($done[$planid]))
+                $done[$planid] = array();
+            foreach ($shift->subscriptions()->get() as $sub) {
+                if ($sub->notification) {
+                    if (!isset($done[$planid][$sub->email])) {
+                        $sub->sendReminder();
+                        $done[$planid][$sub->email] = true;
+                    }
+                }
             }
-          }
-          $shift->notified = true;
-          $shift->save();
+            $shift->notified = true;
+            $shift->save();
         }
     }
 

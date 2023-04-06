@@ -80,6 +80,6 @@
         @endforeach
     @endif
     <div class="py-20">
-    <a href="{{route('plan.recover')}}">{{__('plan.show_subscriptions')}}</a>
+    <a href="{{route('plan.recover', [$plan->view_id])}}">{{__('plan.show_subscriptions')}}</a>
     </div>
 @endsection

@@ -32,10 +32,13 @@ return [
     'sort_help' => 'Ordered by group, type, date',
     'admin_help' => 'This Page allows you to define shifts. Save this address!',
     'admin_subscriptions_help' => 'These people subscribed to your shifts.',
-    'linksEmailSubscribers' => 'Cool you create a plan on the shiftplaner. First you should polish your plan and create all shifts. Then you can share the following link with your audience. They can subscribe themself to a shift.',
+    'allLinksEmail' => 'Here are all your shift plans',
+    'linksEmailSubscribers' => 'You created a plan on the shift planer. First you should polish your plan and create all shifts. Then you can share the following link with your audience. They can subscribe themselves to a shift.',
     'linksEmailAdmin' => 'To update you plan, add one more shifts or see the subscribers, click link. Don\'t share this url, its the key to edit your plan and give access to all subscribers.',
     'notifyMe' => 'Send me links to edit the plan later',
     'linksEmailEditPlan' => 'Edit the plan',
-    'linksEmailSubject' => 'Manage shiftplan: ',
+    'linksEmailPlan' => 'Show the plan',
+    'allLinksEmailSubject' => 'Your shift plans',
+    'linksEmailSubject' => 'Manage shift plan: ',
     'allowUnsubscribe' => 'Allow people to unsubsribe from their shifts themselves.'
 ];
