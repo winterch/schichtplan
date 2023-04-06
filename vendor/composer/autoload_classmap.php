@@ -32,6 +32,7 @@ return array(
     'App\\Models\\Plan' => $baseDir . '/app/Models/Plan.php',
     'App\\Models\\Shift' => $baseDir . '/app/Models/Shift.php',
     'App\\Models\\Subscription' => $baseDir . '/app/Models/Subscription.php',
+    'App\\Notifications\\SendAllLinksNotification' => $baseDir . '/app/Notifications/SendAllLinksNotification.php',
     'App\\Notifications\\SendLinksNotification' => $baseDir . '/app/Notifications/SendLinksNotification.php',
     'App\\Notifications\\SendShiftReminder' => $baseDir . '/app/Notifications/SendShiftReminder.php',
     'App\\Notifications\\SendUnsubscribeConfirmation' => $baseDir . '/app/Notifications/SendUnsubscribeConfirmation.php',

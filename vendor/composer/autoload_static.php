@@ -562,6 +562,7 @@ class ComposerStaticInit36538761990bab2d5da307054e63725a
         'App\\Models\\Plan' => __DIR__ . '/../..' . '/app/Models/Plan.php',
         'App\\Models\\Shift' => __DIR__ . '/../..' . '/app/Models/Shift.php',
         'App\\Models\\Subscription' => __DIR__ . '/../..' . '/app/Models/Subscription.php',
+        'App\\Notifications\\SendAllLinksNotification' => __DIR__ . '/../..' . '/app/Notifications/SendAllLinksNotification.php',
         'App\\Notifications\\SendLinksNotification' => __DIR__ . '/../..' . '/app/Notifications/SendLinksNotification.php',
         'App\\Notifications\\SendShiftReminder' => __DIR__ . '/../..' . '/app/Notifications/SendShiftReminder.php',
         'App\\Notifications\\SendUnsubscribeConfirmation' => __DIR__ . '/../..' . '/app/Notifications/SendUnsubscribeConfirmation.php',
