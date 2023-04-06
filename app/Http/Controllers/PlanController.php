@@ -63,10 +63,15 @@ class PlanController extends Controller
         return view('plan.show', ['plan' => $plan]);
     }
 
-    public function import(Request $request) {
+    public function import(Request $request, Plan $plan) {
+        if ($plan->id) {
+            $this->auth($plan);
+            $this->authorize('update', $plan);
+        } else {
+            $plan = new Plan;
+        }
         $file = $request->file('import');
         $in = fopen($file->getRealPath(), 'r');
-        $plan = new Plan;
         $plan->title = '';
         $plan->description = '';
         $plan->owner_email = '';
@@ -124,6 +129,7 @@ class PlanController extends Controller
      */
     public function recover(Plan $plan)
     {
+        $this->auth($plan);
         return view('plan.recover', ['plan' => $plan]);
     }
     /**
@@ -136,12 +142,13 @@ class PlanController extends Controller
     {
         $email = $request->validated()['owner_email'];
         if ($plan->id) {
-          $plan->sendLinksNotification();
+            $this->auth($plan);
+            $plan->sendLinksNotification();
         } else {
-          $plans = Plan::where('owner_email', $email)->get();
-          if(count($plans) > 0) {
-              $plans[0]->sendAllLinksNotification($plans);
-          }
+            $plans = Plan::where('owner_email', $email)->get();
+            if(count($plans) > 0) {
+                $plans[0]->sendAllLinksNotification($plans);
+            }
         }
         // Show message anyway. So is not possible to check if an address has a plan
         Session::flash('info', __('plan.successfullyRecovered'));

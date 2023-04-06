@@ -23,7 +23,7 @@
 
     <div style="display:none" id="importForm">
     {{ __('plan.importHelp') }}
-    <form method="post" action="{{route('plan.import')}}" enctype="multipart/form-data">
+    <form id="importPlanForm" method="post" action="{{route('plan.import')}}" enctype="multipart/form-data">
     @csrf
     <input type="file"
        id="import" name="import"

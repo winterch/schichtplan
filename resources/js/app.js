@@ -58,7 +58,9 @@ function registerOpenImport() {
   var button = document.getElementById('openImportButton');
   if (button) {
     button.onclick = openImport;
-    document.getElementById('import').onchange = function() { document.forms[0].submit(); };
+    document.getElementById('import').onchange = function() {
+      document.getElementById('importPlanForm').submit();
+    };
   }
 }
 document.addEventListener('DOMContentLoaded', registerOpenImport);
