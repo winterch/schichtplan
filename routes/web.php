@@ -73,6 +73,13 @@ Route::get('/plan/{plan:edit_id}/subscriptions', [PlanController::class, 'admin_
   ->name('plan.admin_subscriptions');
 
 /**
+ * Exporting
+ */
+
+Route::get('/plan/{plan:edit_id}/export', [PlanController::class, 'export'])->name('plan.export');
+Route::post('/plan/import', [PlanController::class, 'import'])->name('plan.import');
+
+/**
  * Edit plan details.
  */
 Route::get('/plan/{plan:edit_id}/edit', [PlanController::class, 'edit'])

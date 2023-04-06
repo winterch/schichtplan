@@ -7,10 +7,11 @@ use App\Http\Requests\RecoverPlanRequest;
 use App\Http\Requests\UpdatePlanRequest;
 use App\Models\Plan;
 use App\Models\Shift;
+use App\Models\Subscription;
 
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
-
+use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
 
@@ -60,6 +61,60 @@ class PlanController extends Controller
     public function show(Plan $plan)
     {
         return view('plan.show', ['plan' => $plan]);
+    }
+
+    public function import(Request $request) {
+        $file = $request->file('import');
+        $in = fopen($file->getRealPath(), 'r');
+        $plan = new Plan;
+        $plan->title = '';
+        $plan->description = '';
+        $plan->owner_email = '';
+        $plan->save();
+        $shift = null;
+        while(($data = fgetcsv($in)) !== FALSE) {
+            if (preg_match("/^[ ]*shift$/", $data[0])) {
+                $shift = new Shift();
+                $shift->plan_id = $plan->id;
+                $shift->import($data);
+                $shift->save();
+            } else if (preg_match("/^[ ]*subscribed$/", $data[0])) {
+                $sub = new Subscription();
+                $sub->shift_id = $shift->id;
+                $sub->import($data);
+                $sub->save();
+            } else {
+                $plan->fill([$data[0] => $data[1]]);
+            }
+        }
+        $plan->save();
+        return redirect()->route('plan.admin', ['plan' => $plan]);
+    }
+
+    public function export(Plan $plan)
+    {
+        $fileName = 'shift-plan-'.$plan->title.'.csv';
+        $headers = array(
+              "Content-type"        => "text/csv",
+              "Content-Disposition" => "attachment; filename=$fileName",
+              "Pragma"              => "no-cache",
+              "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+              "Expires"             => "0"
+        );
+
+        $callback = function() use($plan) {
+            $file = fopen('php://output', 'w');
+            $plan->export($file);
+            foreach ($plan->shifts()->get() as $shift) {
+                fputcsv($file, $shift->export());
+                foreach ($shift->subscriptions()->get() as $sub) {
+                    fputcsv($file, $sub->export());
+                }
+            }
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
     }
 
     /**

@@ -40,5 +40,8 @@ return [
     'linksEmailPlan' => 'Show the plan',
     'allLinksEmailSubject' => 'Your shift plans',
     'linksEmailSubject' => 'Manage shift plan: ',
-    'allowUnsubscribe' => 'Allow people to unsubsribe from their shifts themselves.'
+    'allowUnsubscribe' => 'Allow people to unsubsribe from their shifts themselves.',
+    'export' => 'Export',
+    'import' => 'Import',
+    'importHelp' => 'Hint: Export an existing plan as template.',
 ];

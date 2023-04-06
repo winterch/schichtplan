@@ -41,4 +41,7 @@ return [
     'allLinksEmailSubject' => 'Alle deine Schichtpläne',
     'linksEmailSubject' => 'Manage dein Schichtplan: ',
     'allowUnsubscribe' => 'Erlaube Teilnehmenden sich selbständig wieder auszutragen',
+    'export' => 'Exportieren',
+    'import' => 'Importieren',
+    'importHelp' => 'Tipp: Benutze einen exportierten bestehenden Plan als Vorlage.',
 ];
