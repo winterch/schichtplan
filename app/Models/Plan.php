@@ -32,6 +32,14 @@ class Plan extends Model implements
         'allow_unsubscribe',
     ];
 
+    public function export($csv) {
+      fputcsv($csv, ['title', $this->title]);
+      fputcsv($csv, ['description', $this->description]);
+      fputcsv($csv, ['contact', $this->contact]);
+      fputcsv($csv, ['owner_email', $this->owner_email]);
+      fputcsv($csv, ['allow_unsubscribe', $this->allow_unsubscribe]);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *
