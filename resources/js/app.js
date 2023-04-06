@@ -49,3 +49,16 @@ function deleteShift() {
 
 document.addEventListener('DOMContentLoaded', addEvents);
 document.addEventListener('DOMContentLoaded', deleteShift);
+
+function openImport() {
+  document.getElementById('importForm').style['display'] = 'block';
+  this.style['display']='none';
+}
+function registerOpenImport() {
+  var button = document.getElementById('openImportButton');
+  if (button) {
+    button.onclick = openImport;
+    document.getElementById('import').onchange = function() { document.forms[0].submit(); };
+  }
+}
+document.addEventListener('DOMContentLoaded', registerOpenImport);
