@@ -129,7 +129,6 @@ class PlanController extends Controller
      */
     public function recover(Plan $plan)
     {
-        $this->auth($plan);
         return view('plan.recover', ['plan' => $plan]);
     }
     /**
@@ -142,7 +141,6 @@ class PlanController extends Controller
     {
         $email = $request->validated()['owner_email'];
         if ($plan->id) {
-            $this->auth($plan);
             $plan->sendLinksNotification();
         } else {
             $plans = Plan::where('owner_email', $email)->get();
