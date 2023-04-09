@@ -45,7 +45,7 @@ class SendUnsubscribeConfirmation extends Notification
         return (new MailMessage)
             ->subject(__('subscription.unsubscribeConfirmation'))
             ->line(__('subscription.confirmUnsubscribe'))
-            ->line($this->unsubscribeLink)
+            ->action(__('subscription.unsubscribe'), $this->unsubscribeLink)
             ->line(__('subscription.confirmUnsubscribeEnd'));
     }
 
