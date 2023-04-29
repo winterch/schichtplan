@@ -44,4 +44,8 @@ return [
     'export' => 'Export',
     'import' => 'Import',
     'importHelp' => 'Hint: Export an existing plan as template.',
+    'importRequired' => 'You need a file to import a plan.',
+    'importFile' => 'You need a file.',
+    'importMimetype' => 'Just csv file types are allowed.',
+    'importMax' => 'Max filesize is 1mb.',
 ];

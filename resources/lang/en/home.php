@@ -1,6 +1,7 @@
 <?php
 
 return [
+    "csvImportFail" => "The plan is invalid and can not be imported. :error",
     "shiftplanInfo" => "Shift planning to coordinate volunteers and events, partys or festivals. Create shifts and tasks, where volunteers can sign up.",
     "Shiftplan" => "Shift Planner",
     "deleteInfo" => "Plans will be deleted 30 days after the last entry",

@@ -9,6 +9,7 @@ use App\Models\Shift;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,11 @@ use Illuminate\Support\Facades\Route;
  * Display home view, where users can create a plan
  */
 Route::get('/', function () {
+  // write erorrs into flash 
+  $errors = session()->get('errors');
+    if($errors !== null && $errors->any()) {
+      Session::flash('fail', __('home.csvImportFail', ["error" => $errors->first()]));
+    }
     return view('home');
 })->name('home');
 
