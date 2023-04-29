@@ -26,17 +26,12 @@ class Subscription extends Model
         'notification',
     ];
 
+    /**
+     * Export a subscription
+     */
     public function export() {
-        return ['  subscribed', $this->name, $this->phone,
+        return ['subscribed','','','','','','','', $this->name, $this->phone,
           $this->email, $this->comment, $this->notification];
-    }
-
-    public function import($data) {
-      $this->name = $data[1];
-      $this->phone = $data[2];
-      $this->email = $data[3];
-      $this->comment = $data[4];
-      $this->notification = $data[5];
     }
 
     /**

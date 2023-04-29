@@ -32,6 +32,9 @@ class Plan extends Model implements
         'allow_unsubscribe',
     ];
 
+    /**
+     * Export data to csv
+     */
     public function export($csv) {
       fputcsv($csv, ['title', $this->title]);
       fputcsv($csv, ['description', $this->description]);
@@ -112,6 +115,7 @@ class Plan extends Model implements
         $this->notify(new SendLinksNotification($this->title, $adminLink, $viewLink));
     }
 
+    // todo rename method...
     public function sendAllLinksNotification($plans) {
         $links = array();
         foreach ($plans as $plan) {

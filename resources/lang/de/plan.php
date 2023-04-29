@@ -44,4 +44,8 @@ return [
     'export' => 'Exportieren',
     'import' => 'Importieren',
     'importHelp' => 'Tipp: Benutze einen exportierten bestehenden Plan als Vorlage.',
+    'importRequired' => 'Für den Import wird ein csv File benötigt.',
+    'importFile' => 'Das File wird benötigt.',
+    'importMimetype' => 'Nur csv file sind erlaubt.',
+    'importMax' => 'Das csv darf maximal 1mb gross sein.',
 ];

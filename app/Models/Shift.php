@@ -24,21 +24,14 @@ class Shift extends Model
         'team_size',
     ];
 
+    /**
+     * Export shifts
+     */
     public function export() {
       return [
-        ' shift', $this->type, $this->title, $this->description,
+        'shift','', $this->type, $this->title, $this->description,
         $this->start, $this->end, $this->team_size
       ];
-    }
-
-    public function import($data) {
-       $this->type = $data[1] || '';
-       $this->title = $data[2];
-       $this->description = $data[3];
-       $this->start = $data[4];
-       $this->end = $data[5];
-       $this->team_size = $data[6];
-       $this->group = 0;
     }
 
     /**

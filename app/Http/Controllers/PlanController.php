@@ -2,18 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ImportPlanRequest;
 use App\Http\Requests\StorePlanRequest;
 use App\Http\Requests\RecoverPlanRequest;
+use App\Http\Requests\StoreShiftRequest;
+use App\Http\Requests\StoreSubscriptionRequest;
 use App\Http\Requests\UpdatePlanRequest;
 use App\Models\Plan;
 use App\Models\Shift;
 use App\Models\Subscription;
-
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\File;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
+use Symfony\Component\CssSelector\Exception\InternalErrorException;
 
 class PlanController extends Controller
 {
@@ -63,7 +70,16 @@ class PlanController extends Controller
         return view('plan.show', ['plan' => $plan]);
     }
 
-    public function import(Request $request, Plan $plan) {
+    /**
+     * Import a plan from a csv file.
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Plan $plan
+     */
+    public function import(ImportPlanRequest $request, Plan $plan) {
+        if(!$request->file('import')->isValid()) {
+            return abort(500, "Can't upload the file");
+        }
         if ($plan->id) {
             $this->auth($plan);
             $this->authorize('update', $plan);
@@ -72,30 +88,88 @@ class PlanController extends Controller
         }
         $file = $request->file('import');
         $in = fopen($file->getRealPath(), 'r');
+        // reset an existing plan if you update
         $plan->title = '';
         $plan->description = '';
         $plan->owner_email = '';
         $plan->save();
         $shift = null;
+        $planData = [];
+        // go over all lines and import the data
         while(($data = fgetcsv($in)) !== FALSE) {
-            if (preg_match("/^[ ]*shift$/", $data[0])) {
-                $shift = new Shift();
-                $shift->plan_id = $plan->id;
-                $shift->import($data);
-                $shift->save();
-            } else if (preg_match("/^[ ]*subscribed$/", $data[0])) {
-                $sub = new Subscription();
-                $sub->shift_id = $shift->id;
-                $sub->import($data);
-                $sub->save();
+            if (preg_match("/^shift$/", $data[0])) {
+                // remove the identifier field
+                array_shift($data);
+                // we use empty fields to separte. Find the start of the data
+                $key = 0;
+                foreach($data as $key => $field) {
+                    if(!empty($field)) {
+                        break;
+                    }
+                }
+                $d = [
+                    "type" => $data[$key]  || '',
+                    "title" => $data[$key+1],
+                    "description" => $data[$key+2],
+                    "start" => $data[$key+3],
+                    "end" => $data[$key+4],
+                    "team_size" => $data[$key+5],
+                    "group" => 0,
+                ];
+                $validator = Validator::make($d, (new StoreShiftRequest())->rules(), (new StoreShiftRequest())->messages());
+                $validData = $validator->validated();
+                $shift = $plan->shifts()->create($validData);
+            } else if (preg_match("/^subscribed$/", $data[0])) {
+                // the csv is malformated. We first eed a shift, before we can have a subscriber
+                if($shift === null) {
+                    return abort(400, "Invalid csv input");
+                }
+                // remove the identifier field
+                array_shift($data);
+                // we use empty fields to separte. Find the start of the data
+                $key = 0;
+                foreach($data as $key => $field) {
+                    if(!empty($field)) {
+                        break;
+                    }
+                }
+                $d = [
+                    "name" => $data[$key],
+                    "phone" => $data[$key+1],
+                    "email" => $data[$key+2],
+                    "comment" => $data[$key+3],
+                    "notification" => $data[$key+4],
+                ];
+                $validator = Validator::make($d, (new StoreSubscriptionRequest())->rules(), (new StoreSubscriptionRequest())->messages());
+                $validData = $validator->validated();
+                $shift->subscriptions()->create($validData);
             } else {
-                $plan->fill([$data[0] => $data[1]]);
+                // guess the fields from the input!
+                $planData[$data[0]] = $data[1];
             }
         }
+        // Fill the plan and save it later
+        if(count($planData) > 0 ) {
+            $validator = Validator::make($planData, (new UpdatePlanRequest())->rules(), (new UpdatePlanRequest())->messages());
+            $validData = $validator->validated();
+            $plan->fill($validData);
+        }
+
+        // delete the file
+        File::delete($file->getRealPath());
         $plan->save();
         return redirect()->route('plan.admin', ['plan' => $plan]);
     }
 
+    /**
+     * Exprt a plan
+     * 
+     * The format of the csv s for humans, and not primary for machines
+     * We try to visually separate thigs, so people can use some excell-fu 
+     * to update a plan.
+     * 
+     * @param \App\Models\Plan $plan
+     */
     public function export(Plan $plan)
     {
         $fileName = 'shift-plan-'.$plan->title.'.csv';
@@ -107,6 +181,7 @@ class PlanController extends Controller
               "Expires"             => "0"
         );
 
+        // export a plan in the csv format
         $callback = function() use($plan) {
             $file = fopen('php://output', 'w');
             $plan->export($file);
