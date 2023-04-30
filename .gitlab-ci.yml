@@ -59,17 +59,12 @@ deploy:
     - printf "${DEPLOY_HOST} ssh-ed25519 ${DEPLOY_HOST_ED_KEY}
       " > ~/.ssh/known_hosts
     - rm -rf vendor public/{css,js}
-    - mkdir /tmp/publish
-    - cp -a * /tmp/publish
-    - wd=$(pwd)
-    - pushd /tmp/publish
-    - rm -rf tests
     - tar fxz ${wd}/public.tar.gz
     - tar fxz ${wd}/vendor-php${PHP_VERSION}-el${EL}.tar.gz
-    - tar czf ${wd}/published.tar.gz *
-    - popd
+    - rm -rf tests *.tar.gz
     # lftp needs a "dummy" password, even if key-based authentication is used.
-    - lftp -e "mirror -eRv -x ^.git/ -x ^.env /tmp/publish www; quit;" -u $DEPLOY_USER,dummy sftp://$DEPLOY_HOST
+    - lftp -e "mirror -eRv -x ^.git/ -x ^.env . www; quit;" -u $DEPLOY_USER,dummy sftp://$DEPLOY_HOST
+    - tar czf published.tar.gz *
   stage: deploy
   only:
     # This job relies on secret env vars, which are only available in our repo.
@@ -79,4 +74,4 @@ deploy:
     PHP_VERSION: "8.2"
   artifacts:
     paths:
-      - vendor-*.tar.gz
+      - published.tar.gz
