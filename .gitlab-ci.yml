@@ -63,7 +63,7 @@ deploy:
   stage: deploy
   only:
     # This job relies on secret env vars, which are only available in our repo.
-    - master
+    - main
   variables:
     EL: "7"
     PHP_VERSION: "8.2"
