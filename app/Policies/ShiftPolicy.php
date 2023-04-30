@@ -6,8 +6,6 @@ use App\Models\Plan;
 use App\Models\Shift;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class ShiftPolicy
 {

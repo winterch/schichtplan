@@ -31,4 +31,5 @@ return [
     'notifyMe' => 'Notify me one day before my shift starts.',
     'reminder' => 'You have an upcomming shift tomorrow',
     'reminderBody' => "Don't forget the shift(s) you subscribed to. See the plan for details.",
+    "validLanguage" => "invalid language"
 ];

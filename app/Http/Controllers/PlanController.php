@@ -9,18 +9,13 @@ use App\Http\Requests\StoreShiftRequest;
 use App\Http\Requests\StoreSubscriptionRequest;
 use App\Http\Requests\UpdatePlanRequest;
 use App\Models\Plan;
-use App\Models\Shift;
-use App\Models\Subscription;
-use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
-use Symfony\Component\CssSelector\Exception\InternalErrorException;
 
 class PlanController extends Controller
 {
@@ -230,39 +225,16 @@ class PlanController extends Controller
 
     /**
      * Cleanup old plans and notify.
-     * todo: we may want to delete this
      */
-    public function cron()
+    public function cron(Request $request)
     {
-        $old = DB::table('shifts')->whereDate('end', '<=', date('Y-m-d', strtotime('-30 days')))->get();
-        foreach ($old as $shift) {
-          Shift::findOrFail($shift->id)->delete();
-        }
-        $old = DB::table('plans')->whereDate('created_at', '<=', date('Y-m-d', strtotime('+30 days')))->get();
-        foreach ($old as $p) {
-          $plan = Plan::findOrFail($p->id);
-          if ($plan->shifts->count() === 0)
-            $plan->delete();
-        }
-        $done = array();
-        $toNotify = DB::table('shifts')
-          ->whereDate('start', '=', date('Y-m-d', strtotime('+1 day')))
-          ->where('notified', '<>', '1')->get();
-        foreach ($toNotify as $n) {
-            $shift = Shift::findOrFail($n->id);
-            $planid = $shift->plan()->get()[0]->id;
-            if (!isset($done[$planid]))
-                $done[$planid] = array();
-            foreach ($shift->subscriptions()->get() as $sub) {
-                if ($sub->notification) {
-                    if (!isset($done[$planid][$sub->email])) {
-                        $sub->sendReminder();
-                        $done[$planid][$sub->email] = true;
-                    }
-                }
-            }
-            $shift->notified = true;
-            $shift->save();
+        $cronKey = $request->get('key', '');
+        $confKey = env('API_KEY', false);
+        if(isset($confKey) && $cronKey === $confKey) {
+            Artisan::call('schichtplan:cleanup');
+            Artisan::call('schichtplan:notify-subscribers');
+        } else {
+            return abort(403);
         }
     }
 
