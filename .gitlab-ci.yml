@@ -43,6 +43,7 @@ build_php:
       - vendor-*.tar.gz
 
 deploy:
+  image: $CI_REGISTRY/immerda/container-images/amh:latest
   dependencies: ["build_yarn","build_php"]
   needs: ["build_yarn", "build_php"]
   tags:
