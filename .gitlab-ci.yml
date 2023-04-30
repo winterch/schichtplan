@@ -11,7 +11,7 @@ build_yarn:
     - yarn -v
     - yarn install
     - yarn production
-    - tar cfz public.tar.gz public
+    - tar cfz public.tar.gz public/{js,css}
   artifacts:
     paths:
       - public.tar.gz
