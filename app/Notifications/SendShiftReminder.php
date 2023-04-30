@@ -18,10 +18,11 @@ class SendShiftReminder extends Notification
      * Create a new notification instance.
      *
      */
-    public function __construct(string $planLink, string $shifts)
+    public function __construct(string $planLink, string $shifts, string $locale)
     {
         $this->planLink = $planLink;
         $this->shifts = $shifts;
+        app()->setLocale($locale);
     }
 
     /**
@@ -43,11 +44,9 @@ class SendShiftReminder extends Notification
      */
     public function toMail($notifiable)
     {
-        # TODO: remember the lang of the subscription
         return (new MailMessage)
-            ->subject(__('subscription.reminder', locale: 'de') . " / " . __('subscription.reminder', locale: 'en'))
-            ->line(__('subscription.reminderBody', locale: 'de'))
-            ->line(__('subscription.reminderBody', locale: 'en'))
+            ->subject(__('subscription.reminder'))
+            ->line(__('subscription.reminderBody'))
             ->line($this->shifts)
             ->action(__('plan.linksEmailPlan'), $this->planLink);
     }

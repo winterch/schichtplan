@@ -25,6 +25,7 @@ APP_KEY=base64:YOU_NEED_TO_CHANGE_ME
 APP_DEBUG=false
 APP_URL=https://schichtplan.com
 LOG_LEVEL=info
+APP_API_KEY=the key to trigger cronjobs
 
 DB_CONNECTION=sqlite
 DB_DATABASE=/path/to/laravel/database/database.sqlite
@@ -58,6 +59,11 @@ There is no upgrade path from older version of schichtplan (< 2.0).
 There is a command to clean up old plans. Most of the time you want to run this in a schedule and don't need to invoke it directly.
 ```bash
 php artisan schichtplan:cleanup
+```
+
+There is a command to send notification emails to subscribers one day before the event.
+```bash
+php artisan schichtplan:notify-subscribers
 ```
 
 ## Development

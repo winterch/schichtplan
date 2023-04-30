@@ -20,6 +20,7 @@ class StoreSubscriptionRequest extends FormRequest
             'phone' => 'nullable|regex:/[0-9\s]{10,15}/',
             'notification' => 'boolean',
             'comment' => 'max:500',
+            'locale' => 'required|in:de,en,es'
         ];
     }
 
@@ -34,6 +35,7 @@ class StoreSubscriptionRequest extends FormRequest
             'email.required'  => __('subscription.emailRequired'),
             'phone.regex'  => __('subscription.phoneRegex'),
             'comment.max'  => __('subscription.commentMax'),
+            'locale.in'  => __('subscription.validLanguage'),
         ];
     }
 }

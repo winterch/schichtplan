@@ -25,7 +25,7 @@ class SubscriptionController extends Controller
         $this->authSubscriber($plan, $shift);
         $subscription = new Subscription();
         $subscription->notification = true;
-        return view('subscription.create', ['plan' => $plan, 'shift' => $shift, 'subscription' => $subscription]);
+        return view('subscription.create', ['plan' => $plan, 'shift' => $shift, 'subscription' => $subscription, 'locale' => session('locale', 'en')]);
     }
 
     /*
@@ -102,9 +102,10 @@ class SubscriptionController extends Controller
      */
     public function edit(Plan $plan, Shift $shift, Subscription $subscription)
     {
+      echo "local" . session('locale');
         $this->auth($plan);
         $this->authorize('update', $subscription);
-        return view('subscription.create', ['plan' => $plan, 'shift' => $shift, 'subscription' => $subscription]);
+        return view('subscription.create', ['plan' => $plan, 'shift' => $shift, 'subscription' => $subscription, 'locale' => session('locale', 'en')]);
     }
 
     /**

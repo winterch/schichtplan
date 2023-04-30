@@ -31,4 +31,5 @@ return [
     'notifyMe' => 'Errinner mich einen Tag bevor meine Schicht beginnt.',
     'reminder' => 'Du hast morgen eine Schicht',
     'reminderBody' => "Vergiss nicht die Schicht(en), für die du dich morgen eingetragen hast. Infos findest du im entsprechenden Schichtplan.",
+    "validLanguage" => "Ungültige Sprache"
 ];

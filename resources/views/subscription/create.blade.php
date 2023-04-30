@@ -10,6 +10,7 @@
         <form method="post" action="{{route('plan.shift.subscription.store', ['plan' => $plan, 'shift' => $shift])}}">
     @endif
             @csrf
+            <input type="hidden" name="locale" value="{{ $locale }}">
             <div class="grid grid-rows-4 grid-flow-row gap-4 md:grid-flow-col mb-4">
                 <div>
                     <label for="type" class="block text-gray-700 font-bold mb-1">{{__("subscription.nameDesc")}}</label>
