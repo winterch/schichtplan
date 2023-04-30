@@ -64,7 +64,7 @@ deploy:
     - rm -rf tests *.tar.gz
     - chmod -R g+w storage
     # lftp needs a "dummy" password, even if key-based authentication is used.
-    - lftp -e "mirror -eRv -x ^.git/ -x ^.env . www; quit;" -u $DEPLOY_USER,dummy sftp://$DEPLOY_HOST
+    - lftp -e "mirror -eRv -x ^.git/ -x ^.env . www; chmod -R g+w www/storage; quit;" -u $DEPLOY_USER,dummy sftp://$DEPLOY_HOST
     - tar czf published.tar.gz *
   stage: deploy
   only:
