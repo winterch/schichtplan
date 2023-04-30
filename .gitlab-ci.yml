@@ -28,7 +28,7 @@ build_php:
         PHP_VERSION:
           - "8.2"
   stage: build
-  image: $CI_REGISTRY/immerda/container-images/php/el$EL:$PHP_VERSION
+  image: $CI_REGISTRY/immerda/container-images/php/el$EL/devel:$PHP_VERSION
   tags:
     - container
   script:
