@@ -62,6 +62,7 @@ deploy:
     - tar fxz public.tar.gz
     - tar fxz vendor-php${PHP_VERSION}-el${EL}.tar.gz
     - rm -rf tests *.tar.gz
+    - chmod -R g+w storage
     # lftp needs a "dummy" password, even if key-based authentication is used.
     - lftp -e "mirror -eRv -x ^.git/ -x ^.env . www; quit;" -u $DEPLOY_USER,dummy sftp://$DEPLOY_HOST
     - tar czf published.tar.gz *
