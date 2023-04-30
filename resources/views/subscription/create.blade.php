@@ -4,10 +4,10 @@
     <div>{{$shift->desripion}}</div>
     <div> {{$shift->start}} - {{$shift->end}}</div>
     @if(isset($subscription->id) && $subscription->id > 0)
-        <form method="post" action="{{route('plan.shift.subscription.update', ['plan' => $plan, 'shift' => $shift, 'subscription' => $subscription])}}">
+        <form method="post" action="{{route('plan.shift.subscription.update', ['plan' => $plan, 'shift' => $shift, 'subscription' => $subscription])}}" class="subscription">
             @method("put")
     @else
-        <form method="post" action="{{route('plan.shift.subscription.store', ['plan' => $plan, 'shift' => $shift])}}">
+        <form method="post" action="{{route('plan.shift.subscription.store', ['plan' => $plan, 'shift' => $shift])}}" class="subscription">
     @endif
             @csrf
             <input type="hidden" name="locale" value="{{ $locale }}">

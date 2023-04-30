@@ -24,7 +24,6 @@ class SubscriptionController extends Controller
         // anonymous users can just add a shift for the authorized plan
         $this->authSubscriber($plan, $shift);
         $subscription = new Subscription();
-        $subscription->notification = true;
         return view('subscription.create', ['plan' => $plan, 'shift' => $shift, 'subscription' => $subscription, 'locale' => session('locale', 'en')]);
     }
 

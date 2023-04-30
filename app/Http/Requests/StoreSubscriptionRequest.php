@@ -16,7 +16,7 @@ class StoreSubscriptionRequest extends FormRequest
     {
         return [
             'name' => 'required|max:100',
-            'email' => 'required|email|max:100',
+            'email' => 'email|max:100',
             'phone' => 'nullable|regex:/[0-9\s]{10,15}/',
             'notification' => 'boolean',
             'comment' => 'max:500',
@@ -32,7 +32,6 @@ class StoreSubscriptionRequest extends FormRequest
     {
         return [
             'name.required' => __("subscription.nameRequired"),
-            'email.required'  => __('subscription.emailRequired'),
             'phone.regex'  => __('subscription.phoneRegex'),
             'comment.max'  => __('subscription.commentMax'),
             'locale.in'  => __('subscription.validLanguage'),
