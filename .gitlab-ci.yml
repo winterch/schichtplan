@@ -65,6 +65,6 @@ deploy:
     # This job relies on secret env vars, which are only available in our repo.
     - master
   variables:
-    EL: 7
-    PHP_VERSION: 8.2
+    EL: "7"
+    PHP_VERSION: "8.2"
 
