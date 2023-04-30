@@ -59,8 +59,8 @@ deploy:
     - printf "${DEPLOY_HOST} ssh-ed25519 ${DEPLOY_HOST_ED_KEY}
       " > ~/.ssh/known_hosts
     - rm -rf vendor public/{css,js}
-    - tar fxz ${wd}/public.tar.gz
-    - tar fxz ${wd}/vendor-php${PHP_VERSION}-el${EL}.tar.gz
+    - tar fxz public.tar.gz
+    - tar fxz vendor-php${PHP_VERSION}-el${EL}.tar.gz
     - rm -rf tests *.tar.gz
     # lftp needs a "dummy" password, even if key-based authentication is used.
     - lftp -e "mirror -eRv -x ^.git/ -x ^.env . www; quit;" -u $DEPLOY_USER,dummy sftp://$DEPLOY_HOST
