@@ -102,8 +102,9 @@ class PlanController extends Controller
                         break;
                     }
                 }
+                $type = $data[$key];
                 $d = [
-                    "type" => $data[$key]  || '',
+                    "type" => empty($type) ? '': $type,
                     "title" => $data[$key+1],
                     "description" => $data[$key+2],
                     "start" => $data[$key+3],
