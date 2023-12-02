@@ -4,6 +4,9 @@ module.exports = {
       './resources/**/*.js',
       './resources/**/*.vue',
   ],
+  safelist: [
+    "underline",
+  ],
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {},
