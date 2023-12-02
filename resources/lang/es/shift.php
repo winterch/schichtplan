@@ -3,6 +3,7 @@ return [
     'add' => 'Agregar turno',
     'noshifts' => 'Aún no hay turnos definidos',
     'createHeading' => 'Nuevo turno',
+    'editHeading' => 'Editar turno',
     'type' => 'Tipo',
     'title' => 'Título',
     'description' => 'Descripción',

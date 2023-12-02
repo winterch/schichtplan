@@ -3,6 +3,7 @@ return [
     'add' => 'Add shift',
     'noshifts' => 'No shifts',
     'createHeading' => 'New shift',
+    'editHeading' => 'Edit shift',
     'type' => 'Category',
     'title' => 'Title',
     'description' => 'Description',
