@@ -65,7 +65,7 @@ deploy:
     # clean cached stuff
     - rm -rf storage/framework/*/* bootstrap/cache/*
     # lftp needs a "dummy" password, even if key-based authentication is used.
-    - lftp -e "mirror -eRv -x ^.git/ -x ^.env . www; quit;" -u $DEPLOY_USER,dummy sftp://$DEPLOY_HOST
+    - lftp -e "mirror -eRv -x ^.git/ -x storage/logs -x ^.env . www; quit;" -u $DEPLOY_USER,dummy sftp://$DEPLOY_HOST
     - tar czf published.tar.gz *
   stage: deploy
   only:
