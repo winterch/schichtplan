@@ -38,7 +38,8 @@
     <a href="{{route('plan.recover')}}">{{__('plan.recover')}}</a>
     </div>
 
-    <div class="flex md:justify-end md:text-sm text-xs justify-start">
-        {!! __('home.copyleft') !!}
-    </div>
+    <ul class="flex md:justify-end md:text-sm text-xs justify-start">
+        <li class="mr-2">{!! __('plan.documentation') !!} </li>
+        <li>{!! __('home.copyleft') !!}</li>
+</ul>
 @endsection
