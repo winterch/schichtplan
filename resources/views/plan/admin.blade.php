@@ -12,7 +12,7 @@
 
 
     <div class="py-4">
-      {{ __('plan.admin_help') }}
+      {!! __('plan.admin_help') !!}
     </div>
 
     @if(count($plan->shifts) > 0)

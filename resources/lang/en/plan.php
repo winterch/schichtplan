@@ -30,7 +30,7 @@ return [
     'recover_help' => 'Enter your email address to receive the admin link of your plans.',
     'successfullyRecovered' => 'If you have active plans you will receive them by email now',
     'sort_help' => 'Ordered by group, type, date',
-    'admin_help' => 'This Page allows you to define shifts. Save this address!',
+    'admin_help' => 'This Page allows you to define shifts. Save this address! Find instructions in <a href="https://docs.immerda.ch/de/services/shifts/" target="_blank" class="underline">Immerda documentation</a>',
     'admin_subscriptions_help' => 'These people subscribed to your shifts.',
     'allLinksEmail' => 'Here are all your shift plans',
     'linksEmailSubscribers' => 'You created a plan on the shift planer. First you should polish your plan and create all shifts. Then you can share the following link with your audience. They can subscribe themselves to a shift.',
