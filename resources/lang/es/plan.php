@@ -35,5 +35,7 @@ return [
     'linksEmailSubscribers' => 'Hiciste un gran trabajo al crear un plan de turnos. Primero debes llenar tu plan de turnos con vida y crear algunos turnos. Entonces puedes compartir el siguiente enlace con tus amigos. A continuación, pueden inscribirse en uno de los turnos.',
     'linksEmailAdmin' => 'Para editar tu plan de turnos, para agregar nuevos turnos y obtener una lista de ayudantes, hagas clic en el enlace a continuación. No debes compartir este enlace. Le permite cambiar tu plan de turnos y ver todos los ayudantes.',
     'linksEmailEditPlan' => 'Editar plan de turnos',
-    'linksEmailSubject' => 'Gestiona tu plan de turnos: '
+    'linksEmailSubject' => 'Gestiona tu plan de turnos: ',
+    'documentation' => '<a href="//docs.immerda.ch/en/services/shifts/">Ayuda</a>',
+
 ];

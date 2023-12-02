@@ -48,4 +48,5 @@ return [
     'importFile' => 'Das File wird benötigt.',
     'importMimetype' => 'Nur csv file sind erlaubt.',
     'importMax' => 'Das csv darf maximal 1mb gross sein.',
+    'documentation' => '<a href="//docs.immerda.ch/de/services/shifts/">Hilfe</a>',
 ];
