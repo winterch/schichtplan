@@ -82,21 +82,21 @@
                     @else
                       <tr class="bg-gray-100">
                     @endif
-                        <td class="text-sm px-4 py-1">{{$shift->title}}</td>
+                        <td style="border-radius: 10px 0 0 10px;" class="text-sm px-4 py-1">{{$shift->title}}</td>
                         <td class="text-sm px-4 py-1">{{$shift->description}}</td>
                         <td class="text-sm text-right px-4 py-1">{{Date::parse($shift->start)->formatLocalized("%a %d. %b '%y - %H:%M")}}</td>
                         <td class="text-sm text-right px-4 py-1">{{Date::parse($shift->end)->formatLocalized("%a %d. %b '%y - %H:%M")}}</td>
                         <td class="text-sm px-4 py-1">{{$shift->team_size}}</td>
-                        <td class="text-sm px-4 py-1">
+                        <td style="border-radius: 0 10px 10px 0; class="text-sm px-4 py-1">
 
-                            <a href="{{route('plan.shift.edit',  ['plan' => $plan, 'shift' => $shift])}}" class="mt-3 mb-0">
+                            <a class="my-button mt-4" href="{{route('plan.shift.edit',  ['plan' => $plan, 'shift' => $shift])}}" class="mt-3 mb-0">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline" viewBox="0 0 20 20" fill="currentColor">
                                     <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
                                 </svg></a>
                             <form method="post" action="{{route('plan.shift.destroy', ['plan' => $plan, 'shift' => $shift])}}" style="display:inline" class="delete-shift" data-confirm-delete-msg="{{ __('shift.confirmDelete') }}">
                                 @method('delete')
                                 @csrf
-                                <button type="submit" class="mt-2 mb-0">
+                                <button type="submit" class="my-button mt-2 mb-0">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline" viewBox="0 0 20 20" fill="currentColor">
                                         <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
                                     </svg>

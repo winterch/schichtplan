@@ -22,7 +22,7 @@
                        </thead>
                        @endif
                        <thead class="">
-                        <tr>
+                        <tr class="border-b">
                             <th scope="col" class="text-sm px-2 py-4 text-left">{{__('shift.title')}}</th>
                             <th scope="col" class="text-sm max-w-sm px-4 py-4 text-left">{{__('shift.description')}}</th>
                             <th scope="col" class="text-sm px-6 py-4">{{__('shift.startDesc')}}</th>
@@ -33,8 +33,12 @@
                         </thead>
                         <tbody>
                         @endif
-                        <tr class="border-b">
-                            <td class="text-sm px-4 py-4">{{$shift->title}}</td>
+                        @if ($loop->index % 2 == 0)
+                          <tr class="">
+                        @else
+                          <tr class="bg-gray-200">
+                        @endif
+                            <td style="border-radius: 10px 0 0 10px;" class="text-sm px-4 py-4">{{$shift->title}}</td>
                             <td class="text-sm max-w-xs px-6 py-4">{{$shift->description}}</td>
                             <td class="text-sm text-right px-4 py-1">{{Date::parse($shift->start)->formatLocalized("%a %d. %b '%y - %H:%M")}}</td>
                             <td class="text-sm text-right px-4 py-1">{{Date::parse($shift->end)->formatLocalized("%a %d. %b '%y - %H:%M")}}</td>
@@ -49,9 +53,9 @@
                                 @endforeach
                                 </i>
                             </td>
-                            <td class="text-sm px-4 py-4">
+                            <td style="border-radius: 0 10px 10px 0;" class="text-sm px-4 py-4">
                                 @if ($shift->team_size > $shift->subscriptions->count())
-                                  <a href="{{route('plan.subscription.create', ['plan' => $shift->plan->view_id, 'shift'=> $shift])}}" class="my-button">
+                                  <a href="{{route('plan.subscription.create', ['plan' => $shift->plan->view_id, 'shift'=> $shift])}}" class="my-button m-4">
                                       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline" viewBox="0 0 20 20" fill="currentColor">
                                           <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                                       </svg>
