@@ -5,7 +5,7 @@
 @endif
 
 @if(Session::has('info'))
-    <div class="sm:m-6 sm:py-6 w-full bg-blue-50 border border-blue-500 p-4 my-2 rounded text-xl">
+    <div class="sm:m-6 sm:py-6 w-full bg-green-50 border p-4 my-2 rounded text-xl">
         {{Session::get('info')}}
     </div>
 @endif
