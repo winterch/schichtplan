@@ -1,6 +1,10 @@
 @extends('layout.app')
 @section('body')
-    <h1 class="text-3xl mb-2">{{ __('shift.createHeading') }}</h1>
+    @if(isset($shift->id) && $shift->id > 0)
+        <h1 class="text-3xl mb-2">{{ __('shift.editHeading') }}</h1>
+    @else
+        <h1 class="text-3xl mb-2">{{ __('shift.createHeading') }}</h1>
+    @endif
 
     {{ __('plan.sort_help') }}
     <br>
@@ -55,8 +59,7 @@
         <div class="grid grid-rows-1 p-3 grid-flow-row gap-4 md:grid-flow-col">
             <div>
                 <label for="type" class="block text-gray-700 font-bold mb-1">{{__("shift.type")}}</label>
-                <input id="type" name="type" type="text" class="@error('type') border-red-500 @enderror w-full block text-black p-1 text-lg mb-2 border rounded" value="{{old('type', $shift->type)}}">
-                @error('type')
+                <input id="type" name="type" type="text" class="@error('type') border-red-500 @enderror w-full block text-black p-1 text-lg mb-2 border rounded" value="{{old('type', $shift->type)}}">                @error('type')
                 <div class="text-red-500 text-xs italic">{{ $message }}</div>
                 @enderror
             </div>
