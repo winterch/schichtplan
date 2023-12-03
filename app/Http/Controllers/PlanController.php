@@ -9,6 +9,7 @@ use App\Http\Requests\StoreShiftRequest;
 use App\Http\Requests\StoreSubscriptionRequest;
 use App\Http\Requests\UpdatePlanRequest;
 use App\Models\Plan;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Response;
@@ -312,5 +313,30 @@ class PlanController extends Controller
         $plan->forceDelete();
         Session::flash('info', __('plan.successfullyDestroyed'));
         return \redirect()->route('home');
+    }
+
+
+    // Mo. 10.1 10:00 - 12:00
+    // Mo. 10.1 10:00 - Di.11.1 12:00
+    // Mo
+    public static function buildDateString(string $start, string $end): string  {
+        $start = \Illuminate\Support\Facades\Date::parse($start);
+        $end = \Illuminate\Support\Facades\Date::parse($end);
+        $hours = $start->diffInHours($end);
+        $res = "";
+        if($start->isSameDay($end)) {
+            $res .= $start->formatLocalized("%a %d. %b | %H:%M");
+            $res .= " - ";
+            $res .= $end->formatLocalized('%H:%M');
+        } elseif($start->isSameYear($end)) {
+            $res .= $start->formatLocalized("%a %d. %b | %H:%M");
+            $res .= "<br>";
+            $res .= $end->formatLocalized("%a %d. %b | %H:%M");
+        } else {
+            $res .= $start->formatLocalized("%a %d. %b | %H:%M");
+            $res .= "<br>";
+            $res .= $end->formatLocalized("%a %d. %b | %H:%M");
+        }
+        return $res;
     }
 }

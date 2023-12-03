@@ -37,7 +37,6 @@
                     <tr>
                         <th class="text-sm px-2 py-4 text-left">{{ $shift->type }}</th>
                         <th class="text-sm px-0 py-4 text-left"></th>
-                        <th class="text-sm px-0 py-4 text-left"></th>
                         <th class="text-sm px-0 py-4 text-left">{{__('subscription.name')}}</th>
                         <th class="text-sm px-0 py-4 text-left">{{__('subscription.phone')}}</th>
                         <th class="text-sm px-0 py-4 text-left">{{__('subscription.email')}}</th>
@@ -55,11 +54,10 @@
                     @endif
 
                     @if ($subscription == $shift->subscriptions->first())
-                        <td style="border-radius: 10px 0 0 0;" class="text-left text-sm px-4 py-1">{{$shift->title}}</td>
-                        <td class="text-sm text-right px-4 py-1">{{Date::parse($shift->start)->formatLocalized("%a %d. %b '%y - %H:%M")}}</td>
-                        <td class="text-sm text-right px-4 py-1">{{Date::parse($shift->end)->formatLocalized("%a %d. %b '%y - %H:%M")}}</td>
+                        <td class="text-left text-sm px-4 py-1">{{$shift->title}}</td>
+                        <td class="text-sm text-right px-4 py-1 whitespace-nowrap">{!! \App\Http\Controllers\PlanController::buildDateString($shift->start, $shift->end) !!}</td>
                     @else
-                        <td colspan="3"></td>
+                        <td colspan="2"></td>
                     @endif
 
                         <td class="px-4">
@@ -104,9 +102,8 @@
                   <tr class="bg-gray-200">
                 @endif
                 @if ($shift->subscriptions->count() === 0)
-                  <td style="border-radius: 10px 0 0 10px;" class="text-left text-sm px-4 py-1">{{$shift->title}}</td>
-                  <td class="text-sm text-right px-4 py-1">{{Date::parse($shift->start)->formatLocalized("%a %d. %b '%y - %H:%M")}}</td>
-                  <td class="text-sm text-right px-4 py-1">{{Date::parse($shift->end)->formatLocalized("%a %d. %b '%y - %H:%M")}}</td>
+                  <td style="border-radius: 10px 0 0 10px;" class="text-left text-sm px-4 py-1 rounded-">{{$shift->title}}</td>
+                  <td class="text-sm text-right px-4 py-1 whitespace-nowrap">{!! \App\Http\Controllers\PlanController::buildDateString($shift->start, $shift->end) !!}</td>
                   <td style="border-radius: 0 10px 10px 0;" colspan="6">
                 @else
                   <td colspan=3 style="border-radius: 0 0 0 10px;"></td>
