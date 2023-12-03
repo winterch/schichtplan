@@ -47,13 +47,15 @@
                     </thead>
                     <tbody>
             @endif
-            @if($loop->first || ($plan->shifts[$index - 1]->type !== $shift->type))
+              @if($loop->first || ($plan->shifts[$index - 1]->type !== $shift->type))
+                @if($shift->type !== "")
                   <thead class="">
                   <tr><td colspan="6">
                     <div class="m-10"><span class="font-bold rounded bg-green-100 p-5 m-2">{{ $shift->type }}</span></div>
                   </td></tr>
                   </thead>
                 @endif
+              @endif
 
               @foreach($shift->subscriptions as $subscription)
                     @if ($index % 2 == 0)
@@ -104,26 +106,26 @@
                         </td>
                     </tr>
             @endforeach
+            @if ($index % 2 == 0)
+              <tr class="">
+            @else
+              <tr class="bg-gray-200">
+            @endif
+            @if ($shift->subscriptions->count() === 0)
+              <td style="border-radius: 10px 0 0 10px;" class="text-left text-sm px-4 py-1 rounded-">{{$shift->title}}</td>
+              <td class="text-sm text-right px-4 py-1 whitespace-nowrap">{!! \App\Http\Controllers\PlanController::buildDateString($shift->start, $shift->end) !!}</td>
+              <td style="border-radius: 0 10px 10px 0;" colspan="6">
+            @else
+              <td colspan=3 style="border-radius: 0 0 0 10px;"></td>
+              <td style="border-radius: 0 0 10px 0;" colspan="6">
+            @endif
             @if($shift->subscriptions->count() < $shift->team_size)
-                @if ($index % 2 == 0)
-                  <tr class="">
-                @else
-                  <tr class="bg-gray-200">
-                @endif
-                @if ($shift->subscriptions->count() === 0)
-                  <td style="border-radius: 10px 0 0 10px;" class="text-left text-sm px-4 py-1 rounded-">{{$shift->title}}</td>
-                  <td class="text-sm text-right px-4 py-1 whitespace-nowrap">{!! \App\Http\Controllers\PlanController::buildDateString($shift->start, $shift->end) !!}</td>
-                  <td style="border-radius: 0 10px 10px 0;" colspan="6">
-                @else
-                  <td colspan=3 style="border-radius: 0 0 0 10px;"></td>
-                  <td style="border-radius: 0 0 10px 0;" colspan="6">
-                @endif
                 <span class="rounded m-4 p-3 bg-red-100 float-right">
                 {{$shift->subscriptions->count()}} / {{$shift->team_size}}
                 </span>
-              </td>
-              </tr>
             @endif
+            </td>
+            </tr>
         @endforeach
                </tbody>
               </table>
