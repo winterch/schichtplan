@@ -38,7 +38,7 @@
                 @else
                   <tr class="bg-gray-200">
                 @endif
-                <td style="border-radius: 0 10px 10px 0;" class="text-sm px-4 py-4 align-top">
+                <td style="border-radius: 10px 0 0 10px" class="text-sm px-4 py-4 align-top">
                         @if ($shift->team_size > $shift->subscriptions->count())
                           <a href="{{route('plan.subscription.create', ['plan' => $shift->plan->view_id, 'shift'=> $shift])}}" class="my-button whitespace-nowrap">
                               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline" viewBox="0 0 20 20" fill="currentColor">
@@ -56,10 +56,10 @@
                           </a>
                         @endif
                     </td>
-                    <td style="border-radius: 10px 0 0 10px;" class="text-sm px-4 py-4 align-top">{{$shift->title}}</td>
+                    <td  class="text-sm px-4 py-4 align-top">{{$shift->title}}</td>
                     <td class="text-sm max-w-xs px-6 py-4 align-top" >{{$shift->description}}</td>
                     <td class="text-sm text-right px-4 py-4 whitespace-nowrap align-top">{!! \App\Http\Controllers\PlanController::buildDateString($shift->start, $shift->end) !!}</td>
-                    <td class="text-sm px-4 py-4 align-top">
+                    <td class="text-sm px-4 py-4 align-top" style="border-radius: 0 10px 10px 0;">
                         {{ $shift->subscriptions->count() }}&nbsp;/&nbsp;{{ $shift->team_size }}
                         @if($shift->subscriptions->count() > 0)
                           :

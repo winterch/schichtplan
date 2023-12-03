@@ -30,12 +30,13 @@
           <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
             <div class="overflow-x-auto">
               <table class="min-w-full">
+        @php($x = 0)
         @foreach($plan->shifts as $index => $shift)
             {{--  Header of a new group --}}
             @if($loop->first || ($plan->shifts[$index - 1]->type !== $shift->type))
                     <thead class="border-b">
                     <tr>
-                        <th class="text-sm px-2 py-4 text-left">{{ $shift->type }}</th>
+                        <th class="text-sm px-2 py-4 text-left"></th>
                         <th class="text-sm px-0 py-4 text-left"></th>
                         <th class="text-sm px-0 py-4 text-left">{{__('subscription.name')}}</th>
                         <th class="text-sm px-0 py-4 text-left">{{__('subscription.phone')}}</th>
@@ -46,6 +47,14 @@
                     </thead>
                     <tbody>
             @endif
+            @if($loop->first || ($plan->shifts[$index - 1]->type !== $shift->type))
+                  <thead class="">
+                  <tr><td colspan="6">
+                    <div class="m-10"><span class="font-bold rounded bg-green-100 p-5 m-2">{{ $shift->type }}</span></div>
+                  </td></tr>
+                  </thead>
+                @endif
+
               @foreach($shift->subscriptions as $subscription)
                     @if ($index % 2 == 0)
                       <tr class="">
@@ -54,10 +63,10 @@
                     @endif
 
                     @if ($subscription == $shift->subscriptions->first())
-                        <td class="text-left text-sm px-4 py-1">{{$shift->title}}</td>
+                        <td class="text-left text-sm px-4 py-1"  style="border-radius: 10px 0 0 0;" >{{$shift->title}}</td>
                         <td class="text-sm text-right px-4 py-1 whitespace-nowrap">{!! \App\Http\Controllers\PlanController::buildDateString($shift->start, $shift->end) !!}</td>
                     @else
-                        <td colspan="2"></td>
+                        <td colspan="2"  style="border-radius: 10px 0 0 0;" ></td>
                     @endif
 
                         <td class="px-4">
