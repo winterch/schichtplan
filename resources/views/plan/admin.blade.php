@@ -68,9 +68,8 @@
               <thead class="border-b">
                     <tr>
                         <th class="px-2 text-sm px-0 py-4 text-left">{{__('shift.title')}}</th>
-                        <th class="text-sm px-0 py-4 text-left">{{__('shift.description')}}</th>
+                        <th class="text-sm px-0 py-4 text-left ">{{__('shift.description')}}</th>
                         <th class="text-sm px-0 py-4">{{__('shift.startDesc')}}</th>
-                        <th class="text-sm px-0 py-4">{{__('shift.endDesc')}}</th>
                         <th class="text-sm px-0 py-4 text-left">{{__('shift.team_size')}}</th>
                         <th class="text-sm px-0 py-4 text-left">{{__('shift.action')}}</th>
                     </tr>
@@ -84,8 +83,9 @@
                     @endif
                         <td style="border-radius: 10px 0 0 10px;" class="text-sm px-4 py-1">{{$shift->title}}</td>
                         <td class="text-sm px-4 py-1">{{$shift->description}}</td>
-                        <td class="text-sm text-right px-4 py-1">{{Date::parse($shift->start)->formatLocalized("%a %d. %b '%y - %H:%M")}}</td>
-                        <td class="text-sm text-right px-4 py-1">{{Date::parse($shift->end)->formatLocalized("%a %d. %b '%y - %H:%M")}}</td>
+                        <td class="text-sm text-right px-4 py-1 whitespace-nowrap">
+                        {!! \App\Http\Controllers\PlanController::buildDateString($shift->start, $shift->end) !!}
+                        </td>
                         <td class="text-sm px-4 py-1">{{$shift->team_size}}</td>
                         <td style="border-radius: 0 10px 10px 0; class="text-sm px-4 py-1">
 
