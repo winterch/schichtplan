@@ -49,13 +49,15 @@ class NotifySubscribers extends Command
             if (!isset($done[$planId])) {
                 $done[$planId] = [];
             }
-            foreach ($shift->subscriptions as $sub) {
-                if ($sub->notification) {
-                    if (!isset($done[$planId][$sub->email])) {
-                        $sub->sendReminder();
-                        $done[$planId][$sub->email] = true;
-                    }
-                }
+            if (\Illuminate\Support\Facades\Date::parse($shift->start) > \Illuminate\Support\Facades\Date::now()) {
+              foreach ($shift->subscriptions as $sub) {
+                  if ($sub->notification) {
+                      if (!isset($done[$planId][$sub->email])) {
+                          $sub->sendReminder();
+                          $done[$planId][$sub->email] = true;
+                      }
+                  }
+              }
             }
             $shift->notified = true;
             $shift->save();
