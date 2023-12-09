@@ -45,9 +45,10 @@ class PlanController extends Controller
         // no specific authorization - everybody can create a plan
         // validate the request
         $data = $request->validated();
+	$data['allow_unsubscribe'] = $request->has('allow_unsubscribe');
         $plan = Plan::create($data);
         // If user enables notification, she/he will get the links to edit and view the plan into the inbox
-        if((bool)$request->input('notification', 0)) {
+        if($request->has('notification')) {
             $plan->sendLinksNotification();
         }
         // redirect with success message
@@ -291,9 +292,7 @@ class PlanController extends Controller
         $this->auth($plan);
         $this->authorize("update", $plan);
         $data = $request->validated();
-        if (!isset($data['allow_unsubscribe'])) {
-          $data['allow_unsubscribe'] = false;
-        }
+	$data['allow_unsubscribe'] = $request->has('allow_unsubscribe');
         $plan->update($data);
         // redirect to shifts overview
         Session::flash('info', __('plan.successfullyUpdated'));

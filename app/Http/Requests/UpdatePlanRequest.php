@@ -19,7 +19,7 @@ class UpdatePlanRequest extends FormRequest
             'description' => 'required|max:500',
             'contact' => 'max:500',
             'owner_email' => 'required|email',
-            'allow_unsubscribe' => 'boolean',
+            'allow_unsubscribe' => 'max:1',
         ];
     }
 

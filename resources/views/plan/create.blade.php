@@ -38,14 +38,14 @@
                 @enderror
             </div>
             <div class="px-1">
-                <input id="allow_unsubscribe" name="allow_unsubscribe" type="checkbox" class="@error('allow_unsubscribe') border-red-500 @enderror" {{ old('allow_unsubscribe', $plan->allow_unsubscribe) ? 'checked' : '' }} > {{__("plan.allowUnsubscribe")}}
+                <input id="allow_unsubscribe" name="allow_unsubscribe" type="checkbox" value="1" {{ old('allow_unsubscribe', $plan->allow_unsubscribe) ? 'checked' : '' }} > {{__("plan.allowUnsubscribe")}}
                 @error('allow_unsubscribe')
                     <div class="text-red-500 text-xs italic">{{ $message }}</div>
                 @enderror
             </div>
             @if(!isset($plan->id))
             <div class="px-1">
-                <input id="notification" name="notification" type="checkbox" class="@error('notification') border-red-500 @enderror" value="1" checked> {{__("plan.notifyMe")}}
+                <input id="notification" name="notification" type="checkbox" value="1" {{ old('notification') ? 'checked' : '' }} > {{__("plan.notifyMe")}}
                 @error('notification')
                     <div class="text-red-500 text-xs italic">{{ $message }}</div>
                 @enderror
