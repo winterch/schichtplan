@@ -97,21 +97,16 @@ class PlanController extends Controller
             if (preg_match("/^shift$/", $data[0])) {
                 // remove the identifier field
                 array_shift($data);
-                // we use empty fields to separte. Find the start of the data
-                $key = 0;
-                foreach($data as $key => $field) {
-                    if(!empty($field)) {
-                        break;
-                    }
-                }
-                $type = $data[$key];
+		// remove empty field
+                array_shift($data);
+                $type = $data[0];
                 $d = [
                     "type" => empty($type) ? '': $type,
-                    "title" => $data[$key+1],
-                    "description" => $data[$key+2],
-                    "start" => $data[$key+3],
-                    "end" => $data[$key+4],
-                    "team_size" => $data[$key+5],
+                    "title" => $data[1],
+                    "description" => $data[2],
+                    "start" => $data[3],
+                    "end" => $data[4],
+                    "team_size" => $data[5],
                     "group" => 0,
                 ];
                 $validator = Validator::make($d, (new StoreShiftRequest())->rules(), (new StoreShiftRequest())->messages());
@@ -122,15 +117,8 @@ class PlanController extends Controller
                 if($shift === null) {
                     return abort(400, "Invalid csv input");
                 }
-                // remove the identifier field
-                array_shift($data);
                 // we use empty fields to separte. Find the start of the data
-                $key = 0;
-                foreach($data as $key => $field) {
-                    if(!empty($field)) {
-                        break;
-                    }
-                }
+                $key = 8;
                 $d = [
                     "name" => $data[$key],
                     "phone" => $data[$key+1],
