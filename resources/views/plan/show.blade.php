@@ -7,7 +7,7 @@
       <div>{{__('shift.noshifts')}}</div>
     @else
       <style>
-        @media (min-width: 640px) {
+        @media (min-width: 801px) {
           table {
             display: inline-table !important;
           }
@@ -18,7 +18,7 @@
             background-color: #eee;
           }
         }
-        @media (max-width: 639px) {
+        @media (max-width: 800px) {
           .shift-entry-desc {
             display: inline !important;
             font-weight: bold;
@@ -47,8 +47,8 @@
               <thead class="flex-1 sm:flex-none table-header" style="display:none">
                 <tr class="flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
                     <th class="p-3 text-left">{{__('shift.title')}}</th>
-                    <th class="p-3 text-left">{{__('shift.description')}}</th>
-                    <th class="p-3 text-left">{{__('shift.startDesc')}}</th>
+                    <th class="p-3 text-left" style="min-width: 230px">{{__('shift.description')}}</th>
+                    <th class="p-3 text-left" style="min-width: 195px">{{__('shift.startDesc')}}</th>
                     <th class="p-3 text-left">&nbsp;</th>
                     <th class="p-3 text-left">{{__('shift.action')}}&nbsp;</th>
                 </tr>
