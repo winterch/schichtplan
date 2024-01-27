@@ -23,7 +23,7 @@ class StoreShiftRequest extends FormRequest
             'group' => 'int|numeric|max:100|min:0',
             'start' => 'required|date|before:end',
             'end' => 'required|date|after:start',
-            'team_size' => 'required|int|max:100|min:1|numeric',
+            'team_size' => 'required|int|max:100|min:0|numeric',
             'repetition' => 'int|min:1|max:50|min:0|numeric',
             'repetition_type' => Rule::in(RepetitionType::cases()),
         ];
