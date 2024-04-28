@@ -24,9 +24,6 @@ build_php:
       - EL: "9"
         PHP_VERSION:
           - "8.2"
-      - EL: "7"
-        PHP_VERSION:
-          - "8.2"
   stage: build
   image: $CI_REGISTRY/immerda/container-images/php/el$EL/devel:$PHP_VERSION
   tags:
@@ -73,7 +70,7 @@ deploy:
     # This job relies on secret env vars, which are only available in our repo.
     - main
   variables:
-    EL: "7"
+    EL: "9"
     PHP_VERSION: "8.2"
   artifacts:
     paths:
