@@ -29,7 +29,7 @@ return [
     'removeEmail' => "Please check your email to confirm.",
     'successfullyRemoved' => "You are now unsubscribed.",
     'notifyMe' => 'Notify me one day before my shift starts.',
-    'reminder' => 'You have an upcomming shift tomorrow',
+    'reminder' => 'You have an upcoming shift tomorrow',
     'reminderBody' => "Don't forget the shift(s) you subscribed to. See the plan for details.",
     "validLanguage" => "invalid language"
 ];
