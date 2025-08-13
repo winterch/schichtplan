@@ -42,7 +42,7 @@
                   <tr>
                     <td colspan="6">
                       <div class="mt-10">
-                        <span class="rounded font-bold p-3 bg-{{ ($shift->subscriptions->count() < $shift->team_size) ? 'red' : 'green' }}-100">
+                        <span class="rounded font-bold p-3 bg-{{ ($shift->getSubscriptionsPercentageColor()) }}-100">
                           {{$shift->subscriptions->count()}} / {{$shift->team_size}}
                         </span>
                         <span class="font-bold ml-4">{{ $shift->title }}</span>

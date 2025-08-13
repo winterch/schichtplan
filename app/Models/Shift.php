@@ -63,4 +63,25 @@ class Shift extends Model
     public function subscriptions() {
         return $this->hasMany(Subscription::class);
     }
+
+    /**
+     * Color for amount of filled spaces
+     * 100% filled => green
+     * 80% - 99% filled => yellow
+     * below 80% filled => red
+     * 
+     * @return string
+     */
+    public function getSubscriptionsPercentageColor(): string {
+        $currentAmount = $this->subscriptions->count();
+        $requiredAmount = $this->team_size;
+        $percentage = $currentAmount / $requiredAmount;
+        if ($percentage >= 1) {
+            return 'green';
+        } elseif ($percentage >= 0.8) {
+            return 'yellow';
+        } else {
+            return 'red';
+        }
+    }
 }
