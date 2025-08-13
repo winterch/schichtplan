@@ -58,16 +58,16 @@
         @foreach($plan->shifts as $index => $shift)
             {{--  Header of a new group --}}
             @if($loop->first || ($plan->shifts[$index - 1]->type !== $shift->type))
-            
+
               @include('partials/shift_type_header')
 
                 <thead class="border-b">
                     <tr>
-                        <th class="px-2 text-sm px-0 py-4 text-left">{{__('shift.title')}}</th>
-                        <th class="text-sm px-0 py-4 text-left ">{{__('shift.description')}}</th>
-                        <th class="text-sm px-0 py-4">{{__('shift.durationDesc')}}</th>
-                        <th class="text-sm px-0 py-4 text-left">{{__('shift.team_size')}}</th>
-                        <th class="text-sm px-0 py-4 text-left">{{__('shift.action')}}</th>
+                        <th class="text-sm p-4 text-left">{{__('shift.title')}}</th>
+                        <th class="text-sm p-4 text-left ">{{__('shift.description')}}</th>
+                        <th class="text-sm p-4">{{__('shift.durationDesc')}}</th>
+                        <th class="text-sm p-4 text-left">{{__('shift.team_size')}}</th>
+                        <th class="text-sm p-4 text-left">{{__('shift.action')}}</th>
                     </tr>
                     </thead>
                     <tbody>

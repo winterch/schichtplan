@@ -19,11 +19,11 @@
 
                 <thead class="">
                 <tr class="border-b">
-                    <th scope="col" class="text-sm px-4 py-4 text-left" style="width: 140px;">{{__('shift.action')}}</th>
-                    <th scope="col" class="text-sm px-2 py-4 text-left" style="width: 300px;">{{__('shift.title')}}</th>
-                    <th scope="col" class="text-sm max-w-sm px-4 py-4 text-left" style="min-width: 250px;">{{__('shift.description')}}</th>
-                    <th scope="col" class="text-sm px-6 py-4" style="width: 220px;">{{__('shift.durationDesc')}}</th>
-                    <th scope="col" class="text-sm px-4 py-4 text-left" style="width: 180px;">{{__('shift.subscriptionsDesc')}}</th>
+                    <th scope="col" class="text-sm p-4 text-left" style="width: 140px;">{{__('shift.action')}}</th>
+                    <th scope="col" class="text-sm p-4 text-left" style="width: 300px;">{{__('shift.title')}}</th>
+                    <th scope="col" class="text-sm max-w-sm p-4 text-left" style="min-width: 250px;">{{__('shift.description')}}</th>
+                    <th scope="col" class="text-sm p-4" style="width: 220px;">{{__('shift.durationDesc')}}</th>
+                    <th scope="col" class="text-sm p-4 text-left" style="width: 180px;">{{__('shift.subscriptionsDesc')}}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -51,20 +51,18 @@
                           </a>
                         @endif
                     </td>
-                    <td  class="text-sm px-4 py-4 align-top font-bold">{{$shift->title}}</td>
-                    <td class="text-sm max-w-xs px-6 py-4 align-top" >{{$shift->description}}</td>
-                    <td class="text-sm text-center px-4 py-4 whitespace-nowrap align-top">{!! \App\Http\Controllers\PlanController::buildDateString($shift->start, $shift->end) !!}</td>
-                    <td class="text-sm px-4 py-4 align-top" style="border-radius: 0 10px 10px 0;">
+                    <td  class="text-sm p-4 align-top font-bold">{{$shift->title}}</td>
+                    <td class="text-sm max-w-xs p-4 align-top" >{{$shift->description}}</td>
+                    <td class="text-sm text-center p-4 whitespace-nowrap align-top">{!! \App\Http\Controllers\PlanController::buildDateString($shift->start, $shift->end) !!}</td>
+                    <td class="text-sm p-4 align-top" style="border-radius: 0 10px 10px 0;">
                         {{ $shift->subscriptions->count() }}&nbsp;/&nbsp;{{ $shift->team_size }}
-                        @if($shift->subscriptions->count() > 0)
-                          :
-                        @endif
                         <br>
-                        <i>
+                        
                         @foreach($shift->subscriptions as $subscription)
-                          {{$subscription->name}}@if($subscription != $shift->subscriptions->last())<br> @endif
+                          <i>{{$subscription->name}}</i>
+                          @if($subscription != $shift->subscriptions->last())<br> @endif
                         @endforeach
-                        </i>
+                        
                     </td>
                 </tr>
                 {{--  Footer of a group--}}
