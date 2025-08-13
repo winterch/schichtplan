@@ -106,7 +106,7 @@ return [
     'available_locales' => [
         'English' => 'en',
         'Deutsch' => 'de',
-        'Castellano' => 'es',
+        // 'Castellano' => 'es',
     ],
 
     /*

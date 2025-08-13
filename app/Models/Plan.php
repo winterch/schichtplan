@@ -11,6 +11,7 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class Plan extends Model implements
@@ -78,7 +79,10 @@ class Plan extends Model implements
     public function shifts()
     {
         // order by group, type and start date
-        return $this->hasMany(Shift::class)->orderBy('group')->orderBy('type')->orderBy('start');
+        return $this->hasMany(Shift::class)
+            ->orderBy('group')
+            ->orderByRaw('IF (`type` = "", 1, 0), `type`')
+            ->orderBy('start');
     }
 
     /**

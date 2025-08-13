@@ -15,28 +15,23 @@
         @foreach($plan->shifts as $index => $shift)
             {{--  Header of a new group --}}
             @if($loop->first || ($plan->shifts[$index - 1]->type !== $shift->type))
-                @if($shift->type !== "")
-                  <thead class="">
-                  <tr><td colspan="6">
-                    <div class="m-10"><span class="font-bold rounded bg-green-100 p-5 m-2">{{ $shift->type }}</span></div>
-                  </td></tr>
-                  </thead>
-                @endif
+              @include('partials/shift_type_header')
+
                 <thead class="">
                 <tr class="border-b">
                     <th scope="col" class="text-sm px-4 py-4 text-left" style="width: 140px;">{{__('shift.action')}}</th>
                     <th scope="col" class="text-sm px-2 py-4 text-left" style="width: 300px;">{{__('shift.title')}}</th>
                     <th scope="col" class="text-sm max-w-sm px-4 py-4 text-left" style="min-width: 250px;">{{__('shift.description')}}</th>
-                    <th scope="col" class="text-sm px-6 py-4" style="width: 220px;">{{__('shift.startDesc')}}</th>
-                    <th scope="col" class="text-sm px-4 py-4 text-left" style="width: 180px;"></th>
+                    <th scope="col" class="text-sm px-6 py-4" style="width: 220px;">{{__('shift.durationDesc')}}</th>
+                    <th scope="col" class="text-sm px-4 py-4 text-left" style="width: 180px;">{{__('shift.subscriptionsDesc')}}</th>
                 </tr>
                 </thead>
                 <tbody>
                 @endif
                 @if ($loop->index % 2 == 0)
-                  <tr class="">
-                @else
                   <tr class="bg-gray-200">
+                @else
+                  <tr class="bg-gray-100">
                 @endif
                 <td style="border-radius: 10px 0 0 10px" class="text-sm px-4 py-4 align-top">
                         @if ($shift->team_size > $shift->subscriptions->count())
@@ -56,9 +51,9 @@
                           </a>
                         @endif
                     </td>
-                    <td  class="text-sm px-4 py-4 align-top">{{$shift->title}}</td>
+                    <td  class="text-sm px-4 py-4 align-top font-bold">{{$shift->title}}</td>
                     <td class="text-sm max-w-xs px-6 py-4 align-top" >{{$shift->description}}</td>
-                    <td class="text-sm text-right px-4 py-4 whitespace-nowrap align-top">{!! \App\Http\Controllers\PlanController::buildDateString($shift->start, $shift->end) !!}</td>
+                    <td class="text-sm text-center px-4 py-4 whitespace-nowrap align-top">{!! \App\Http\Controllers\PlanController::buildDateString($shift->start, $shift->end) !!}</td>
                     <td class="text-sm px-4 py-4 align-top" style="border-radius: 0 10px 10px 0;">
                         {{ $shift->subscriptions->count() }}&nbsp;/&nbsp;{{ $shift->team_size }}
                         @if($shift->subscriptions->count() > 0)
@@ -67,7 +62,7 @@
                         <br>
                         <i>
                         @foreach($shift->subscriptions as $subscription)
-                          {{$subscription->name}}@if($subscription != $shift->subscriptions->last()), @endif
+                          {{$subscription->name}}@if($subscription != $shift->subscriptions->last())<br> @endif
                         @endforeach
                         </i>
                     </td>

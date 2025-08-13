@@ -43,7 +43,7 @@
     <br>
     @endif
 
-    {{ __('plan.sort_help') }}
+    {{-- __('plan.sort_help') --}}
 
     @if(count($plan->shifts) === 0)
         <br>
@@ -53,23 +53,19 @@
       <div class="flex flex-col">
         <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-            <div class="rounded p-2 overflow-x-auto">
+            <div class="rounded overflow-x-auto">
               <table class="min-w-full">
         @foreach($plan->shifts as $index => $shift)
             {{--  Header of a new group --}}
             @if($loop->first || ($plan->shifts[$index - 1]->type !== $shift->type))
-              @if($shift->type !== "")
-                <thead class="">
-                <tr><td colspan="6">
-                  <div class="m-10"><span class="font-bold rounded bg-green-100 p-5 m-2">{{ $shift->type }}</span></div>
-                </td></tr>
-                </thead>
-              @endif
-              <thead class="border-b">
+            
+              @include('partials/shift_type_header')
+
+                <thead class="border-b">
                     <tr>
                         <th class="px-2 text-sm px-0 py-4 text-left">{{__('shift.title')}}</th>
                         <th class="text-sm px-0 py-4 text-left ">{{__('shift.description')}}</th>
-                        <th class="text-sm px-0 py-4">{{__('shift.startDesc')}}</th>
+                        <th class="text-sm px-0 py-4">{{__('shift.durationDesc')}}</th>
                         <th class="text-sm px-0 py-4 text-left">{{__('shift.team_size')}}</th>
                         <th class="text-sm px-0 py-4 text-left">{{__('shift.action')}}</th>
                     </tr>
@@ -77,13 +73,13 @@
                     <tbody>
             @endif
                     @if ($index % 2 == 0)
-                      <tr class="">
+                      <tr class="bg-gray-200">
                     @else
                       <tr class="bg-gray-100">
                     @endif
-                        <td style="border-radius: 10px 0 0 10px;" class="text-sm px-4 py-1">{{$shift->title}}</td>
+                        <td style="border-radius: 10px 0 0 10px;" class="text-sm px-4 py-1 font-bold">{{$shift->title}}</td>
                         <td class="text-sm px-4 py-1">{{$shift->description}}</td>
-                        <td class="text-sm text-right px-4 py-1 whitespace-nowrap">
+                        <td class="text-sm text-center px-4 py-1 whitespace-nowrap">
                         {!! \App\Http\Controllers\PlanController::buildDateString($shift->start, $shift->end) !!}
                         </td>
                         <td class="text-sm px-4 py-1">{{$shift->team_size}}</td>

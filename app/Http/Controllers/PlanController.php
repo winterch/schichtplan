@@ -306,7 +306,7 @@ class PlanController extends Controller
     // Mo. 10.1 10:00 - 12:00
     // Mo. 10.1 10:00 - Di.11.1 12:00
     // Mo
-    public static function buildDateString(string $start, string $end): string  {
+    public static function buildDateString(string $start, string $end, bool $inline = false): string  {
         $start = \Illuminate\Support\Facades\Date::parse($start);
         $end = \Illuminate\Support\Facades\Date::parse($end);
         $hours = $start->diffInHours($end);
@@ -317,11 +317,15 @@ class PlanController extends Controller
             $res .= $end->formatLocalized('%H:%M');
         } elseif($start->isSameYear($end)) {
             $res .= $start->formatLocalized("%a %d. %b | %H:%M");
-            $res .= "<br>";
+            $res .= $inline ? "&nbsp;" : "<br>";
+            $res .= " - ";
+            $res .= $inline ? "&nbsp;" : "<br>";
             $res .= $end->formatLocalized("%a %d. %b | %H:%M");
         } else {
             $res .= $start->formatLocalized("%a %d. %b | %H:%M");
-            $res .= "<br>";
+            $res .= $inline ? "&nbsp;" : "<br>";
+            $res .= " - ";
+            $res .= $inline ? "&nbsp;" : "<br>";
             $res .= $end->formatLocalized("%a %d. %b | %H:%M");
         }
         return $res;
