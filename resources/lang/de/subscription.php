@@ -28,6 +28,8 @@ return [
     'confirmUnsubscribeEnd' => "Falls du nicht versucht hast, dich von einer Schicht auszutragen, kannst du dieses E-Mail ignorieren.",
     'removeEmail' => "Wir haben dir ein E-Mail mit einem Link zum Austragen gesendet.",
     'successfullyRemoved' => "Du bist nun ausgetragen.",
+    'subscribeConfirmation' => "Anmeldebestätigung",
+    'subscribeConfirmationText' => "Willkommen im Team! Du hast dich für folgende Schicht angemeldet:",
     'notifyMe' => 'Errinnere mich einen Tag bevor meine Schicht beginnt.',
     'reminder' => 'Du hast morgen eine Schicht',
     'reminderBody' => "Vergiss nicht die Schicht(en), für die du dich morgen eingetragen hast. Infos findest du im entsprechenden Schichtplan.",

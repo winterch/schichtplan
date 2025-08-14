@@ -28,6 +28,8 @@ return [
     'confirmUnsubscribeEnd' => "If you didn't try to unsubscribe from a shift, you can ignore this email.",
     'removeEmail' => "Please check your email to confirm.",
     'successfullyRemoved' => "You are now unsubscribed.",
+    'subscribeConfirmation' => "Subscription confirmation",
+    'subscribeConfirmationText' => "Welcome to our team! You are now entered into the following shift:",
     'notifyMe' => 'Notify me one day before my shift starts.',
     'reminder' => 'You have an upcoming shift tomorrow',
     'reminderBody' => "Don't forget the shift(s) you subscribed to. See the plan for details.",

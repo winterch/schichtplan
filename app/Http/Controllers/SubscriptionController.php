@@ -86,7 +86,8 @@ class SubscriptionController extends Controller
             return redirect()->route('plan.show', ['plan' => $plan]);
         }
         $data = $request->validated();
-        $shift->subscriptions()->create($data);
+        $sub = $shift->subscriptions()->create($data);
+        $sub->sendSubscribeConfirmation();
         Session::flash('info', __('subscription.successfullyCreated'));
         return redirect()->route('plan.show', ['plan' => $plan]);
     }

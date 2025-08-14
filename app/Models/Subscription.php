@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Notifications\SendUnsubscribeConfirmation;
 use App\Notifications\SendShiftReminder;
+use App\Notifications\SendSubscribeConfirmation;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -54,6 +55,13 @@ class Subscription extends Model
      */
     public function shift() {
         return $this->belongsTo(Shift::class);
+    }
+
+    /**
+     * Send a subscribe confirmation Email
+     */
+    public function sendSubscribeConfirmation() {
+        $this->notify(new SendSubscribeConfirmation($this->shift));
     }
 
     /**
