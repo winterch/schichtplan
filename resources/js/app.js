@@ -1,6 +1,11 @@
 import flatpickr from "flatpickr";
 
 /**
+ * Localize flatpickr
+ */
+const German = require("flatpickr/dist/l10n/de.js");
+
+/**
  * Add flatpickr for events
  */
 function addEvents() {
@@ -10,6 +15,7 @@ function addEvents() {
         minDate: e,
         enableTime: true,
         time_24hr: true,
+        locale: 'de',
     });
 
     const el = document.getElementById('start');
@@ -24,6 +30,7 @@ function addEvents() {
                     minDate: e1,
                     enableTime: true,
                     time_24hr: true,
+                    locale: 'de',
                 });
             })
         );
