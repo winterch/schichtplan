@@ -4,54 +4,96 @@ This is a very simple shift planer. An admin can define a plan with shifts and u
 
 ## About Schichtplan
 
-Schichtplan was original developed by [o](https://code.immerda.ch/o) with [cakephp](https://book.cakephp.org/1.3/en/index.html) framework back in 2011. The current version use [laravel](https://github.com/laravel/framework) as a base and is compatible with modern php version (^7.3|^8.0). 
+Schichtplan was original developed by [o](https://code.immerda.ch/o) with [cakephp](https://book.cakephp.org/1.3/en/index.html) framework back in 2011. The current version uses [laravel](https://github.com/laravel/framework) as a base and is compatible with modern php versions (\^7.3|\^8.0). 
 
-## Installation
+This fork was created in 2025 for the [Rock AG e.V.](https://rockag.net/) organization and is currently maintained by [winterch](https://github.com/winterch).
+
+## Setup with laradock (recommended)
+
+The application can be set up in Docker containers using [laradock](https://laradock.io/).
+
+### Configuration (Laravel)
+
+In the base directory create a `.env` file. E.g.:
+```
+cp .env.example .env
+```
+In `.env` set the values for `MAIL_FROM_ADDRESS` and `BASIC_AUTH_USERS`. `BASIC_AUTH_USERS` is a comma-separated list of `username:password` pairs.
+
+For more information on `.env` configuration options please refer to the official Laravel and Symfony documentation.
+
+### Configuration (laradock)
+
+Change into the laradock directory (e.g. ``cd laradock``) and create a `.env` file for laradock. E.g.:
+```
+cp .env.example .env
+```
+
+### Additional locales (optional)
+If necessary, enable additional locales in the php-fpm container from laradock. In `.env` of the laradock folder change the following values:
+- `PHP_FPM_INSTALL_ADDITIONAL_LOCALES`: Set to `true`
+- `PHP_FPM_ADDITIONAL_LOCALES`: Add the desired locales (e.g. `de_DE.UTF-8`) to the list
+- `PHP_FPM_DEFAULT_LOCALE`: Set to the desired default locale
+
+### Run the laradock containers
+Make sure Docker Compose is installed and up-to-date and Docker is running.
+
+Inside the `laradock` folder:
+
+- Build and start containers:
+    ```
+    docker-compose up -d caddy mysql mailhog workspace
+    ```
+
+### Install dependencies and run commands using the `workspace` container
+
+*Make sure that you run all commands that require PHP oder Node.js inside the `workspace` container. Otherwise you might run into issues because of different software versions.*
+
+- Enter the laradock `workspace` container:
+    ```
+    docker-compose exec --user=laradock workspace bash
+    ```
+    The `--user=laradock` option makes sure that all files are created with your native user and group instead of the docker user.
+
+- Install node.js dependencies and compile assets
+    ```
+    npm install && npm run dev
+    ```
+
+- Install Laravel dependencies
+    ```
+    composer install
+    ```
+
+- Generate app key
+    ```
+    php artisan key:generate
+    ```
+    The new app key will be automatically written into `.env`
+
+- Run database migrations
+    ```
+    php artisan migrate
+    ```
+
+The application should now be reachable at https://localhost. You have to allow your browser to trust the self-signed certificate of the Caddy server. This is only necessary for local setup.
+
+### Register Cronjob (optional)
+On a production system or for testing purposes you should register a cronjob to cleanup plans without activity. For more information see the [laravel documentation](https://laravel.com/docs/8.x/scheduling) 
+```bash
+* * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1```
+```
+
+## Installation (without laradock)
+
+__This setup is not maintained, use at your own risk__
 
 You need to install the dependencies to run schichtplaner.
 ```bash
 ./setup.sh
 ```
 
-## Configure
-To run schichtplan you need to configure a database and a mail backend. You can choose between different database vendors such as mysql, postgres or sqlite (see also [laravel doc](https://github.com/laravel/framework)). Add a `.env` file with your configuration and credentials.
 
-Please change the APP_KEY. The easiest way to change the app_key is to run `php artisan key:generate`. This will set the APP_KEY in your .env file
-
-```dotenv
-APP_NAME=Schichtplan
-APP_ENV=production
-APP_KEY=base64:YOU_NEED_TO_CHANGE_ME
-APP_DEBUG=false
-APP_URL=https://schichtplan.com
-LOG_LEVEL=info
-APP_API_KEY=the key to trigger cronjobs
-
-DB_CONNECTION=sqlite
-DB_DATABASE=/path/to/laravel/database/database.sqlite
-DB_FOREIGN_KEYS=true
-
-MAIL_MAILER=smtp
-MAIL_HOST=mailhog
-MAIL_PORT=1025
-MAIL_USERNAME=null
-MAIL_PASSWORD=null
-MAIL_ENCRYPTION=null
-MAIL_FROM_ADDRESS=null
-MAIL_FROM_NAME="${APP_NAME}"
-```
-
-After you generated the APP_KEY and configured your database connection, you have to run the databse migrations. This will setup or migrate needed database tables.
-
-```bash
-# Install or upgrade database tables
-php artisan migrate
-```
-
-You should register a cronjob to cleanup plans without activity. For more information see the [laravel documentation](https://laravel.com/docs/8.x/scheduling) 
-```bash
-* * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1```
-```
 ## Upgrade
 There is no upgrade path from older version of schichtplan (< 2.0).
 
@@ -68,6 +110,8 @@ php artisan schichtplan:notify-subscribers
 
 ## Development
 If you find errors please open an issue or send a pull request!
+
+__If you followed the laradock setup, you don't need this section, since laradock will provide the dev server__
 
 To start devloping, clone the repo, install the dependencies and copy the `.env.example` to .env. You want to check the values in the `.env` file, before starting to develop.
 
@@ -90,7 +134,9 @@ If you change the design make sure you also commit the built assets.
 npm run prod
 ```
 
-## Containerized development env
+## Containerized development env (deprecated)
+
+__This setup is not maintained, use at your own risk. We recommend the setup via laradock described above__
 
 ```bash
 ./setup.sh
