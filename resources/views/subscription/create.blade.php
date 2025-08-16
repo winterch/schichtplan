@@ -2,7 +2,7 @@
 @section('body')
     <h1 class="text-3xl mb-2">{{ $shift->title }}</h1>
     <div>{{$shift->desripion}}</div>
-    <div class="mb-10"> {{$shift->start}} - {{$shift->end}}</div>
+    <div class="mb-10"> {!! \App\Http\Controllers\PlanController::buildDateString($shift->start, $shift->end, true) !!}</div>
     @if(isset($subscription->id) && $subscription->id > 0)
         <form method="post" action="{{route('plan.shift.subscription.update', ['plan' => $plan, 'shift' => $shift, 'subscription' => $subscription])}}" class="subscription">
             @method("put")

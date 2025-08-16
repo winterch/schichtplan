@@ -312,21 +312,21 @@ class PlanController extends Controller
         $hours = $start->diffInHours($end);
         $res = "";
         if($start->isSameDay($end)) {
-            $res .= $start->formatLocalized("%a %d. %b | %H:%M");
+            $res .= $start->isoFormat("OD. MMMM YYYY | HH:mm");
             $res .= " - ";
-            $res .= $end->formatLocalized('%H:%M');
+            $res .= $end->isoFormat('HH:mm');
         } elseif($start->isSameYear($end)) {
-            $res .= $start->formatLocalized("%a %d. %b | %H:%M");
+            $res .= $start->isoFormat("OD. MMMM YYYY | HH:mm");
             $res .= $inline ? "&nbsp;" : "<br>";
             $res .= " - ";
             $res .= $inline ? "&nbsp;" : "<br>";
-            $res .= $end->formatLocalized("%a %d. %b | %H:%M");
+            $res .= $end->isoFormat("OD. MMMM YYYY | HH:mm");
         } else {
-            $res .= $start->formatLocalized("%a %d. %b | %H:%M");
+            $res .= $start->isoFormat("OD. MMMM YYYY HH:mm");
             $res .= $inline ? "&nbsp;" : "<br>";
             $res .= " - ";
             $res .= $inline ? "&nbsp;" : "<br>";
-            $res .= $end->formatLocalized("%a %d. %b | %H:%M");
+            $res .= $end->isoFormat("OD. MMMM YYYY | HH:mm");
         }
         return $res;
     }
