@@ -51,7 +51,8 @@ Route::get('/language/{locale}', function ($locale) {
  * Create a new plan.
  */
 Route::get('/plan/create', [PlanController::class, 'create'])
-  ->name('plan.create');
+  ->name('plan.create')
+  ->middleware('auth.basic.fromEnv');
 Route::post('/plan/create', [PlanController::class, 'store'])
   ->name('plan.store');
 
