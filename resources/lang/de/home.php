@@ -7,5 +7,5 @@ return [
     "deleteInfo" => "Pläne werden 30 Tage nach dem letzten Eintrag gelöscht",
     "createPlan" => "Neuen Plan erstellen",
     "AGPLlogo" => "AGPL Logo",
-    "copyleft" => "copyleft www.immerda.ch - <a href= 'https://code.immerda.ch/immerda/apps/schichtplan'>Source</a> - <a href='https://www.gnu.org/licenses/agpl-3.0.en.html'>AGPL License</a>"
+    "copyleft" => "copyleft Rock AG e.V. - <a href= 'https://github.com/winterch/schichtplan'>Source</a> - <a href='https://www.gnu.org/licenses/agpl-3.0.en.html'>AGPL License</a>"
 ];
