@@ -15,9 +15,9 @@ class StoreSubscriptionRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:100',
-            'email' => 'email|max:100',
-            'phone' => 'nullable|regex:/[0-9\s]{10,15}/',
+            'name' => 'required|max:60',
+            'email' => 'required|email|max:100',
+            'phone' => 'required|regex:/\+?[0-9\s]{8,20}/',
             'notification' => 'boolean',
             'comment' => 'max:500',
             'locale' => 'required|in:de,en,es'
@@ -31,9 +31,18 @@ class StoreSubscriptionRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => __("subscription.nameRequired"),
-            'phone.regex'  => __('subscription.phoneRegex'),
-            'comment.max'  => __('subscription.commentMax'),
+            'name.required' => __("validation.required.name"),
+            'name.max' => __("validation.nameMax"),
+
+            'phone.required' => __("validation.required.phone"),
+            'phone.regex'  => __('validation.phoneRegex'),
+
+            'email.required' => __("validation.required.email"),
+            'email.email'  => __('validation.emailEmail'),
+            'email.max'  => __('validation.emailMax'),
+
+            'comment.max'  => __('validation.commentMax'),
+
             'locale.in'  => __('subscription.validLanguage'),
         ];
     }

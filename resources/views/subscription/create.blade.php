@@ -14,7 +14,7 @@
             <div class="grid grid-rows-4 grid-flow-row gap-4 md:grid-flow-col mb-4">
                 <div>
                     <label for="type" class="block text-gray-700 mb-1">{{__("subscription.nameDesc")}}</label>
-                    <input id="name" name="name" type="text" class="@error('type') border-red-500 @enderror w-full block text-black p-1 text-lg border rounded" value="{{old('name', $subscription->name)}}">
+                    <input id="name" name="name" type="text" class="@error('name') border-red-500 @enderror w-full block text-black p-1 text-lg border rounded" value="{{old('name', $subscription->name)}}">
                     @error('name')
                     <div class="text-red-500 text-xs italic">{{ $message }}</div>
                     @enderror
