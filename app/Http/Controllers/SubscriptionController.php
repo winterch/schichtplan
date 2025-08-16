@@ -9,6 +9,7 @@ use App\Models\Shift;
 use App\Models\Subscription;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\URL;
 
 class SubscriptionController extends Controller
 {
@@ -24,7 +25,13 @@ class SubscriptionController extends Controller
         // anonymous users can just add a shift for the authorized plan
         $this->authSubscriber($plan, $shift);
         $subscription = new Subscription();
-        return view('subscription.create', ['plan' => $plan, 'shift' => $shift, 'subscription' => $subscription, 'locale' => session('locale', 'en')]);
+        return view('subscription.create', [
+            'plan' => $plan,
+            'shift' => $shift,
+            'subscription' => $subscription,
+            'locale' => session('locale', 'en'),
+            'cancelLink' => URL::route('plan.show', $plan->view_id)
+        ]);
     }
 
     /*
@@ -104,7 +111,13 @@ class SubscriptionController extends Controller
     {
         $this->auth($plan);
         $this->authorize('update', $subscription);
-        return view('subscription.create', ['plan' => $plan, 'shift' => $shift, 'subscription' => $subscription, 'locale' => session('locale', 'en')]);
+        return view('subscription.create', [
+            'plan' => $plan,
+            'shift' => $shift,
+            'subscription' => $subscription,
+            'locale' => session('locale', 'en'),
+            'cancelLink' => URL::route('plan.admin_subscriptions', $plan->edit_id)
+        ]);
     }
 
     /**
